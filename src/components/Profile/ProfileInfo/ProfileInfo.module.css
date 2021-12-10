@@ -1,0 +1,41 @@
+.profileInfo {
+    display: grid;
+    grid-template-areas: "top_wallpaper top_wallpaper" "avatar description";
+    grid-template-columns: 1fr 3fr;
+}
+
+.avatar {
+    grid-area: avatar;
+    padding: 0 40px;
+    margin-top: -100px;
+    position: relative;
+}
+
+.avatar .image {
+    width: 250px;
+    height: 250px;
+
+}
+
+.avatar .image img {
+    width: 100%;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.top_wallpaper {
+    grid-area: top_wallpaper;
+    padding-bottom: 40px;
+}
+
+.top_wallpaper img {
+    width: 100%;
+}
+
+
+
+
+
+
+
+

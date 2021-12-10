@@ -1,0 +1,10 @@
+.item img {
+    width: 50px;
+}
+
+.item {
+    color: white;
+    padding: 15px 0;
+    max-width: 400px;
+    word-wrap: break-word;
+}

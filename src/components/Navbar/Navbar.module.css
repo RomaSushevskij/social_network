@@ -1,0 +1,38 @@
+.nav {
+    grid-area: nav;
+    padding: 20px;
+    background-color: tomato;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.item {
+    padding: 5px;
+}
+
+.item a:hover {
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.item a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    display: inline;
+    cursor: pointer;
+}
+
+.item a.active {
+    font-size: 1.7em;
+    display: block;
+    padding: 5px 0;
+    transition: all 0.4s ease;
+}
+
+.settings {
+    margin-top: 30px;
+}
+
+.users {
+    margin-top: 20px;
+}
+
