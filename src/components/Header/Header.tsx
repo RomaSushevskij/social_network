@@ -2,7 +2,7 @@ import React from "react";
 import styleModule from './Header.module.css';
 import logo from '../../main-logo.png';
 
-export const Header = (props: any) => {
+export function Header(props: any) {
 
     return (
         <header className={styleModule.header}>

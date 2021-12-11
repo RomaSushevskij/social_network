@@ -1,0 +1,24 @@
+.dialog {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    column-gap:20px;
+    margin: 20px 0;
+}
+.dialog img {
+    width: 50px;
+    border-radius: 50%;
+}
+.dialog a{
+    padding: 5px 0;
+    color: white;
+    text-decoration: none;
+    align-self: center;
+}
+.dialog.active {
+    font-size: 1.7em;
+    display:block;
+    padding: 5px 0;
+    transition: all 0.2s ease;
+}
+
+

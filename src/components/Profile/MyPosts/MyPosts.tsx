@@ -1,8 +1,8 @@
 import React from "react";
 import styleModule from './MyPosts.module.css'
-import Post from "./Posts/Posts";
+import {Post} from "./Posts/Posts";
 
-export const MyPosts = (props: any) => {
+export function MyPosts (props: any) {
 
     return (
         <div className={styleModule.myPosts}>

@@ -1,29 +1,31 @@
 import React from "react";
 import './Navbar.module.css';
 import styleModule from './Navbar.module.css';
+import {NavLink} from "react-router-dom";
 
-export const Navbar = (props: any) => {
-    return (
+export function Navbar(props: any) {
+    let nav = <>
         <nav className={styleModule.nav}>
             <div className={styleModule.item}>
-                <a>Profile</a>
+                <NavLink to={'/profile'} className={profile => profile.isActive ? styleModule.active : ''}>Profile</NavLink>
             </div>
             <div className={styleModule.item}>
-                <a>Messages</a>
+                <NavLink to={'/dialogs'} className={dialogs => dialogs.isActive ? styleModule.active : ''}>Messages</NavLink>
             </div>
             <div className={styleModule.item}>
-                <a>News</a>
+                <NavLink to={'/news'} className={news => news.isActive ? styleModule.active : ''}>News</NavLink>
             </div>
             <div className={styleModule.item}>
-                <a>Music</a>
+                <NavLink to={'/music'} className={music => music.isActive ? styleModule.active : ''}>Music</NavLink>
             </div>
             <div className={`${styleModule.item} ${styleModule.users}`}>
-                <a>Users</a>
+                <NavLink to={'/users'} className={users => users.isActive ? styleModule.active : ''}>Users</NavLink>
             </div>
             <div className={`${styleModule.item} ${styleModule.settings}`}>
-                <a>Settings</a>
+                <NavLink to={'/settings'} className={settings => settings.isActive ? styleModule.active : ''}>Settings</NavLink>
             </div>
 
         </nav>
-    );
+    </>;
+    return nav;
 };

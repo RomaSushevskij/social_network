@@ -16,7 +16,7 @@
 .item a {
     color: white;
     text-decoration: none;
-    transition: all 0.4s ease;
+    transition: all 0.2s ease;
     display: inline;
     cursor: pointer;
 }
@@ -25,7 +25,7 @@
     font-size: 1.7em;
     display: block;
     padding: 5px 0;
-    transition: all 0.4s ease;
+    transition: all 0.2s ease;
 }
 
 .settings {

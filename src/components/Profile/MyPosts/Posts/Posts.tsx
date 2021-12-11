@@ -8,7 +8,7 @@ type PostPropsType = {
     likeCount: number
 }
 
-const Post = (props: PostPropsType) => {
+export function Post(props: PostPropsType) {
     return (
         <div className={styleModule.item}>
             <img src={ava_post} alt="ava_post"/>
@@ -21,5 +21,3 @@ const Post = (props: PostPropsType) => {
     );
 };
 
-
-export default Post;

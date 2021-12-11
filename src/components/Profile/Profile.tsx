@@ -4,7 +4,7 @@ import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPosts} from './MyPosts/MyPosts';
 
 
-export const Profile = (props: any) => {
+export function Profile(props: any) {
     return (
         <div className={styleModule.content}>
             <ProfileInfo/>
