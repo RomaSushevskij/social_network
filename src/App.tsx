@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
@@ -9,9 +8,12 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {Settings} from "./components/Settings/Settings";
+import {StateType} from "./redux/state";
 
-
-function App() {
+export type AppPropsType = {
+    state: StateType
+}
+function App(props:AppPropsType) {
     return (
         <BrowserRouter>
             <div className="app_wrapper">
@@ -19,8 +21,8 @@ function App() {
                 <Navbar/>
                 <div className="app_wrapper_content">
                     <Routes>
-                        <Route path='/profile' element={<Profile/>}/>
-                        <Route path='/dialogs' element={<Dialogs/>}/>
+                        <Route path='/profile' element={<Profile profilePage={props.state.profilePage}/>}/>
+                        <Route path='/dialogs/*' element={<Dialogs dialogsPage={props.state.dialogsPage}/>}/>
                         <Route path='/music' element={<Music/>}/>
                         <Route path='/news' element={<News/>}/>
                         <Route path='/settings' element={<Settings/>}/>

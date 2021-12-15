@@ -1,8 +1,13 @@
 import React from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Posts";
+import {PostsDataType} from "../../../redux/state";
 
-export function MyPosts (props: any) {
+type MyPostsPropsType = {
+    postsData: PostsDataType
+}
+
+export function MyPosts (props: MyPostsPropsType) {
 
     return (
         <div className={styleModule.myPosts}>
@@ -16,9 +21,7 @@ export function MyPosts (props: any) {
                 </div>
             </form>
             <div className={styleModule.posts}>
-                <Post id={1} message="Hi, how are you?" likeCount={9}/>
-                <Post id={2} message="Hi, it's my first post" likeCount={3}/>
-                <Post id={3} message="hello" likeCount={87}/>
+                {props.postsData.map(post=> <Post {...post}/>)}
             </div>
         </div>
 
