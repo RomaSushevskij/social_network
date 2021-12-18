@@ -6,14 +6,16 @@ import {DialogsPageType} from "../../redux/state";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
+    addNewMessage: (messageText: string) => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
+
     const newMessageText: LegacyRef<HTMLTextAreaElement> = React.createRef();
-    const onAddMessageButton = (event:React.MouseEvent<HTMLButtonElement>) => {
+    const onAddMessageButton = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (newMessageText.current) {
-            const text = newMessageText.current.value;
-            alert(text)
+            const text: string = newMessageText.current.value;
+            props.addNewMessage(text)
         }
     }
 

@@ -5,7 +5,7 @@ import {PostType} from "../../../../redux/state";
 
 type PostPropsType = PostType;
 
-export function Post({message, likeCount, image, ...props} : PostPropsType) {
+export function Post({message, likeCount, image, ...props}: PostPropsType) {
     return (
         <div className={styleModule.item}>
             <img src={image ? image : ava_post} alt="ava_post"/>

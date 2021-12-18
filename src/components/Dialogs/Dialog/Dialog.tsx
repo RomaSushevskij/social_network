@@ -10,7 +10,7 @@ export function Dialog({id, name, image, ...props}: DialogPropsType) {
     return (
         <div className={styleModule.dialog}>
             <div className={styleModule.contactAvatar}>
-                <img src={image ? image : userLogo} />
+                <img src={image ? image : userLogo}/>
             </div>
             <NavLink to={`/dialogs/ ${id}`}>{name}</NavLink>
         </div>

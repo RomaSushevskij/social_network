@@ -4,7 +4,8 @@ import {MessageType} from "../../../redux/state";
 import messageAva from '../../../usersAvatars/user.png'
 
 export type MessagePropsType = MessageType
-export function Message({name, message,image, time,...props}:MessagePropsType) {
+
+export function Message({name, message, image, time, ...props}: MessagePropsType) {
     return (
         <div className={styleModule.messageWrapper}>
             <div className={styleModule.avatar}>
