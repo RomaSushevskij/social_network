@@ -15,9 +15,10 @@ export function Dialogs(props: DialogsPropsType) {
     const onAddMessageButton = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (newMessageText.current) {
             const text: string = newMessageText.current.value;
-            props.addNewMessage(text)
+            props.addNewMessage(text);
+            newMessageText.current.value = ''
         }
-    }
+    };
 
     return (
         <div className={styleModule.dialogs}>

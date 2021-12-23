@@ -13,10 +13,10 @@ export function MyPosts(props: MyPostsPropsType) {
     const onAddPostButton = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (newPostText.current) {
             const text: string = newPostText.current.value;
-            props.addNewPost(text)
+            props.addNewPost(text);
+            newPostText.current.value = ''
         }
-
-    }
+    };
 
 
     return (

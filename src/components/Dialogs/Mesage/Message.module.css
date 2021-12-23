@@ -5,15 +5,14 @@
 .messageBlock {
     max-width: 300px;
     min-width: 100px;
-    background-color: #4787ff;
+    background-color: white;
     padding:8px 10px;
     display: flex;
     flex-direction: column;
     margin-left: 10px;
     border-radius:15px;
     position: relative;
-    color: #ffffff;
-    font-family: arial;
+    color: black;
     letter-spacing: .05em;
     word-wrap: break-word;
 }
@@ -24,7 +23,7 @@
     left: -28.5px;
     width: 50px;
     height: 27px;
-    background: radial-gradient(circle at top left, transparent 50%, #4787ff 50%);
+    background: radial-gradient(circle at top left, transparent 50%, #ffffff 50%);
 }
 .messageBlock .name {
     font-weight: bold;

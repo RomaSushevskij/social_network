@@ -1,3 +1,5 @@
+import {rerenderIntireTree} from "../render";
+
 export type DialogType = {
     id: number
     name: string
@@ -98,7 +100,8 @@ export const addNewPost = (postText: string) => {
         likeCount: 0,
         image: null
     };
-    state.profilePage.postsData.push(newPost)
+    state.profilePage.postsData.push(newPost);
+    rerenderIntireTree(state);
 };
 
 export const addNewMessage = (messageText: string) => {
@@ -110,5 +113,7 @@ export const addNewMessage = (messageText: string) => {
         time: '13:00'
     };
     state.dialogsPage.messagesData.push(newMessage);
-}
+
+    rerenderIntireTree(state);
+};
 
