@@ -5,16 +5,21 @@ import {PostsDataType} from "../../../redux/state";
 
 type MyPostsPropsType = {
     postsData: PostsDataType
-    addNewPost: (postText: string) => void
+    addNewPost: () => void
+    newPostText: string
+    updateNewPostText: (newPostText: string) => void
 }
 
 export function MyPosts(props: MyPostsPropsType) {
+
     const newPostText: LegacyRef<HTMLTextAreaElement> = React.createRef();
     const onAddPostButton = (event: React.MouseEvent<HTMLButtonElement>) => {
+        props.addNewPost();
+    };
+    const onUpdatePostText = () => {
         if (newPostText.current) {
             const text: string = newPostText.current.value;
-            props.addNewPost(text);
-            newPostText.current.value = ''
+            props.updateNewPostText(text);
         }
     };
 
@@ -24,7 +29,7 @@ export function MyPosts(props: MyPostsPropsType) {
             <p>My posts</p>
             <div>
                 <div className={styleModule.writePost}>
-                    <textarea ref={newPostText}></textarea>
+                    <textarea onChange={onUpdatePostText} value={props.newPostText} ref={newPostText}/>
                 </div>
                 <div className={styleModule.addPostButton}>
                     <button onClick={onAddPostButton}>Add post</button>

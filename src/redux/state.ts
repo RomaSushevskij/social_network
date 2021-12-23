@@ -27,9 +27,11 @@ export type PostsDataType = Array<PostType>
 export type DialogsPageType = {
     dialogsData: DialogsDataType
     messagesData: MessagesDataType
+    newMessageText: string
 }
 export type ProfilePageType = {
-    postsData: PostsDataType
+    postsData: PostsDataType,
+    newPostText: string
 }
 
 export type StateType = {
@@ -72,7 +74,8 @@ export const state: StateType = {
                 time: '13:08'
             },
             {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05'}
-        ]
+        ],
+        newMessageText: ''
     },
     profilePage: {
         postsData: [
@@ -89,31 +92,42 @@ export const state: StateType = {
                 likeCount: 87,
                 image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
             }
-        ]
+        ],
+        newPostText: ''
     }
 };
 
-export const addNewPost = (postText: string) => {
+export const addNewPost = () => {
     const newPost: PostType = {
         id: state.profilePage.postsData.length + 1,
-        message: postText,
+        message: state.profilePage.newPostText,
         likeCount: 0,
         image: null
     };
     state.profilePage.postsData.push(newPost);
+    state.profilePage.newPostText = '';
     rerenderIntireTree(state);
 };
 
-export const addNewMessage = (messageText: string) => {
+export const addNewMessage = () => {
     const newMessage: MessageType = {
         id: state.dialogsPage.messagesData.length + 1,
         name: 'Someone',
-        message: messageText,
+        message: state.dialogsPage.newMessageText,
         image: null,
         time: '13:00'
     };
     state.dialogsPage.messagesData.push(newMessage);
-
+    state.dialogsPage.newMessageText = '';
     rerenderIntireTree(state);
+};
+
+export const updateNewPostText = (newPostText: string) => {
+    state.profilePage.newPostText = newPostText;
+    rerenderIntireTree(state);
+};
+export const updateNewMessageText = (newMessageText: string) => {
+    state.dialogsPage.newMessageText = newMessageText;
+    rerenderIntireTree(state)
 };
 

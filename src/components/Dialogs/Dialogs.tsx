@@ -6,17 +6,20 @@ import {DialogsPageType} from "../../redux/state";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    addNewMessage: (messageText: string) => void
+    addNewMessage: () => void
+    updateNewMessageText: (newMessageText: string) => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
 
     const newMessageText: LegacyRef<HTMLTextAreaElement> = React.createRef();
     const onAddMessageButton = (event: React.MouseEvent<HTMLButtonElement>) => {
+        props.addNewMessage();
+    };
+    const onUpdateNewMessageText =()=> {
         if (newMessageText.current) {
             const text: string = newMessageText.current.value;
-            props.addNewMessage(text);
-            newMessageText.current.value = ''
+            props.updateNewMessageText(text);
         }
     };
 
@@ -34,7 +37,7 @@ export function Dialogs(props: DialogsPropsType) {
                 </div>
                 <div className={styleModule.writeAndSendMessage}>
                     <div className={styleModule.writeMessage}>
-                        <textarea ref={newMessageText} placeholder='Enter your message'/>
+                        <textarea onChange={onUpdateNewMessageText} value={props.dialogsPage.newMessageText} ref={newMessageText} placeholder='Enter your message'/>
                     </div>
                     <button onClick={onAddMessageButton} className={styleModule.sendMessage}>
                         Send
