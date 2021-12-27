@@ -3,6 +3,9 @@ import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
 import {DialogsPageType} from "../../redux/state";
+import {Button} from "../generic/Button/Button";
+import {BrowserRouter} from "react-router-dom";
+import {Textarea} from "../generic/Textarea/Textarea";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
@@ -13,10 +16,10 @@ export type DialogsPropsType = {
 export function Dialogs(props: DialogsPropsType) {
 
     const newMessageText: LegacyRef<HTMLTextAreaElement> = React.createRef();
-    const onAddMessageButton = (event: React.MouseEvent<HTMLButtonElement>) => {
-        props.addNewMessage();
+    const onAddMessageButton = () => {
+        props.dialogsPage.newMessageText && props.addNewMessage();
     };
-    const onUpdateNewMessageText =()=> {
+    const onUpdateNewMessageText = () => {
         if (newMessageText.current) {
             const text: string = newMessageText.current.value;
             props.updateNewMessageText(text);
@@ -37,11 +40,12 @@ export function Dialogs(props: DialogsPropsType) {
                 </div>
                 <div className={styleModule.writeAndSendMessage}>
                     <div className={styleModule.writeMessage}>
-                        <textarea onChange={onUpdateNewMessageText} value={props.dialogsPage.newMessageText} ref={newMessageText} placeholder='Enter your message'/>
+                        <Textarea textareaValue={props.dialogsPage.newMessageText}
+                                  setTextareaValue={onUpdateNewMessageText} reference={newMessageText}
+                                  placeholder={'Enter your message'}/>
+
                     </div>
-                    <button onClick={onAddMessageButton} className={styleModule.sendMessage}>
-                        Send
-                    </button>
+                    <Button name={'Send'} callback={onAddMessageButton}/>
                 </div>
             </div>
         </div>
