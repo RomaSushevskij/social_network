@@ -1,31 +1,42 @@
 .nav {
     grid-area: nav;
-    padding: 20px;
+    padding: 20px 10px 20px 20px;
     background-color: tomato;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .item {
+    display: flex;
     padding: 5px;
 }
-
-.item a:hover {
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+.item .icon {
+    color: #ffffff;
+    margin-right: 5px;
 }
-
 .item a {
     color: white;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     display: inline;
     cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+a:hover {
+    transition: all 0.3s ease;
+    margin-left: 5px;
 }
 
 .item a.active {
-    font-size: 1.7em;
+    font-size: 1.5em;
     display: block;
     padding: 5px 0;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+}
+.item a.active:hover {
+    box-shadow: none;
+    margin-left: 0;
 }
 
 .settings {

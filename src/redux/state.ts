@@ -115,7 +115,7 @@ export const addNewMessage = () => {
         name: 'Someone',
         message: state.dialogsPage.newMessageText,
         image: null,
-        time: '13:00'
+        time: new Date().toJSON().slice(11,16),
     };
     state.dialogsPage.messagesData.push(newMessage);
     state.dialogsPage.newMessageText = '';

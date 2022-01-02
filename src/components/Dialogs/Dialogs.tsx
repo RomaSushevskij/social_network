@@ -1,4 +1,4 @@
-import React, {LegacyRef} from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
@@ -15,15 +15,18 @@ export type DialogsPropsType = {
 
 export function Dialogs(props: DialogsPropsType) {
 
-    const newMessageText: LegacyRef<HTMLTextAreaElement> = React.createRef();
+
     const onAddMessageButton = () => {
-        props.dialogsPage.newMessageText && props.addNewMessage();
+        props.dialogsPage.newMessageText.trim() && props.addNewMessage();
     };
-    const onUpdateNewMessageText = () => {
-        if (newMessageText.current) {
-            const text: string = newMessageText.current.value;
-            props.updateNewMessageText(text);
+    const onAddMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (!e.shiftKey && e.key === 'Enter') {
+            e.preventDefault();
+            onAddMessageButton()
         }
+    };
+    const onUpdateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.updateNewMessageText(e.currentTarget.value);
     };
 
     return (
@@ -41,7 +44,8 @@ export function Dialogs(props: DialogsPropsType) {
                 <div className={styleModule.writeAndSendMessage}>
                     <div className={styleModule.writeMessage}>
                         <Textarea textareaValue={props.dialogsPage.newMessageText}
-                                  setTextareaValue={onUpdateNewMessageText} reference={newMessageText}
+                                  setTextareaValue={onUpdateNewMessageText}
+                                  onAddWithEnter={onAddMessageWithEnter}
                                   placeholder={'Enter your message'}/>
 
                     </div>

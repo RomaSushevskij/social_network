@@ -1,15 +1,28 @@
-import React, {LegacyRef} from "react";
+import React, {ChangeEvent, LegacyRef, KeyboardEvent} from "react";
 import style from './Textarea.module.css'
 
 type TextareaPropsType = {
     textareaValue: string
-    setTextareaValue: () => void
-    reference: LegacyRef<HTMLTextAreaElement>
-    placeholder:string
+    setTextareaValue: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    onAddWithEnter?: (e: KeyboardEvent<HTMLTextAreaElement>) => void
+    reference?: LegacyRef<HTMLTextAreaElement>
+    placeholder: string
 }
 
-export const Textarea = ({textareaValue, setTextareaValue, reference, placeholder, ...props}:TextareaPropsType) => {
+export const Textarea = ({
+                             textareaValue,
+                             setTextareaValue,
+                             reference,
+                             placeholder,
+                             onAddWithEnter,
+                             ...restProps
+                         }: TextareaPropsType) => {
     return (
-        <textarea placeholder={placeholder} className={style.textarea} onChange={setTextareaValue} value={textareaValue} ref={reference}/>
+        <textarea placeholder={placeholder}
+                  className={style.textarea}
+                  onChange={setTextareaValue}
+                  onKeyPress={onAddWithEnter}
+                  value={textareaValue}
+                  ref={reference}/>
     )
 };
