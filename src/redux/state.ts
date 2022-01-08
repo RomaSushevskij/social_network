@@ -1,4 +1,6 @@
-import {rerenderIntireTree} from "../render";
+let rerenderIntireTree = () => {
+    console.log('state changed')
+};
 
 export type DialogType = {
     id: number
@@ -38,7 +40,6 @@ export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
 }
-
 
 export const state: StateType = {
     dialogsPage: {
@@ -106,7 +107,7 @@ export const addNewPost = () => {
     };
     state.profilePage.postsData.push(newPost);
     state.profilePage.newPostText = '';
-    rerenderIntireTree(state);
+    rerenderIntireTree();
 };
 
 export const addNewMessage = () => {
@@ -115,19 +116,23 @@ export const addNewMessage = () => {
         name: 'Someone',
         message: state.dialogsPage.newMessageText,
         image: null,
-        time: new Date().toJSON().slice(11,16),
+        time: new Date().toJSON().slice(11,16).split('').map((s,i)=>i===1 ? +s + 3 : s).join('')
     };
     state.dialogsPage.messagesData.push(newMessage);
     state.dialogsPage.newMessageText = '';
-    rerenderIntireTree(state);
+    rerenderIntireTree();
 };
 
 export const updateNewPostText = (newPostText: string) => {
     state.profilePage.newPostText = newPostText;
-    rerenderIntireTree(state);
+    rerenderIntireTree();
 };
 export const updateNewMessageText = (newMessageText: string) => {
     state.dialogsPage.newMessageText = newMessageText;
-    rerenderIntireTree(state)
+    rerenderIntireTree()
+};
+
+export const subscribe = (observer:() => void) => {
+    rerenderIntireTree = observer
 };
 

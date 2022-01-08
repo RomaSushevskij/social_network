@@ -23,7 +23,7 @@
     border-radius: 10px;
 }
 
-a:hover {
+.item a:hover {
     transition: all 0.3s ease;
     margin-left: 5px;
 }
