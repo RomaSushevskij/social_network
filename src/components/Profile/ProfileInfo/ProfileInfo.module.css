@@ -2,6 +2,8 @@
     display: grid;
     grid-template-areas: "top_wallpaper top_wallpaper" "avatar description";
     grid-template-columns: 1fr 3fr;
+    border-bottom: 2px dashed #ffffff ;
+    padding-bottom: 40px;
 }
 
 .avatar {

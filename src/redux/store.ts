@@ -9,6 +9,8 @@ export type MessageType = {
     message: string
     image: string | null
     time: string
+    background:string
+    color:string
 };
 
 export type PostType = {
@@ -48,6 +50,11 @@ export type StoreType = {
     updateNewMessageText: (newMessageText: string) => void
 }
 
+const MESSAGE_STYLE = {
+    background: '#ffffff',
+    color:'#000000',
+};
+
 export const store: StoreType = {
     _state: {
         dialogsPage: {
@@ -72,17 +79,19 @@ export const store: StoreType = {
                     name: 'Ruslan',
                     message: 'Hi',
                     image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album',
-                    time: '12:03'
+                    time: '12:03',
+                    ...MESSAGE_STYLE
                 },
-                {id: 2, name: 'Dmitry', message: 'Hi, how are you?', image: null, time: '13:01'},
+                {id: 2, name: 'Dmitry', message: 'Hi, how are you?', image: null, time: '13:01', ...MESSAGE_STYLE},
                 {
                     id: 3,
                     name: 'Mira',
                     message: 'Yo',
                     image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
-                    time: '13:08'
+                    time: '13:08',
+                    ...MESSAGE_STYLE
                 },
-                {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05'}
+                {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05', ...MESSAGE_STYLE}
             ],
             newMessageText: ''
         },
@@ -131,7 +140,8 @@ export const store: StoreType = {
             name: 'Someone',
             message: this._state.dialogsPage.newMessageText,
             image: null,
-            time: new Date().toJSON().slice(11, 16)
+            time: new Date().toJSON().slice(11, 16),
+            ...MESSAGE_STYLE
         };
         this._state.dialogsPage.messagesData.push(newMessage);
         this._state.dialogsPage.newMessageText = '';

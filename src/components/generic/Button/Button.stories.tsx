@@ -17,7 +17,7 @@ export default {
     component: Button,
     argTypes: {
         name: {
-          ...getCategoryObj('Main'),
+            ...getCategoryObj('Main'),
             defaultValue: 'Title'
         },
         backgroundHover: {
@@ -35,9 +35,9 @@ export default {
             control: 'color',
             defaultValue: '#ffffff'
         },
-      callback: {
-        ...getCategoryObj('Main')
-      }
+        callback: {
+            ...getCategoryObj('Main')
+        }
     },
 
 } as ComponentMeta<typeof Button>;

@@ -1,24 +1,46 @@
 import React from "react";
 import styleModule from './Header.module.css';
-import logo from '../../main-logo.png';
+import styled from "styled-components";
 
-export function Header(props: any) {
+export type HeaderPropsType = {
+    title: string
+    description?: string
+    background: string
+    color: string
+    logo?: string
+}
 
+export function Header({
+                           title,
+                           description,
+                           background,
+                           color,
+                           logo, ...props
+                       }: HeaderPropsType) {
+    const Header = styled.header`
+    & {
+    background: ${background}
+    `;
+    const TitleDescription = styled.div`
+    & p {
+    color: ${color}
+    }
+    `;
     return (
-        <header className={styleModule.header}>
+        <Header className={styleModule.header}>
             <div className={styleModule.logoAndDescription}>
                 <div className={styleModule.logo}>
                     <img src={logo} className={styleModule.main_logo}/>
                 </div>
-                <div className={styleModule.name_description}>
-                    <p>Cloudpaper</p>
-                    <p>Connecting Network</p>
-                </div>
+                <TitleDescription className={styleModule.title_description}>
+                    <p>{title}</p>
+                    <p>{description}</p>
+                </TitleDescription>
             </div>
             <div className={styleModule.loginStatus}>
 
             </div>
-        </header>
+        </Header>
     );
 }
 

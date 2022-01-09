@@ -21,12 +21,12 @@
     height: 50px;
 }
 
-.name_description p {
+.title_description p {
     margin: 0;
     color: white;
 }
 
-.name_description p:first-child {
+.title_description p:first-child {
     font-weight: bold;
     font-size: 1.2em;
 }

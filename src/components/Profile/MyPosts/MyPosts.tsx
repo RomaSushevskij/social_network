@@ -24,7 +24,7 @@ export function MyPosts(props: MyPostsPropsType) {
     const onAddPostButton = () => {
         props.newPostText.trim() && props.addNewPost();
     };
-    const onAddMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const onAddPostWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (!e.shiftKey && e.key === 'Enter') {
             e.preventDefault();
             onAddPostButton()
@@ -42,7 +42,7 @@ export function MyPosts(props: MyPostsPropsType) {
                 <div className={styleModule.writePost}>
                     <Textarea setTextareaValue={onUpdatePostText}
                               textareaValue={props.newPostText}
-                              onAddWithEnter={onAddMessageWithEnter}
+                              onAddWithEnter={onAddPostWithEnter}
                               placeholder={'Here you can leave your post'}
                               background={'#ffffff'}
                               color={'#60575A'}/>

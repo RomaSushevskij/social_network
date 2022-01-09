@@ -6,8 +6,8 @@ type ButtonPropsType = {
     name: string
     callback: () => void
     backgroundHover: string
-    background:string
-    colorHover:string
+    background: string
+    colorHover: string
 }
 
 

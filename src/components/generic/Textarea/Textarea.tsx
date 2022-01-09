@@ -24,7 +24,7 @@ export const Textarea = ({
     const styles = {
         background:background,
         color: color
-    }
+    };
     return (
         <textarea placeholder={placeholder}
                   className={style.textarea}
