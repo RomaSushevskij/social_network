@@ -7,6 +7,8 @@ type TextareaPropsType = {
     onAddWithEnter?: (e: KeyboardEvent<HTMLTextAreaElement>) => void
     reference?: LegacyRef<HTMLTextAreaElement>
     placeholder: string
+    background: string
+    color: string
 }
 
 export const Textarea = ({
@@ -15,14 +17,22 @@ export const Textarea = ({
                              reference,
                              placeholder,
                              onAddWithEnter,
+                             background,
+                             color,
                              ...restProps
                          }: TextareaPropsType) => {
+    const styles = {
+        background:background,
+        color: color
+    }
     return (
         <textarea placeholder={placeholder}
                   className={style.textarea}
                   onChange={setTextareaValue}
                   onKeyPress={onAddWithEnter}
                   value={textareaValue}
-                  ref={reference}/>
+                  ref={reference}
+                  style={styles}
+                  />
     )
 };

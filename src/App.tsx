@@ -8,15 +8,11 @@ import {BrowserRouter, Route, Routes, Navigate, HashRouter} from "react-router-d
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {Settings} from "./components/Settings/Settings";
-import {StateType} from "./redux/state";
+import {StateType, StoreType} from "./redux/store";
 
 
 export type AppPropsType = {
-    state: StateType
-    addNewPost: () => void
-    addNewMessage: () => void
-    updateNewPostText: (newPostText: string) => void
-    updateNewMessageText: (newMessageText: string) => void
+    store:StoreType
 }
 
 export type PATHType = {
@@ -34,7 +30,7 @@ const PATH = {
     SETTINGS: '/settings'
 }
 
-function App(props: AppPropsType) {
+function App({store, ...restProps}: AppPropsType) {
     return (
         <HashRouter>
             <div className="app_wrapper">
@@ -43,12 +39,12 @@ function App(props: AppPropsType) {
                 <div className="app_wrapper_content">
                     <Routes>
                         <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
-                        <Route path={PATH.PROFILE}element={<Profile profilePage={props.state.profilePage}
-                                                                 addNewPost={props.addNewPost}
-                                                                 updateNewPostText={props.updateNewPostText}/>}/>
-                        <Route path={PATH.DIALOGS} element={<Dialogs dialogsPage={props.state.dialogsPage}
-                                                                   addNewMessage={props.addNewMessage}
-                                                                   updateNewMessageText={props.updateNewMessageText}/>}/>
+                        <Route path={PATH.PROFILE} element={<Profile profilePage={store.getState().profilePage}
+                                                                 addNewPost={store.addNewPost.bind(store)}
+                                                                 updateNewPostText={store.updateNewPostText.bind(store)}/>}/>
+                        <Route path={PATH.DIALOGS} element={<Dialogs dialogsPage={store.getState().dialogsPage}
+                                                                   addNewMessage={store.addNewMessage.bind(store)}
+                                                                   updateNewMessageText={store.updateNewMessageText.bind(store)}/>}/>
                         <Route path={PATH.MUSIC} element={<Music/>}/>
                         <Route path={PATH.NEWS} element={<News/>}/>
                         <Route path={PATH.SETTINGS} element={<Settings/>}/>

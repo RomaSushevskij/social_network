@@ -1,7 +1,7 @@
 import React from "react";
 import styleModule from './Posts.module.css'
 import ava_post from '../../../../usersAvatars/user.png'
-import {PostType} from "../../../../redux/state";
+import {PostType} from "../../../../redux/store";
 
 type PostPropsType = PostType;
 

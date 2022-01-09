@@ -1,9 +1,16 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Posts";
-import {PostsDataType} from "../../../redux/state";
+import {PostsDataType} from "../../../redux/store";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
+
+export const BUTTON_STYLE = {
+    BACKGROUND_HOVER: '#ffbf47',
+    BACKGROUND: '#ffe1a9',
+    COLOR_HOVER: '#ffffff'
+};
+
 
 type MyPostsPropsType = {
     postsData: PostsDataType
@@ -36,10 +43,16 @@ export function MyPosts(props: MyPostsPropsType) {
                     <Textarea setTextareaValue={onUpdatePostText}
                               textareaValue={props.newPostText}
                               onAddWithEnter={onAddMessageWithEnter}
-                              placeholder={'Here you can leave your post'}/>
+                              placeholder={'Here you can leave your post'}
+                              background={'#ffffff'}
+                              color={'#60575A'}/>
                 </div>
                 <div className={styleModule.addPostButton}>
-                    <Button name={'Add post'} callback={onAddPostButton}/>
+                    <Button name={'Add post'}
+                            callback={onAddPostButton}
+                            backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
+                            background={BUTTON_STYLE.BACKGROUND}
+                            colorHover={BUTTON_STYLE.COLOR_HOVER}/>
                 </div>
             </div>
             <div className={styleModule.posts}>

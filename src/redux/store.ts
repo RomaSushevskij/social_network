@@ -1,7 +1,3 @@
-let rerenderIntireTree = () => {
-    console.log('state changed')
-};
-
 export type DialogType = {
     id: number
     name: string
@@ -42,9 +38,14 @@ export type StateType = {
 }
 
 export type StoreType = {
-    _state:StateType
+    _state: StateType
     getState: () => StateType
-    addNewPost:() => void
+    _callSubscriber: () => void
+    subscriber: (observer: () => void) => void
+    addNewPost: () => void
+    addNewMessage: () => void
+    updateNewPostText: (newPostText: string) => void
+    updateNewMessageText: (newMessageText: string) => void
 }
 
 export const store: StoreType = {
@@ -107,6 +108,12 @@ export const store: StoreType = {
     getState() {
         return this._state
     },
+    _callSubscriber() {
+        console.log('state changed')
+    },
+    subscriber(observer) {
+        this._callSubscriber = observer
+    },
     addNewPost() {
         const newPost: PostType = {
             id: this._state.profilePage.postsData.length + 1,
@@ -116,48 +123,27 @@ export const store: StoreType = {
         };
         this._state.profilePage.postsData.push(newPost);
         this._state.profilePage.newPostText = '';
-        rerenderIntireTree();
+        this._callSubscriber();
     },
-
-};
-
-
-
-export const addNewPost = () => {
-    const newPost: PostType = {
-        id: state.profilePage.postsData.length + 1,
-        message: state.profilePage.newPostText,
-        likeCount: 0,
-        image: null
-    };
-    state.profilePage.postsData.push(newPost);
-    state.profilePage.newPostText = '';
-    rerenderIntireTree();
-};
-
-export const addNewMessage = () => {
-    const newMessage: MessageType = {
-        id: state.dialogsPage.messagesData.length + 1,
-        name: 'Someone',
-        message: state.dialogsPage.newMessageText,
-        image: null,
-        time: new Date().toJSON().slice(11,16).split('').map((s,i)=>i===1 ? +s + 3 : s).join('')
-    };
-    state.dialogsPage.messagesData.push(newMessage);
-    state.dialogsPage.newMessageText = '';
-    rerenderIntireTree();
-};
-
-export const updateNewPostText = (newPostText: string) => {
-    state.profilePage.newPostText = newPostText;
-    rerenderIntireTree();
-};
-export const updateNewMessageText = (newMessageText: string) => {
-    state.dialogsPage.newMessageText = newMessageText;
-    rerenderIntireTree()
-};
-
-export const subscribe = (observer:() => void) => {
-    rerenderIntireTree = observer
+    addNewMessage() {
+        const newMessage: MessageType = {
+            id: this._state.dialogsPage.messagesData.length + 1,
+            name: 'Someone',
+            message: this._state.dialogsPage.newMessageText,
+            image: null,
+            time: new Date().toJSON().slice(11, 16)
+        };
+        this._state.dialogsPage.messagesData.push(newMessage);
+        this._state.dialogsPage.newMessageText = '';
+        this._callSubscriber();
+    },
+    updateNewPostText(newPostText: string) {
+        this._state.profilePage.newPostText = newPostText;
+        this._callSubscriber();
+    },
+    updateNewMessageText(newMessageText: string) {
+        this._state.dialogsPage.newMessageText = newMessageText;
+        this._callSubscriber()
+    }
 };
 

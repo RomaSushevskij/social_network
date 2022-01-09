@@ -2,10 +2,10 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {DialogsPageType} from "../../redux/state";
+import {DialogsPageType} from "../../redux/store";
 import {Button} from "../generic/Button/Button";
-import {BrowserRouter} from "react-router-dom";
 import {Textarea} from "../generic/Textarea/Textarea";
+import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
@@ -46,10 +46,16 @@ export function Dialogs(props: DialogsPropsType) {
                         <Textarea textareaValue={props.dialogsPage.newMessageText}
                                   setTextareaValue={onUpdateNewMessageText}
                                   onAddWithEnter={onAddMessageWithEnter}
-                                  placeholder={'Enter your message'}/>
+                                  placeholder={'Enter your message'}
+                                  background={'#ffffff'}
+                                  color={'#60575A'}/>
 
                     </div>
-                    <Button name={'Send'} callback={onAddMessageButton}/>
+                    <Button name={'Send'}
+                            callback={onAddMessageButton}
+                            backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
+                            background={BUTTON_STYLE.BACKGROUND}
+                            colorHover={BUTTON_STYLE.COLOR_HOVER}/>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import styleModule from './Message.module.css';
-import {MessageType} from "../../../redux/state";
+import {MessageType} from "../../../redux/store";
 import messageAva from '../../../usersAvatars/user.png'
 
 export type MessagePropsType = MessageType
