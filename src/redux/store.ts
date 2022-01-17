@@ -4,13 +4,11 @@ export type DialogType = {
     image: string | null
 };
 export type MessageType = {
-    id: number
-    name: string
-    message: string
-    image: string | null
+    id: number,
+    name: string,
+    message: string,
+    image: string | null,
     time: string
-    background:string
-    color:string
 };
 
 export type PostType = {
@@ -39,21 +37,37 @@ export type StateType = {
     profilePage: ProfilePageType
 }
 
+export type AddPostActionType = {
+    type: 'ADD-POST'
+}
+export type AddMessageActionType = {
+    type: 'ADD-MESSAGE'
+}
+export type UpdateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newPostText: string
+}
+export type UpdateNewMessageTextActionType = {
+    type: 'UPDATE-NEW-MESSAGE-TEXT'
+    newMessageText: string
+}
+
+
+export type ActionsTypes =
+    AddPostActionType |
+    AddMessageActionType |
+    UpdateNewPostTextActionType |
+    UpdateNewMessageTextActionType
+
+
 export type StoreType = {
     _state: StateType
     getState: () => StateType
     _callSubscriber: () => void
     subscriber: (observer: () => void) => void
-    addNewPost: () => void
-    addNewMessage: () => void
-    updateNewPostText: (newPostText: string) => void
-    updateNewMessageText: (newMessageText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
-const MESSAGE_STYLE = {
-    background: '#ffffff',
-    color:'#000000',
-};
 
 export const store: StoreType = {
     _state: {
@@ -79,19 +93,17 @@ export const store: StoreType = {
                     name: 'Ruslan',
                     message: 'Hi',
                     image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album',
-                    time: '12:03',
-                    ...MESSAGE_STYLE
+                    time: '12:03'
                 },
-                {id: 2, name: 'Dmitry', message: 'Hi, how are you?', image: null, time: '13:01', ...MESSAGE_STYLE},
+                {id: 2, name: 'Dmitry', message: 'Hi, how are you?', image: null, time: '13:01'},
                 {
                     id: 3,
                     name: 'Mira',
                     message: 'Yo',
                     image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
-                    time: '13:08',
-                    ...MESSAGE_STYLE
+                    time: '13:08'
                 },
-                {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05', ...MESSAGE_STYLE}
+                {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05'}
             ],
             newMessageText: ''
         },
@@ -114,46 +126,44 @@ export const store: StoreType = {
             newPostText: ''
         }
     },
-    getState() {
-        return this._state
-    },
     _callSubscriber() {
         console.log('state changed')
+    },
+    getState() {
+        return this._state
     },
     subscriber(observer) {
         this._callSubscriber = observer
     },
-    addNewPost() {
-        const newPost: PostType = {
-            id: this._state.profilePage.postsData.length + 1,
-            message: this._state.profilePage.newPostText,
-            likeCount: 0,
-            image: null
-        };
-        this._state.profilePage.postsData.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber();
-    },
-    addNewMessage() {
-        const newMessage: MessageType = {
-            id: this._state.dialogsPage.messagesData.length + 1,
-            name: 'Someone',
-            message: this._state.dialogsPage.newMessageText,
-            image: null,
-            time: new Date().toJSON().slice(11, 16),
-            ...MESSAGE_STYLE
-        };
-        this._state.dialogsPage.messagesData.push(newMessage);
-        this._state.dialogsPage.newMessageText = '';
-        this._callSubscriber();
-    },
-    updateNewPostText(newPostText: string) {
-        this._state.profilePage.newPostText = newPostText;
-        this._callSubscriber();
-    },
-    updateNewMessageText(newMessageText: string) {
-        this._state.dialogsPage.newMessageText = newMessageText;
-        this._callSubscriber()
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostType = {
+                id: this._state.profilePage.postsData.length + 1,
+                message: this._state.profilePage.newPostText,
+                likeCount: 0,
+                image: null
+            };
+            this._state.profilePage.postsData.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber();
+        } else if (action.type === 'ADD-MESSAGE') {
+            const newMessage: MessageType = {
+                id: this._state.dialogsPage.messagesData.length + 1,
+                name: 'Someone',
+                message: this._state.dialogsPage.newMessageText,
+                image: null,
+                time: new Date().toJSON().slice(11, 16)
+            };
+            this._state.dialogsPage.messagesData.push(newMessage);
+            this._state.dialogsPage.newMessageText = '';
+            this._callSubscriber();
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newPostText;
+            this._callSubscriber();
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessageText = action.newMessageText;
+            this._callSubscriber();
+        }
     }
 };
 

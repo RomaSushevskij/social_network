@@ -2,22 +2,26 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {DialogsPageType} from "../../redux/store";
+import {ActionsTypes, DialogsPageType} from "../../redux/store";
 import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    addNewMessage: () => void
-    updateNewMessageText: (newMessageText: string) => void
+    dispatch: (action: ActionsTypes) => void
+}
+
+const MESSAGE_STYLE = {
+    background: '#ffffff',
+    color: '#757575'
 }
 
 export function Dialogs(props: DialogsPropsType) {
 
 
     const onAddMessageButton = () => {
-        props.dialogsPage.newMessageText.trim() && props.addNewMessage();
+        props.dispatch({type: "ADD-MESSAGE"});
     };
     const onAddMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (!e.shiftKey && e.key === 'Enter') {
@@ -26,7 +30,7 @@ export function Dialogs(props: DialogsPropsType) {
         }
     };
     const onUpdateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageText(e.currentTarget.value);
+        props.dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newMessageText: (e.currentTarget.value)});
     };
 
     return (
@@ -39,7 +43,10 @@ export function Dialogs(props: DialogsPropsType) {
             </div>
             <div className={styleModule.messagesBlock}>
                 <div className={styleModule.messages}>
-                    {props.dialogsPage.messagesData.map(message => <Message key={message.id} {...message}/>)}
+                    {props.dialogsPage.messagesData.map(message => <Message background={MESSAGE_STYLE.background}
+                                                                            color={MESSAGE_STYLE.color}
+                                                                            key={message.id}
+                                                                            {...message}/>)}
                 </div>
                 <div className={styleModule.writeAndSendMessage}>
                     <div className={styleModule.writeMessage}>

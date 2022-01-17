@@ -4,7 +4,15 @@ import {MessageType} from "../../../redux/store";
 import messageAva from '../../../usersAvatars/user.png'
 import styled from "styled-components";
 
-export type MessagePropsType = MessageType
+export type MessagePropsType = {
+    id: number,
+    name: string,
+    message: string,
+    image: string | null,
+    time: string
+    background:string
+    color:string
+}
 
 export function Message({
                             name,

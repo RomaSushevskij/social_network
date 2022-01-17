@@ -51,11 +51,10 @@ function App({store, ...restProps}: AppPropsType) {
                     <Routes>
                         <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
                         <Route path={PATH.PROFILE} element={<Profile profilePage={store.getState().profilePage}
-                                                                     addNewPost={store.addNewPost.bind(store)}
-                                                                     updateNewPostText={store.updateNewPostText.bind(store)}/>}/>
+                                                                     dispatch={store.dispatch.bind(store)}/>}/>
                         <Route path={PATH.DIALOGS} element={<Dialogs dialogsPage={store.getState().dialogsPage}
-                                                                     addNewMessage={store.addNewMessage.bind(store)}
-                                                                     updateNewMessageText={store.updateNewMessageText.bind(store)}/>}/>
+                                                                     dispatch={store.dispatch.bind(store)}
+                        />}/>
                         <Route path={PATH.MUSIC} element={<Music/>}/>
                         <Route path={PATH.NEWS} element={<News/>}/>
                         <Route path={PATH.SETTINGS} element={<Settings/>}/>
