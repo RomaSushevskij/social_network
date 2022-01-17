@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Posts";
-import {ActionsTypes, PostsDataType} from "../../../redux/store";
+import {ActionsTypes, addPostAC, PostsDataType, updateNewPostTextAC} from "../../../redux/store";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
 
@@ -21,7 +21,7 @@ type MyPostsPropsType = {
 export function MyPosts(props: MyPostsPropsType) {
 
     const onAddPostButton = () => {
-        props.newPostText.trim() && props.dispatch({type:"ADD-POST"});
+        props.newPostText.trim() && props.dispatch(addPostAC());
     };
     const onAddPostWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (!e.shiftKey && e.key === 'Enter') {
@@ -30,7 +30,8 @@ export function MyPosts(props: MyPostsPropsType) {
         }
     };
     const onUpdatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type:"UPDATE-NEW-POST-TEXT", newPostText:(e.currentTarget.value)});
+        props.dispatch(updateNewPostTextAC(e.currentTarget.value));
+
 
     };
 

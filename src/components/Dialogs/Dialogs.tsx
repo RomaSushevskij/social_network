@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {ActionsTypes, DialogsPageType} from "../../redux/store";
+import {ActionsTypes, addMessageAC, DialogsPageType, updateNewMessageTextAC} from "../../redux/store";
 import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
@@ -21,7 +21,7 @@ export function Dialogs(props: DialogsPropsType) {
 
 
     const onAddMessageButton = () => {
-        props.dispatch({type: "ADD-MESSAGE"});
+        props.dispatch(addMessageAC());
     };
     const onAddMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (!e.shiftKey && e.key === 'Enter') {
@@ -30,7 +30,7 @@ export function Dialogs(props: DialogsPropsType) {
         }
     };
     const onUpdateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newMessageText: (e.currentTarget.value)});
+        props.dispatch(updateNewMessageTextAC(e.currentTarget.value));
     };
 
     return (
