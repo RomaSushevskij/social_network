@@ -1,9 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Posts";
-import {ActionsTypes, addPostAC, PostsDataType, updateNewPostTextAC} from "../../../redux/store";
+import {ActionsTypes, PostsDataType} from "../../../redux/store";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer";
 
 export const BUTTON_STYLE = {
     BACKGROUND_HOVER: '#ffbf47',

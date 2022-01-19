@@ -13,43 +13,44 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar(props: any) {
-    let nav = <>
-        <nav className={styleModule.nav}>
-            <div className={styleModule.item}>
-                <NavLink to={'/profile'}
-                         className={profile => profile.isActive ? styleModule.active : ''}>
-                    <FontAwesomeIcon icon={faUserAlt} className={styleModule.icon}/> Profile
-                </NavLink>
-            </div>
-            <div className={styleModule.item}>
-                <NavLink to={'/dialogs'}
-                         className={dialogs => dialogs.isActive ? styleModule.active : ''}>
-                    <FontAwesomeIcon icon={faCommentDots} className={styleModule.icon}/> Messages
-                </NavLink>
-            </div>
-            <div className={styleModule.item}>
-                <NavLink to={'/news'} className={news => news.isActive ? styleModule.active : ''}>
-                    <FontAwesomeIcon icon={faNewspaper} className={styleModule.icon}/> News
-                </NavLink>
-            </div>
-            <div className={styleModule.item}>
-                <NavLink to={'/music'} className={music => music.isActive ? styleModule.active : ''}>
-                    <FontAwesomeIcon icon={faHeadphonesAlt} className={styleModule.icon}/> Music
-                </NavLink>
-            </div>
-            <div className={`${styleModule.item} ${styleModule.users}`}>
-                <NavLink to={'/users'} className={users => users.isActive ? styleModule.active : ''}>
-                    <FontAwesomeIcon icon={faUsers} className={styleModule.icon}/> Users
-                </NavLink>
-            </div>
-            <div className={`${styleModule.item} ${styleModule.settings}`}>
-                <NavLink to={'/settings'}
-                         className={settings => settings.isActive ? styleModule.active : ''}>
-                    <FontAwesomeIcon icon={faSlidersH} className={styleModule.icon}/> Settings
-                </NavLink>
-            </div>
+    return (
+        <>
+            <nav className={styleModule.nav}>
+                <div className={styleModule.item}>
+                    <NavLink to={'/profile'}
+                             className={profile => profile.isActive ? styleModule.active : ''}>
+                        <FontAwesomeIcon icon={faUserAlt} className={styleModule.icon}/> Profile
+                    </NavLink>
+                </div>
+                <div className={styleModule.item}>
+                    <NavLink to={'/dialogs'}
+                             className={dialogs => dialogs.isActive ? styleModule.active : ''}>
+                        <FontAwesomeIcon icon={faCommentDots} className={styleModule.icon}/> Messages
+                    </NavLink>
+                </div>
+                <div className={styleModule.item}>
+                    <NavLink to={'/news'} className={news => news.isActive ? styleModule.active : ''}>
+                        <FontAwesomeIcon icon={faNewspaper} className={styleModule.icon}/> News
+                    </NavLink>
+                </div>
+                <div className={styleModule.item}>
+                    <NavLink to={'/music'} className={music => music.isActive ? styleModule.active : ''}>
+                        <FontAwesomeIcon icon={faHeadphonesAlt} className={styleModule.icon}/> Music
+                    </NavLink>
+                </div>
+                <div className={`${styleModule.item} ${styleModule.users}`}>
+                    <NavLink to={'/users'} className={users => users.isActive ? styleModule.active : ''}>
+                        <FontAwesomeIcon icon={faUsers} className={styleModule.icon}/> Users
+                    </NavLink>
+                </div>
+                <div className={`${styleModule.item} ${styleModule.settings}`}>
+                    <NavLink to={'/settings'}
+                             className={settings => settings.isActive ? styleModule.active : ''}>
+                        <FontAwesomeIcon icon={faSlidersH} className={styleModule.icon}/> Settings
+                    </NavLink>
+                </div>
 
-        </nav>
-    </>;
-    return nav;
+            </nav>
+        </>
+    )
 };

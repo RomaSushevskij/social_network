@@ -2,10 +2,11 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {ActionsTypes, addMessageAC, DialogsPageType, updateNewMessageTextAC} from "../../redux/store";
+import {ActionsTypes,  DialogsPageType, } from "../../redux/store";
 import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
+import {addMessageAC, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
