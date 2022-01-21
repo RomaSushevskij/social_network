@@ -8,7 +8,7 @@ import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {Settings} from "./components/Settings/Settings";
-import {StoreType} from "./redux/store";
+import {StoreType} from "./redux/redux-store";
 import logo from './main-logo.png';
 
 
@@ -23,7 +23,7 @@ export type PATHType = {
     NEWS: string
     SETTINGS: string
 }
-const PATH = {
+const PATH: PATHType = {
     PROFILE: '/profile',
     DIALOGS: '/dialogs/*',
     MUSIC: '/music',
