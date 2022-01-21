@@ -20,6 +20,7 @@ export type DialogType = {
      */
     color?: string
 };
+/*
 export type MessageType = {
     id: number,
     name: string,
@@ -27,6 +28,7 @@ export type MessageType = {
     image: string | null,
     time: string
 };
+
 
 export type PostType = {
     id: number
@@ -153,4 +155,5 @@ export const store: StoreType = {
         this._callSubscriber();
     }
 };
+*/
 

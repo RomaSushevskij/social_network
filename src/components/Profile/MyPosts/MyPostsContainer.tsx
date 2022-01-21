@@ -1,6 +1,6 @@
 import React, {KeyboardEvent} from "react";
-import {ActionsTypes, PostsDataType} from "../../../redux/store";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer";
+import {ActionsTypes} from "../../../redux/redux-store";
+import {PostsDataType, addPostAC, removePostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer";
 import {MyPosts} from "./MyPosts";
 
 type MyPostsContainerPropsType = {
@@ -20,10 +20,11 @@ export function MyPostsContainer(props: MyPostsContainerPropsType) {
             addPost()
         }
     };
-    const updatePostText = (newPostText:string) => {
+    const updatePostText = (newPostText: string) => {
         props.dispatch(updateNewPostTextAC(newPostText));
-
-
+    };
+    const removePost = (id: number) => {
+        props.dispatch(removePostAC(id))
     };
 
     return (
@@ -31,7 +32,8 @@ export function MyPostsContainer(props: MyPostsContainerPropsType) {
                  newPostText={props.newPostText}
                  addPost={addPost}
                  addPostWithEnter={addPostWithEnter}
-                 updatePostText={updatePostText} />
+                 updatePostText={updatePostText}
+                 removePost={removePost}/>
 
     )
         ;

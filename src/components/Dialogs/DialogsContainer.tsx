@@ -1,6 +1,6 @@
 import React, {KeyboardEvent} from "react";
-import {ActionsTypes, DialogsPageType,} from "../../redux/store";
-import {addMessageAC, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer";
+import {ActionsTypes} from "../../redux/redux-store";
+import {DialogsPageType, addMessageAC, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer";
 import {Dialogs} from "./Dialogs";
 
 export type DialogsContainerPropsType = {

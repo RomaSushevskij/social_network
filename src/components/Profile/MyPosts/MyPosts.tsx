@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Post";
-import {PostsDataType} from "../../../redux/store";
+import {PostsDataType} from "../../../redux/redusers/profileReducer";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
 
@@ -22,6 +22,7 @@ type MyPostsPropsType = {
     addPost: () => void
     addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>) => any
     updatePostText: (newPostText:string) => any
+    removePost:(id:number) => void
 }
 
 export function MyPosts(props: MyPostsPropsType) {
@@ -60,6 +61,7 @@ export function MyPosts(props: MyPostsPropsType) {
                 {props.postsData.map(post => <Post key={post.id}
                                                    background={POST_STYLE.background}
                                                    color={POST_STYLE.color}
+                                                   removePost={props.removePost}
                                                    {...post}/>)}
             </div>
         </div>

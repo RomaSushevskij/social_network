@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {DialogsPageType,} from "../../redux/store";
+import {DialogsPageType} from "../../redux/redusers/dialogsReducer";
 import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";

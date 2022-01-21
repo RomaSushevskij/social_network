@@ -8,6 +8,7 @@
 
 .postWrapper .avaBlock {
     display: flex;
+    position: relative;
 }
 .postWrapper .avaBlock img {
     width: 50px;
@@ -24,4 +25,15 @@
 .postWrapper .messageBlock {
     margin: 10px 0;
 }
-
+.removePost {
+    position: absolute;
+    top:0;
+    right: 0;
+    padding: 5px;
+    transition: .4s ease;
+}
+.removePost:hover {
+    color: #ffbf47;
+    cursor: pointer;
+    transition: .4s ease;
+}

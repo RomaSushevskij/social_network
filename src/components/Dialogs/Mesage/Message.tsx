@@ -1,6 +1,5 @@
 import React from "react";
 import styleModule from './Message.module.css';
-import {MessageType} from "../../../redux/store";
 import messageAva from '../../../usersAvatars/user.png'
 import styled from "styled-components";
 

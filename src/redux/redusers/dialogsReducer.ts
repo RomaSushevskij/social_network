@@ -34,13 +34,13 @@ export type MessageType = {
 export type DialogsDataType = Array<DialogType>
 export type MessagesDataType = Array<MessageType>
 
-export type DialogsPageActionsTypes = ActionsTypes
-
-export type InitialStateType = {
+export type DialogsPageType = {
     dialogsData: DialogsDataType
     messagesData: MessagesDataType
     newMessageText: string
 }
+
+export type InitialStateType = DialogsPageType;
 
 const initialState: InitialStateType = {
     dialogsData: [
@@ -79,7 +79,7 @@ const initialState: InitialStateType = {
     newMessageText: ''
 };
 
-export const dialogsReducer = (state = initialState, action: DialogsPageActionsTypes): InitialStateType => {
+export const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessage: MessageType = {

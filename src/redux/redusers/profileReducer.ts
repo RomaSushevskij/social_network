@@ -1,8 +1,8 @@
-import {addMessageAC, updateNewMessageTextAC} from "./dialogsReducer";
 import {ActionsTypes} from "../redux-store";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const REMOVE_POST = 'REMOVE-POST';
 
 export type PostType = {
     id: number
@@ -18,7 +18,6 @@ export type ProfilePageType = {
     postsData: PostsDataType,
     newPostText: string
 }
-export type ProfilePageActionsTypes = ActionsTypes
 
 export type InitialStateType = ProfilePageType
 
@@ -50,7 +49,8 @@ const initialState: InitialStateType = {
     newPostText: ''
 };
 
-export const profileReducer = (state = initialState, action: ProfilePageActionsTypes): InitialStateType => {
+export const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
+    debugger
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {
@@ -66,6 +66,10 @@ export const profileReducer = (state = initialState, action: ProfilePageActionsT
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.newPostText;
             return state;
+        case REMOVE_POST:
+            return (
+                {...state, postsData: state.postsData.filter(p => p.id !== action.id)}
+            );
         default:
             return state
     }
@@ -76,3 +80,4 @@ export const updateNewPostTextAC = (newPostText: string) => ({
     type: UPDATE_NEW_POST_TEXT,
     newPostText
 } as const);
+export const removePostAC = (id: number) => ({type: REMOVE_POST, id} as const);
