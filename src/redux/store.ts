@@ -3,8 +3,22 @@ import {dialogsReducer, addMessageAC, updateNewMessageTextAC} from "./redusers/d
 
 export type DialogType = {
     id: number
+    /**
+     * Name of contact/friend
+     */
     name: string
+    /**
+     * Image of contact/friend
+     */
     image: string | null
+    /**
+     * Optional background color of component
+     */
+    background?: string
+    /**
+     * Optional color text of component
+     */
+    color?: string
 };
 export type MessageType = {
     id: number,
@@ -16,9 +30,12 @@ export type MessageType = {
 
 export type PostType = {
     id: number
+    name: string
     message: string
     likeCount: number
     image: string | null
+    background?: string
+    color?: string
 }
 
 export type DialogsDataType = Array<DialogType>
@@ -71,7 +88,7 @@ export const store: StoreType = {
                     name: 'Aleksey',
                     image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
                 },
-                {id: 4, name: 'Mira', image: null},
+                {id: 4, name: 'Ivan', image: null},
                 {id: 5, name: 'Mother', image: null}
             ],
             messagesData: [
@@ -85,7 +102,7 @@ export const store: StoreType = {
                 {id: 2, name: 'Dmitry', message: 'Hi, how are you?', image: null, time: '13:01'},
                 {
                     id: 3,
-                    name: 'Mira',
+                    name: 'Ivan',
                     message: 'Yo',
                     image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
                     time: '13:08'
@@ -98,14 +115,22 @@ export const store: StoreType = {
             postsData: [
                 {
                     id: 1,
-                    message: "Hi, how are you?",
+                    name: 'Ruslan',
+                    message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, eum.',
                     likeCount: 9,
                     image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album'
                 },
-                {id: 2, message: "Hi, it's my first post", likeCount: 3, image: null},
+                {
+                    id: 2,
+                    name: 'Mariya',
+                    message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur cumque harum illo inventore maiores minus mollitia, quaerat quis rem voluptatibus.',
+                    likeCount: 3,
+                    image: null
+                },
                 {
                     id: 3,
-                    message: "hello",
+                    name: 'Ivan',
+                    message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis est, et labore laborum nemo nisi.',
                     likeCount: 87,
                     image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
                 }

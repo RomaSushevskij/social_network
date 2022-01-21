@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {ActionsTypes,  DialogsPageType, } from "../../redux/store";
+import {ActionsTypes, DialogsPageType,} from "../../redux/store";
 import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
@@ -16,7 +16,11 @@ export type DialogsPropsType = {
 const MESSAGE_STYLE = {
     background: '#ffffff',
     color: '#757575'
-}
+};
+const DIALOG_STYLE = {
+    background: 'inherit',
+    color: '#ffffff'
+};
 
 export function Dialogs(props: DialogsPropsType) {
 
@@ -40,13 +44,16 @@ export function Dialogs(props: DialogsPropsType) {
                 DIALOGS
             </div>
             <div className={styleModule.dialogs_items}>
-                {props.dialogsPage.dialogsData.map(dialog => <Dialog key={dialog.id} {...dialog}/>)}
+                {props.dialogsPage.dialogsData.map(dialog => <Dialog key={dialog.id}
+                                                                     background={DIALOG_STYLE.background}
+                                                                     color={DIALOG_STYLE.color}
+                                                                     {...dialog}/>)}
             </div>
             <div className={styleModule.messagesBlock}>
                 <div className={styleModule.messages}>
-                    {props.dialogsPage.messagesData.map(message => <Message background={MESSAGE_STYLE.background}
+                    {props.dialogsPage.messagesData.map(message => <Message key={message.id}
+                                                                            background={MESSAGE_STYLE.background}
                                                                             color={MESSAGE_STYLE.color}
-                                                                            key={message.id}
                                                                             {...message}/>)}
                 </div>
                 <div className={styleModule.writeAndSendMessage}>

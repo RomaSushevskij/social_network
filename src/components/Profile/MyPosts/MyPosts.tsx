@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styleModule from './MyPosts.module.css'
-import {Post} from "./Posts/Posts";
+import {Post} from "./Posts/Post";
 import {ActionsTypes, PostsDataType} from "../../../redux/store";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
@@ -10,6 +10,10 @@ export const BUTTON_STYLE = {
     BACKGROUND_HOVER: '#ffbf47',
     BACKGROUND: '#ffe1a9',
     COLOR_HOVER: '#ffffff'
+};
+export const POST_STYLE = {
+    background: 'inherit',
+    color: '#ffffff'
 };
 
 
@@ -57,7 +61,10 @@ export function MyPosts(props: MyPostsPropsType) {
                 </div>
             </div>
             <div className={styleModule.posts}>
-                {props.postsData.map(post => <Post key={post.id} {...post}/>)}
+                {props.postsData.map(post => <Post key={post.id}
+                                                   background={POST_STYLE.background}
+                                                   color={POST_STYLE.color}
+                                                   {...post}/>)}
             </div>
         </div>
 
