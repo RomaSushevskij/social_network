@@ -2,15 +2,16 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {ActionsTypes, DialogsPageType,} from "../../redux/store";
+import {DialogsPageType,} from "../../redux/store";
 import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
-import {addMessageAC, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    dispatch: (action: ActionsTypes) => void
+    addMessage: () => void
+    addMessageWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>) => void
+    updateNewMessageText: (newMessageText: string) => void
 }
 
 const MESSAGE_STYLE = {
@@ -26,16 +27,13 @@ export function Dialogs(props: DialogsPropsType) {
 
 
     const onAddMessageButton = () => {
-        props.dispatch(addMessageAC());
+        props.addMessage();
     };
     const onAddMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (!e.shiftKey && e.key === 'Enter') {
-            e.preventDefault();
-            onAddMessageButton()
-        }
+        props.addMessageWithEnter(e)
     };
     const onUpdateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageTextAC(e.currentTarget.value));
+        props.updateNewMessageText(e.currentTarget.value)
     };
 
     return (

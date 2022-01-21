@@ -1,10 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Post";
-import {ActionsTypes, PostsDataType} from "../../../redux/store";
+import {PostsDataType} from "../../../redux/store";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer";
 
 export const BUTTON_STYLE = {
     BACKGROUND_HOVER: '#ffbf47',
@@ -20,24 +19,21 @@ export const POST_STYLE = {
 type MyPostsPropsType = {
     postsData: PostsDataType
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    addPost: () => void
+    addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>) => any
+    updatePostText: (newPostText:string) => any
 }
 
 export function MyPosts(props: MyPostsPropsType) {
 
     const onAddPostButton = () => {
-        props.newPostText.trim() && props.dispatch(addPostAC());
+        props.addPost();
     };
     const onAddPostWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (!e.shiftKey && e.key === 'Enter') {
-            e.preventDefault();
-            onAddPostButton()
-        }
+        props.addPostWithEnter(e);
     };
     const onUpdatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextAC(e.currentTarget.value));
-
-
+        props.updatePostText(e.currentTarget.value);
     };
 
     return (

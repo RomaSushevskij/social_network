@@ -10,6 +10,7 @@ import {News} from "./components/News/News";
 import {Settings} from "./components/Settings/Settings";
 import {StoreType} from "./redux/redux-store";
 import logo from './main-logo.png';
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
 export type AppPropsType = {
@@ -52,7 +53,7 @@ function App({store, ...restProps}: AppPropsType) {
                         <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
                         <Route path={PATH.PROFILE} element={<Profile profilePage={store.getState().profilePage}
                                                                      dispatch={store.dispatch.bind(store)}/>}/>
-                        <Route path={PATH.DIALOGS} element={<Dialogs dialogsPage={store.getState().dialogsPage}
+                        <Route path={PATH.DIALOGS} element={<DialogsContainer dialogsPage={store.getState().dialogsPage}
                                                                      dispatch={store.dispatch.bind(store)}
                         />}/>
                         <Route path={PATH.MUSIC} element={<Music/>}/>

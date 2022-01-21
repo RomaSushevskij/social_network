@@ -13,10 +13,9 @@
     margin-left: 10px;
     border-radius:15px;
     position: relative;
-    color: black;
     letter-spacing: .05em;
     word-wrap: break-word;
-    box-shadow: 0 0 20px rgba(0,0,0, .5);
+    box-shadow: 5px 7px 15px -9px #000000;
 }
 .messageBlock:before {
     content: "";
@@ -26,6 +25,7 @@
     width: 50px;
     height: 27px;
     background: radial-gradient(circle at top left, transparent 50%, #ffffff 50%);
+    box-shadow: 0px 7px 10px -9px #000000;
 }
 .messageBlock .name {
     font-weight: bold;
@@ -42,9 +42,8 @@
     width: 50px;
     height: 50px;
     align-self: flex-end;
-    border:2px solid #fff;
+    border:1px solid #fff;
     border-radius: 50%;
-    box-shadow: 0 0 20px rgba(0,0,0, .5);
 }
 .avatar img {
     width: 100%;
