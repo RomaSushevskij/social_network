@@ -1,7 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Post";
-import {PostType} from "../../../redux/redusers/profileReducer";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
 import {MyPostsPropsType} from "./MyPostsContainer";
@@ -26,7 +25,7 @@ export function MyPosts(props: MyPostsPropsType) {
         props.addPostWithEnter(e, props.newPostText);
     };
     const onUpdatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updatePostText(e.currentTarget.value);
+        props.updateNewPostText(e.currentTarget.value);
     };
 
 
@@ -53,6 +52,7 @@ export function MyPosts(props: MyPostsPropsType) {
             <div className={styleModule.posts}>
                 {props.postsData.map(post =>
                     <Post
+                        key={post.id}
                         background={POST_STYLE.background}
                         color={POST_STYLE.color}
                         removePost={props.removePost}
@@ -60,6 +60,5 @@ export function MyPosts(props: MyPostsPropsType) {
                 )}
             </div>
         </div>
-
     );
-};
+}

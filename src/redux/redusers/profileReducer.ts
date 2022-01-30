@@ -53,12 +53,9 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 likeCount: 0,
                 image: null
             };
-            state.postsData.push(newPost);
-            state.newPostText = '';
-            return state;
+            return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.payload.newPostText;
-            return state;
+            return {...state, newPostText: action.payload.newPostText}
         case REMOVE_POST:
             return (
                 {...state, postsData: state.postsData.filter(p => p.id !== action.payload.id)}

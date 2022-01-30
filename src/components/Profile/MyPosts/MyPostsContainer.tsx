@@ -14,7 +14,7 @@ export type MapStateToPropsType = {
 export type MapDispatchToPropsType = {
     addPost: (newPostText: string) => void
     addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newPostText: string) => void
-    updatePostText: (newPostText: string) => void
+    updateNewPostText: (newPostText: string) => void
     removePost: (id: number) => void
 }
 
@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
                 newPostText.trim() && dispatch(addPostAC())
             }
         },
-        updatePostText: (newPostText: string) => {
+        updateNewPostText: (newPostText: string) => {
             dispatch(updateNewPostTextAC(newPostText));
         },
         removePost: (id: number) => {

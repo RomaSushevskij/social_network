@@ -80,12 +80,9 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
                 time: new Date().toJSON().slice(11, 16)
 
             };
-            state.messagesData.push(newMessage);
-            state.newMessageText = '';
-            return state;
+            return {...state, messagesData: [...state.messagesData, newMessage], newMessageText: ''}
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.payload.newMessageText;
-            return state;
+            return {...state, newMessageText: action.payload.newMessageText}
         default:
             return state
     }

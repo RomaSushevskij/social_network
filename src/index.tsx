@@ -6,15 +6,12 @@ import {store} from "./redux/redux-store";
 import {Provider} from "react-redux";
 
 
-const rerenderIntireTree = () => {
-    ReactDOM.render(
-        <Provider store={store}>
-            <App store={store}/>
-        </Provider>,
-        document.getElementById('root')
-    );
-};
-store.subscribe(rerenderIntireTree);
-rerenderIntireTree();
+ReactDOM.render(
+    <Provider store={store}>
+        <App store={store}/>
+    </Provider>,
+    document.getElementById('root')
+);
+
 
 
