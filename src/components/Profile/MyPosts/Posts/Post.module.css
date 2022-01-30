@@ -1,8 +1,8 @@
 .postWrapper {
     color: white;
     padding: 15px;
-    max-width: 400px;
-    word-break: break-all;
+    max-width: 50%;
+    word-break: break-word;
     box-shadow: 0px 7px 10px -9px #000000;
 }
 
@@ -24,6 +24,7 @@
 }
 .postWrapper .messageBlock {
     margin: 10px 0;
+    hyphens:auto;
 }
 .removePost {
     position: absolute;

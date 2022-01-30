@@ -1,7 +1,7 @@
 import {profileReducer, addPostAC, updateNewPostTextAC} from "./redusers/profileReducer";
 import {dialogsReducer, addMessageAC, updateNewMessageTextAC} from "./redusers/dialogsReducer";
 
-export type DialogType = {
+type DialogType = {
     id: number
     /**
      * Name of contact/friend
@@ -20,8 +20,7 @@ export type DialogType = {
      */
     color?: string
 };
-/*
-export type MessageType = {
+type MessageType = {
     id: number,
     name: string,
     message: string,
@@ -30,7 +29,7 @@ export type MessageType = {
 };
 
 
-export type PostType = {
+type PostType = {
     id: number
     name: string
     message: string
@@ -40,33 +39,33 @@ export type PostType = {
     color?: string
 }
 
-export type DialogsDataType = Array<DialogType>
-export type MessagesDataType = Array<MessageType>
-export type PostsDataType = Array<PostType>
+type DialogsDataType = Array<DialogType>
+type MessagesDataType = Array<MessageType>
+type PostsDataType = Array<PostType>
 
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogsData: DialogsDataType
     messagesData: MessagesDataType
     newMessageText: string
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     postsData: PostsDataType,
     newPostText: string
 }
 
-export type StateType = {
+type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
 }
 
-export type ActionsTypes =
+type ActionsTypes =
     ReturnType<typeof addPostAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC>
 
 
-export type StoreType = {
+type StoreType = {
     _state: StateType
     getState: () => StateType
     _callSubscriber: () => void
@@ -75,7 +74,7 @@ export type StoreType = {
 }
 
 
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         dialogsPage: {
             dialogsData: [
@@ -155,5 +154,4 @@ export const store: StoreType = {
         this._callSubscriber();
     }
 };
-*/
 

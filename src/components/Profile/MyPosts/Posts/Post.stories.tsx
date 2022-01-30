@@ -2,6 +2,7 @@ import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {Post} from './Post';
+import {action} from "@storybook/addon-actions";
 
 const getCategoryObj = (categoryName: 'Colors' | 'Events' | 'Main') => {
     return ({
@@ -26,7 +27,7 @@ export default {
             defaultValue: '#ffffff'
         },
         name: {
-            defaultValue:'Roman Sushevskij',
+            defaultValue: 'Roman Sushevskij',
             ...getCategoryObj('Main')
         },
         image: {
@@ -47,9 +48,13 @@ export default {
 
 } as ComponentMeta<typeof Post>;
 
+const onRemovePost = (id:number) => {
+    alert(`post with id ${id} was removed`)
+}
+
 const Template: ComponentStory<typeof Post> = (args) => {
     return (
-            <Post {...args} />
+        <Post {...args} />
     )
 }
 
@@ -59,7 +64,8 @@ PostSomeone.args = {
     name: 'Sushevskij Roman',
     message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur dicta dignissimos magni quae rem temporibus.',
     likeCount: 199,
-    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
+    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png',
+    removePost: onRemovePost
 };
 
 

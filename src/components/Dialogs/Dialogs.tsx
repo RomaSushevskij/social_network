@@ -2,17 +2,11 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {DialogsPageType} from "../../redux/redusers/dialogsReducer";
 import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
+import {DialogsPropsType} from "./DialogsContainer";
 
-export type DialogsPropsType = {
-    dialogsPage: DialogsPageType
-    addMessage: () => void
-    addMessageWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>) => void
-    updateNewMessageText: (newMessageText: string) => void
-}
 
 const MESSAGE_STYLE = {
     background: '#ffffff',
@@ -27,10 +21,10 @@ export function Dialogs(props: DialogsPropsType) {
 
 
     const onAddMessageButton = () => {
-        props.addMessage();
+        props.addMessage(props.dialogsPage.newMessageText);
     };
     const onAddMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        props.addMessageWithEnter(e)
+        props.addMessageWithEnter(e, props.dialogsPage.newMessageText)
     };
     const onUpdateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageText(e.currentTarget.value)
@@ -65,7 +59,7 @@ export function Dialogs(props: DialogsPropsType) {
 
                     </div>
                     <Button name={'Send'}
-                            callback={onAddMessageButton}
+                            onClick={onAddMessageButton}
                             backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
                             background={BUTTON_STYLE.BACKGROUND}
                             colorHover={BUTTON_STYLE.COLOR_HOVER}/>

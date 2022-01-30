@@ -30,19 +30,9 @@ export type MessageType = {
     image: string | null,
     time: string
 };
+export type InitialStateType = typeof initialState
 
-export type DialogsDataType = Array<DialogType>
-export type MessagesDataType = Array<MessageType>
-
-export type DialogsPageType = {
-    dialogsData: DialogsDataType
-    messagesData: MessagesDataType
-    newMessageText: string
-}
-
-export type InitialStateType = DialogsPageType;
-
-const initialState: InitialStateType = {
+const initialState = {
     dialogsData: [
         {
             id: 1,
@@ -57,7 +47,7 @@ const initialState: InitialStateType = {
         },
         {id: 4, name: 'Ivan', image: null},
         {id: 5, name: 'Mother', image: null}
-    ],
+    ] as Array<DialogType>,
     messagesData: [
         {
             id: 1,
@@ -75,11 +65,11 @@ const initialState: InitialStateType = {
             time: '13:08'
         },
         {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05'}
-    ],
+    ] as Array<MessageType>,
     newMessageText: ''
 };
 
-export const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
+export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessage: MessageType = {
@@ -94,7 +84,7 @@ export const dialogsReducer = (state = initialState, action: ActionsTypes): Init
             state.newMessageText = '';
             return state;
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newMessageText;
+            state.newMessageText = action.payload.newMessageText;
             return state;
         default:
             return state
@@ -104,5 +94,5 @@ export const dialogsReducer = (state = initialState, action: ActionsTypes): Init
 export const addMessageAC = () => ({type: ADD_MESSAGE} as const);
 export const updateNewMessageTextAC = (newMessageText: string) => ({
     type: UPDATE_NEW_MESSAGE_TEXT,
-    newMessageText
+    payload: {newMessageText}
 } as const);

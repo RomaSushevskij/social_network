@@ -13,16 +13,10 @@ export type PostType = {
     background?: string
     color?: string
 }
-export type PostsDataType = Array<PostType>
-export type ProfilePageType = {
-    postsData: PostsDataType,
-    newPostText: string
-}
-
-export type InitialStateType = ProfilePageType
+export type InitialStateType = typeof initialState
 
 
-const initialState: InitialStateType = {
+const initialState = {
     postsData: [
         {
             id: 1,
@@ -45,12 +39,11 @@ const initialState: InitialStateType = {
             likeCount: 87,
             image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
         }
-    ],
+    ] as Array<PostType>,
     newPostText: ''
 };
 
-export const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
-    debugger
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {
@@ -64,11 +57,11 @@ export const profileReducer = (state = initialState, action: ActionsTypes): Init
             state.newPostText = '';
             return state;
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newPostText;
+            state.newPostText = action.payload.newPostText;
             return state;
         case REMOVE_POST:
             return (
-                {...state, postsData: state.postsData.filter(p => p.id !== action.id)}
+                {...state, postsData: state.postsData.filter(p => p.id !== action.payload.id)}
             );
         default:
             return state
@@ -78,6 +71,6 @@ export const profileReducer = (state = initialState, action: ActionsTypes): Init
 export const addPostAC = () => ({type: ADD_POST} as const);
 export const updateNewPostTextAC = (newPostText: string) => ({
     type: UPDATE_NEW_POST_TEXT,
-    newPostText
+    payload: {newPostText}
 } as const);
-export const removePostAC = (id: number) => ({type: REMOVE_POST, id} as const);
+export const removePostAC = (id: number) => ({type: REMOVE_POST, payload: {id}} as const);

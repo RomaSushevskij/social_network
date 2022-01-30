@@ -35,7 +35,7 @@ export default {
             control: 'color',
             defaultValue: '#ffffff'
         },
-        callback: {
+        onClick: {
             ...getCategoryObj('Main')
         }
     },
@@ -49,7 +49,7 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 export const AddButton = Template.bind({});
 AddButton.args = {
     name: 'Add post',
-    callback: onAddButtonClick,
+    onClick: onAddButtonClick,
     background: '#ffe1a9',
     backgroundHover: '#ffbf47',
     colorHover: '#ffffff'
@@ -57,7 +57,7 @@ AddButton.args = {
 export const SendButton = Template.bind({});
 SendButton.args = {
     name: 'Send',
-    callback: onSendButtonClick,
+    onClick: onSendButtonClick,
     background: '#ffffff',
     backgroundHover: 'tomato'
 };

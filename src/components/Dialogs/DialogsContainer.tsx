@@ -1,35 +1,43 @@
 import React, {KeyboardEvent} from "react";
-import {ActionsTypes} from "../../redux/redux-store";
-import {DialogsPageType, addMessageAC, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer";
+import {AppStateType} from "../../redux/redux-store";
+import {addMessageAC, InitialStateType, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer";
 import {Dialogs} from "./Dialogs";
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
 
-export type DialogsContainerPropsType = {
-    dialogsPage: DialogsPageType
-    dispatch: (action: ActionsTypes) => void
+export type MapStateToPropsType = {
+    dialogsPage: InitialStateType
 }
 
+export type MapDispatchToPropsType = {
+    addMessage: (newMessageText: string) => void
+    addMessageWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newMessageText: string) => void
+    updateNewMessageText: (newMessageText: string) => void
+}
 
-export function DialogsContainer(props: DialogsContainerPropsType) {
+export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-
-    const addMessage = () => {
-        props.dispatch(addMessageAC());
-    };
-    const addMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (!e.shiftKey && e.key === 'Enter') {
-            e.preventDefault();
-            addMessage()
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        dialogsPage: state.dialogsPage
+    }
+}
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        addMessage: (newMessageText: string) => {
+            newMessageText.trim() && dispatch(addMessageAC())
+        },
+        addMessageWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newMessageText: string) => {
+            if (!e.shiftKey && e.key === 'Enter') {
+                e.preventDefault()
+                newMessageText.trim() && dispatch(addMessageAC())
+            }
+        },
+        updateNewMessageText: (newMessageText: string) => {
+            dispatch(updateNewMessageTextAC(newMessageText));
         }
-    };
-    const updateNewMessageText = (newMessageText: string) => {
-        props.dispatch(updateNewMessageTextAC(newMessageText));
-    };
-
-    return (
-        <Dialogs dialogsPage={props.dialogsPage}
-                 addMessage={addMessage}
-                 addMessageWithEnter={addMessageWithEnter}
-                 updateNewMessageText={updateNewMessageText}/>
-    );
+    }
 }
+
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 

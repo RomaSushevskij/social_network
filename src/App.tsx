@@ -3,7 +3,6 @@ import './App.css';
 import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
-import {Dialogs} from "./components/Dialogs/Dialogs";
 import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
@@ -53,9 +52,7 @@ function App({store, ...restProps}: AppPropsType) {
                         <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
                         <Route path={PATH.PROFILE} element={<Profile profilePage={store.getState().profilePage}
                                                                      dispatch={store.dispatch.bind(store)}/>}/>
-                        <Route path={PATH.DIALOGS} element={<DialogsContainer dialogsPage={store.getState().dialogsPage}
-                                                                     dispatch={store.dispatch.bind(store)}
-                        />}/>
+                        <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
                         <Route path={PATH.MUSIC} element={<Music/>}/>
                         <Route path={PATH.NEWS} element={<News/>}/>
                         <Route path={PATH.SETTINGS} element={<Settings/>}/>

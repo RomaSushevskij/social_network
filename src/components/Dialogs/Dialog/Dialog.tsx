@@ -2,7 +2,7 @@ import React from "react";
 import styleModule from './Dialog.module.css';
 import {NavLink} from "react-router-dom";
 import userLogo from '../../../usersAvatars/user.png'
-import {DialogType} from "../../../redux/store";
+import {DialogType} from "./../../../redux/redusers/dialogsReducer";
 import styled from "styled-components";
 
 export type DialogPropsType = DialogType

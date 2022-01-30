@@ -1,40 +1,50 @@
 import React, {KeyboardEvent} from "react";
-import {ActionsTypes} from "../../../redux/redux-store";
-import {PostsDataType, addPostAC, removePostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer";
+import {AppStateType} from "../../../redux/redux-store";
+import {addPostAC, PostType, removePostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer";
 import {MyPosts} from "./MyPosts";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
 
-type MyPostsContainerPropsType = {
-    postsData: PostsDataType
+
+export type MapStateToPropsType = {
+    postsData: PostType[]
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
 }
 
-export function MyPostsContainer(props: MyPostsContainerPropsType) {
+export type MapDispatchToPropsType = {
+    addPost: (newPostText: string) => void
+    addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newPostText: string) => void
+    updatePostText: (newPostText: string) => void
+    removePost: (id: number) => void
+}
 
-    const addPost = () => {
-        props.newPostText.trim() && props.dispatch(addPostAC());
-    };
-    const addPostWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (!e.shiftKey && e.key === 'Enter') {
-            e.preventDefault();
-            addPost()
+export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        postsData: state.profilePage.postsData,
+        newPostText: state.profilePage.newPostText
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        addPost: (newPostText: string) => {
+            newPostText.trim() && dispatch(addPostAC())
+        },
+        addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newPostText: string) => {
+            if (!e.shiftKey && e.key === 'Enter') {
+                e.preventDefault();
+                newPostText.trim() && dispatch(addPostAC())
+            }
+        },
+        updatePostText: (newPostText: string) => {
+            dispatch(updateNewPostTextAC(newPostText));
+        },
+        removePost: (id: number) => {
+            dispatch(removePostAC(id))
         }
-    };
-    const updatePostText = (newPostText: string) => {
-        props.dispatch(updateNewPostTextAC(newPostText));
-    };
-    const removePost = (id: number) => {
-        props.dispatch(removePostAC(id))
-    };
+    }
+}
 
-    return (
-        <MyPosts postsData={props.postsData}
-                 newPostText={props.newPostText}
-                 addPost={addPost}
-                 addPostWithEnter={addPostWithEnter}
-                 updatePostText={updatePostText}
-                 removePost={removePost}/>
-
-    )
-        ;
-};
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);

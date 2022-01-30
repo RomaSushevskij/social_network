@@ -7,7 +7,7 @@ import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
-type PostPropsType = PostType & {removePost: (id: number) => void};
+type PostPropsType = PostType & { removePost: (id: number) => void };
 
 export function Post({
                          id,

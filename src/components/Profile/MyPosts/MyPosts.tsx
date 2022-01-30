@@ -1,9 +1,11 @@
-import React, {ChangeEvent, KeyboardEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Post";
-import {PostsDataType} from "../../../redux/redusers/profileReducer";
+import {PostType} from "../../../redux/redusers/profileReducer";
 import {Button} from "../../generic/Button/Button";
 import {Textarea} from "../../generic/Textarea/Textarea";
+import {MyPostsPropsType} from "./MyPostsContainer";
+
 
 export const BUTTON_STYLE = {
     BACKGROUND_HOVER: '#ffbf47',
@@ -15,27 +17,18 @@ export const POST_STYLE = {
     color: '#ffffff'
 };
 
-
-type MyPostsPropsType = {
-    postsData: PostsDataType
-    newPostText: string
-    addPost: () => void
-    addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>) => any
-    updatePostText: (newPostText:string) => any
-    removePost:(id:number) => void
-}
-
 export function MyPosts(props: MyPostsPropsType) {
 
     const onAddPostButton = () => {
-        props.addPost();
+        props.addPost(props.newPostText);
     };
     const onAddPostWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        props.addPostWithEnter(e);
+        props.addPostWithEnter(e, props.newPostText);
     };
     const onUpdatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updatePostText(e.currentTarget.value);
     };
+
 
     return (
         <div className={styleModule.myPosts}>
@@ -51,21 +44,22 @@ export function MyPosts(props: MyPostsPropsType) {
                 </div>
                 <div className={styleModule.addPostButton}>
                     <Button name={'Add post'}
-                            callback={onAddPostButton}
+                            onClick={onAddPostButton}
                             backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
                             background={BUTTON_STYLE.BACKGROUND}
                             colorHover={BUTTON_STYLE.COLOR_HOVER}/>
                 </div>
             </div>
             <div className={styleModule.posts}>
-                {props.postsData.map(post => <Post key={post.id}
-                                                   background={POST_STYLE.background}
-                                                   color={POST_STYLE.color}
-                                                   removePost={props.removePost}
-                                                   {...post}/>)}
+                {props.postsData.map(post =>
+                    <Post
+                        background={POST_STYLE.background}
+                        color={POST_STYLE.color}
+                        removePost={props.removePost}
+                        {...post}/>
+                )}
             </div>
         </div>
 
-    )
-        ;
+    );
 };

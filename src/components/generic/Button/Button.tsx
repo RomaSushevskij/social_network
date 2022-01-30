@@ -4,14 +4,14 @@ import styled from "styled-components";
 
 type ButtonPropsType = {
     name: string
-    callback: () => void
+    onClick: () => void
     backgroundHover: string
     background: string
     colorHover: string
 }
 
 
-export const Button = ({name, callback, ...props}: ButtonPropsType) => {
+export const Button = ({name, onClick, ...props}: ButtonPropsType) => {
     const ButtonWithBefore = styled.button`
 & {
 border-color: ${props.backgroundHover};
@@ -27,7 +27,7 @@ color: ${props.colorHover}
 `;
 
     const onClickButton = () => {
-        callback()
+        onClick()
     };
 
     return (

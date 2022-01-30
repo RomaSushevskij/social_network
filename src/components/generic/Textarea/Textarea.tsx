@@ -1,4 +1,4 @@
-import React, {ChangeEvent, LegacyRef, KeyboardEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent, LegacyRef} from "react";
 import style from './Textarea.module.css'
 
 type TextareaPropsType = {
@@ -22,7 +22,7 @@ export const Textarea = ({
                              ...restProps
                          }: TextareaPropsType) => {
     const styles = {
-        background:background,
+        background: background,
         color: color
     };
     return (
@@ -33,6 +33,6 @@ export const Textarea = ({
                   value={textareaValue}
                   ref={reference}
                   style={styles}
-                  />
+        />
     )
 };
