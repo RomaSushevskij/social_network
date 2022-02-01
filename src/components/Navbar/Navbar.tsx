@@ -12,7 +12,7 @@ import {
     faUsers
 } from "@fortawesome/free-solid-svg-icons";
 
-export function Navbar(props: any) {
+export const Navbar = React.memo(() => {
     return (
         <>
             <nav className={styleModule.nav}>
@@ -53,4 +53,4 @@ export function Navbar(props: any) {
             </nav>
         </>
     )
-};
+})

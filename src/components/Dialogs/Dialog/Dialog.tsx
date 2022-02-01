@@ -7,13 +7,13 @@ import styled from "styled-components";
 
 export type DialogPropsType = DialogType
 
-export function Dialog({
+export const Dialog = React.memo(({
                            id,
                            name,
                            image,
                            background,
                            color, ...props
-                       }: DialogPropsType) {
+                       }: DialogPropsType) => {
     const DialogWrapper = styled.div`
     & {
     background: ${background ? background : '#FF6347'};
@@ -37,5 +37,5 @@ export function Dialog({
             <NavLink to={`/dialogs/ ${id}`}>{name}</NavLink>
         </DialogWrapper>
     )
-}
+})
 

@@ -11,7 +11,7 @@ type TextareaPropsType = {
     color: string
 }
 
-export const Textarea = ({
+export const Textarea = React.memo(({
                              textareaValue,
                              setTextareaValue,
                              reference,
@@ -35,4 +35,4 @@ export const Textarea = ({
                   style={styles}
         />
     )
-};
+})

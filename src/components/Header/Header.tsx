@@ -10,13 +10,13 @@ export type HeaderPropsType = {
     logo?: string
 }
 
-export function Header({
+export const Header = React.memo(({
                            title,
                            description,
                            background,
                            color,
                            logo, ...props
-                       }: HeaderPropsType) {
+                       }: HeaderPropsType) => {
     const Header = styled.header`
     & {
     background: ${background}
@@ -42,5 +42,5 @@ export function Header({
             </div>
         </Header>
     );
-}
+})
 

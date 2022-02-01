@@ -9,18 +9,18 @@ export type MessagePropsType = {
     message: string,
     image: string | null,
     time: string
-    background:string
-    color:string
+    background: string
+    color: string
 }
 
-export function Message({
+export const Message = React.memo(({
                             name,
                             message,
                             image,
                             time,
                             color,
                             background, ...props
-                        }: MessagePropsType) {
+                        }: MessagePropsType) => {
     const MessageBlock = styled.div`
     & {
     background: ${background};
@@ -53,5 +53,5 @@ export function Message({
             </MessageBlock>
         </div>
     )
-}
+})
 

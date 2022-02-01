@@ -1,9 +1,9 @@
 import React from "react";
 import styleModule from './Users.module.css';
-import User from "./User/User";
+import {User} from "./User/User";
 import {UsersPropsType} from "./UsersContainer";
 
-const Users = ({
+export const Users = React.memo(({
                    usersPage,
                    becomeFollower,
                    stopBeingFollower,
@@ -56,6 +56,5 @@ const Users = ({
         </div>
     )
 
-}
+})
 
-export default Users;

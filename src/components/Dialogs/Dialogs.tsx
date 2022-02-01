@@ -17,7 +17,7 @@ const DIALOG_STYLE = {
     color: '#ffffff'
 };
 
-export function Dialogs(props: DialogsPropsType) {
+export const Dialogs = React.memo((props: DialogsPropsType) => {
 
 
     const onAddMessageButton = () => {
@@ -67,5 +67,5 @@ export function Dialogs(props: DialogsPropsType) {
             </div>
         </div>
     );
-}
+})
 

@@ -3,7 +3,7 @@ import styleModule from './ProfileInfo.module.css';
 import top_wallpaper from "../../../top-wallpaper.jpg";
 import logo_avatar from '../../../usersAvatars/user.png';
 
-export function ProfileInfo(props: any) {
+export const ProfileInfo = React.memo((props: any) => {
 
 
     return (
@@ -22,5 +22,5 @@ export function ProfileInfo(props: any) {
             </div>
         </div>
     )
-};
+});
 

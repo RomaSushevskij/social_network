@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 type PostPropsType = PostType & { removePost: (id: number) => void };
 
-export function Post({
+export const Post = React.memo(({
                          id,
                          name,
                          message,
@@ -19,7 +19,7 @@ export function Post({
                          color,
                          removePost,
                          ...props
-                     }: PostPropsType) {
+                     }: PostPropsType) => {
     const PostWrapper = styled.div`
      & {
         background: ${background ? background : '#FF6347'};
@@ -47,5 +47,5 @@ export function Post({
         </PostWrapper>
 
     );
-};
+});
 

@@ -16,7 +16,7 @@ export const POST_STYLE = {
     color: '#ffffff'
 };
 
-export function MyPosts(props: MyPostsPropsType) {
+export const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     const onAddPostButton = () => {
         props.addPost(props.newPostText);
@@ -61,4 +61,4 @@ export function MyPosts(props: MyPostsPropsType) {
             </div>
         </div>
     );
-}
+})

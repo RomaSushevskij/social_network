@@ -11,7 +11,7 @@ type ButtonPropsType = {
 }
 
 
-export const Button = ({name, onClick, ...props}: ButtonPropsType) => {
+export const Button = React.memo(({name, onClick, ...props}: ButtonPropsType) => {
     const ButtonWithBefore = styled.button`
 & {
 border-color: ${props.backgroundHover};
@@ -33,4 +33,4 @@ color: ${props.colorHover}
     return (
         <ButtonWithBefore onClick={onClickButton} className={style.button}>{name}</ButtonWithBefore>
     )
-}
+})

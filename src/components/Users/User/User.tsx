@@ -9,7 +9,7 @@ type UserPropsType = {
     stopBeingFollower: (userID: number) => void
 } & UserType
 
-const User = (props: UserPropsType) => {
+export const User = React.memo((props: UserPropsType) => {
     let onFollowClick = () => {
         props.becomeFollower(props.id);
     };
@@ -44,7 +44,4 @@ const User = (props: UserPropsType) => {
             </div>
         </div>
     )
-}
-
-
-export default User;
+})
