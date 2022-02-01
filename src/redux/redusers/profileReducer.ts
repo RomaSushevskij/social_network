@@ -1,8 +1,6 @@
-import {ActionsTypes} from "../redux-store";
-
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const REMOVE_POST = 'REMOVE-POST';
+const ADD_POST = 'social/profile/ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'social/profile/UPDATE-NEW-POST-TEXT';
+const REMOVE_POST = 'social/profile/REMOVE-POST';
 
 export type PostType = {
     id: number
@@ -43,7 +41,7 @@ const initialState = {
     newPostText: ''
 };
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {
@@ -64,6 +62,11 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
             return state
     }
 };
+
+export type ActionType =
+    ReturnType<typeof addPostAC> |
+    ReturnType<typeof updateNewPostTextAC> |
+    ReturnType<typeof removePostAC>
 
 export const addPostAC = () => ({type: ADD_POST} as const);
 export const updateNewPostTextAC = (newPostText: string) => ({

@@ -1,23 +1,24 @@
+
 import {profileReducer, addPostAC, updateNewPostTextAC} from "./redusers/profileReducer";
 import {dialogsReducer, addMessageAC, updateNewMessageTextAC} from "./redusers/dialogsReducer";
-
+/*
 type DialogType = {
     id: number
-    /**
+    /!**
      * Name of contact/friend
-     */
+     *!/
     name: string
-    /**
+    /!**
      * Image of contact/friend
-     */
+     *!/
     image: string | null
-    /**
+    /!**
      * Optional background color of component
-     */
+     *!/
     background?: string
-    /**
+    /!**
      * Optional color text of component
-     */
+     *!/
     color?: string
 };
 type MessageType = {
@@ -155,3 +156,4 @@ const store: StoreType = {
     }
 };
 
+*/

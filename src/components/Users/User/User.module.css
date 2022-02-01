@@ -1,0 +1,83 @@
+.userBody {
+    padding: 10px;
+    background-color: tomato;
+    margin-bottom: 10px;
+    box-shadow: 0 7px 10px -9px #000000;
+}
+
+.avatar img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+}
+
+.userBody {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+}
+
+.avatarAndFollowed {
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+}
+
+.avatar {
+    place-self: center center;
+}
+
+.followed {
+    place-self: center center;
+}
+
+.followed button {
+    width: 80px;
+    padding: 5px;
+    background-color: #ffbf47;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 0.7em;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.4s ease;
+}
+
+.followed button:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+}
+
+.followed button:disabled {
+    background-color: #D8D8D8;
+    color: #888888;
+    cursor: auto;
+    box-shadow: none;
+}
+
+.userInformation {
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    padding: 10px;
+}
+
+.fullNameAndStatus {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+}
+
+.status {
+    align-self: end;
+    font-size: 0.9em;
+}
+
+.fullName {
+    font-weight: 700;
+    font-size: 1em;
+}
+
+.status, .fullName {
+    color: white;
+}
+
+
