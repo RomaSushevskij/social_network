@@ -5,9 +5,21 @@ import styled from "styled-components";
 
 export type MessagePropsType = {
     id: number,
+    /**
+     * Name of the interlocutor
+     */
     name: string,
+    /**
+     * Text of message
+     */
     message: string,
+    /**
+     * Image of the interlocutor
+     */
     image: string | null,
+    /**
+     * Time of sending message
+     */
     time: string
     background: string
     color: string

@@ -58,11 +58,13 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
                                   color={'#60575A'}/>
 
                     </div>
-                    <Button name={'Send'}
-                            onClick={onAddMessageButton}
-                            backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
-                            background={BUTTON_STYLE.BACKGROUND}
-                            colorHover={BUTTON_STYLE.COLOR_HOVER}/>
+                    <div className={styleModule.sendMessage}>
+                        <Button name={'Send'}
+                                onClick={onAddMessageButton}
+                                backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
+                                background={BUTTON_STYLE.BACKGROUND}
+                                colorHover={BUTTON_STYLE.COLOR_HOVER}/>
+                    </div>
                 </div>
             </div>
         </div>

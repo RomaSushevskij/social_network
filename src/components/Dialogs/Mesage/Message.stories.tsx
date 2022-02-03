@@ -1,8 +1,7 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {Message} from './Message';
-import {action} from "@storybook/addon-actions";
 
 const getCategoryObj = (categoryName: 'Colors' | 'Events' | 'Main') => {
     return ({
@@ -54,6 +53,7 @@ HelloMessage.args = {
     message:'Hello',
     time:'13:45',
     background:'#1EA7FD',
-    color:'#ffffff'
+    color:'#ffffff',
+    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
 };
 

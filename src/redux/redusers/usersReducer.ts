@@ -8,10 +8,22 @@ export type UserPhotoType = {
 }
 
 export type UserType = {
+    /**
+     * User name
+     */
     name: string
     id: number
+    /**
+     * User photos
+     */
     photos: UserPhotoType
+    /**
+     * User status
+     */
     status: null | string,
+    /**
+     * Value that indicates if you are following this user
+     */
     followed: boolean
 }
 

@@ -3,6 +3,7 @@
     padding: 20px 10px 20px 20px;
     background-color: tomato;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    min-width: 125px;
 }
 
 .item {

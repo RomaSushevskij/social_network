@@ -50,26 +50,12 @@
     -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
     background-color: #f9f9fd;
 }
-
-.sendMessage {
-    padding: 10px 30px;
-    background-color: #ffbf47;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 1em;
-    cursor: pointer;
-    margin-top:20px;
-    border-radius: 30px;
-    transition: all 0.4s ease;
-}
-.sendMessage:hover {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s ease;
-}
 .writeAndSendMessage {
     padding: 20px;
     padding-right: 50px;
+}
+.sendMessage {
+    margin: 20px 0;
 }
 
 
