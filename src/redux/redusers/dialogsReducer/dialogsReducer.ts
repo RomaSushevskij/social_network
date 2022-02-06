@@ -1,6 +1,3 @@
-const ADD_MESSAGE = 'social/dialogs/ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'social/dialogs/UPDATE-NEW-MESSAGE-TEXT';
-
 export type DialogType = {
     id: number
     /**
@@ -68,17 +65,16 @@ const initialState = {
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
-        case ADD_MESSAGE:
+        case "social/dialogs/ADD-MESSAGE":
             const newMessage: MessageType = {
                 id: state.messagesData.length + 1,
                 name: 'Someone',
                 message: state.newMessageText,
                 image: null,
                 time: new Date().toJSON().slice(11, 16)
-
             };
             return {...state, messagesData: [...state.messagesData, newMessage], newMessageText: ''}
-        case UPDATE_NEW_MESSAGE_TEXT:
+        case "social/dialogs/UPDATE-NEW-MESSAGE-TEXT":
             return {...state, newMessageText: action.payload.newMessageText}
         default:
             return state
@@ -89,8 +85,8 @@ export type ActionType =
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC>
 
-export const addMessageAC = () => ({type: ADD_MESSAGE} as const);
+export const addMessageAC = () => ({type: 'social/dialogs/ADD-MESSAGE'} as const);
 export const updateNewMessageTextAC = (newMessageText: string) => ({
-    type: UPDATE_NEW_MESSAGE_TEXT,
+    type: 'social/dialogs/UPDATE-NEW-MESSAGE-TEXT',
     payload: {newMessageText}
 } as const);

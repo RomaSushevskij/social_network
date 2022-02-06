@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import {User} from './User';
 import {action} from "@storybook/addon-actions";
-import {UserPhotoType} from "../../../redux/redusers/usersReducer";
+import {UserPhotoType} from "../../../redux/redusers/usersReducer/usersReducer";
 import {BrowserRouter} from "react-router-dom";
 
 const getCategoryObj = (categoryName: 'Colors' | 'Events' | 'Main') => {

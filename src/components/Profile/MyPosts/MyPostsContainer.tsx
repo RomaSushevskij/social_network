@@ -1,6 +1,6 @@
 import React, {KeyboardEvent} from "react";
 import {AppStateType} from "../../../redux/redux-store";
-import {addPostAC, PostType, removePostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer";
+import {addPostAC, PostType, removePostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer/profileReducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";

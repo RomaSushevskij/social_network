@@ -1,7 +1,3 @@
-const ADD_POST = 'social/profile/ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'social/profile/UPDATE-NEW-POST-TEXT';
-const REMOVE_POST = 'social/profile/REMOVE-POST';
-
 export type PostType = {
     id: number
     name: string
@@ -43,7 +39,7 @@ const initialState = {
 
 export const profileReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
-        case ADD_POST:
+        case "social/profile/ADD-POST":
             const newPost: PostType = {
                 id: state.postsData.length + 1,
                 name: 'Someone',
@@ -52,9 +48,9 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 image: null
             };
             return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
-        case UPDATE_NEW_POST_TEXT:
+        case "social/profile/UPDATE-NEW-POST-TEXT":
             return {...state, newPostText: action.payload.newPostText}
-        case REMOVE_POST:
+        case "social/profile/REMOVE-POST":
             return (
                 {...state, postsData: state.postsData.filter(p => p.id !== action.payload.id)}
             );
@@ -68,9 +64,9 @@ export type ActionType =
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof removePostAC>
 
-export const addPostAC = () => ({type: ADD_POST} as const);
+export const addPostAC = () => ({type: 'social/profile/ADD-POST'} as const);
 export const updateNewPostTextAC = (newPostText: string) => ({
-    type: UPDATE_NEW_POST_TEXT,
+    type: 'social/profile/UPDATE-NEW-POST-TEXT',
     payload: {newPostText}
 } as const);
-export const removePostAC = (id: number) => ({type: REMOVE_POST, payload: {id}} as const);
+export const removePostAC = (id: number) => ({type: 'social/profile/REMOVE-POST', payload: {id}} as const);

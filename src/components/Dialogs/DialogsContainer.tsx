@@ -1,6 +1,6 @@
 import React, {KeyboardEvent} from "react";
 import {AppStateType} from "../../redux/redux-store";
-import {addMessageAC, InitialStateType, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer";
+import {addMessageAC, InitialStateType, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer/dialogsReducer";
 import {Dialogs} from "./Dialogs";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
