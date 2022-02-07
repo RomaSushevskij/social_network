@@ -13,7 +13,8 @@ beforeEach(() => {
                     large: null
                 },
                 status: null,
-                followed: false
+                followed: false,
+                uniqueUrlName: null
             },
             {
                 name: 'Mariya',
@@ -23,7 +24,8 @@ beforeEach(() => {
                     large: null
                 },
                 status: 'I like to live',
-                followed: false
+                followed: false,
+                uniqueUrlName: null
             },
             {
                 name: 'Ivan',
@@ -33,7 +35,8 @@ beforeEach(() => {
                     large: null
                 },
                 status: 'All is good',
-                followed: true
+                followed: true,
+                uniqueUrlName: null
             }
         ]
     }
@@ -67,7 +70,8 @@ test('new users should be set', () => {
             large: null
         },
         status: 'I like to live',
-        followed: false
+        followed: false,
+        uniqueUrlName: null
     }]
     const endState = usersReducer(startState, setUsersAC(newUsers))
 

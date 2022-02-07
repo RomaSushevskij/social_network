@@ -13,6 +13,7 @@ export type UserType = {
      */
     name: string
     id: number
+    uniqueUrlName: string | null
     /**
      * User photos
      */
