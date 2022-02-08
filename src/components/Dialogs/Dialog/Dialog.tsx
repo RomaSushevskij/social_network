@@ -34,7 +34,7 @@ export const Dialog = React.memo(({
             <ContactAvatar className={styleModule.contactAvatar}>
                 <img src={image ? image : userLogo}/>
             </ContactAvatar>
-            <NavLink to={`/dialogs/ ${id}`}>{name}</NavLink>
+            <NavLink className={dialog => dialog.isActive ? styleModule.dialogActive : ''} to={`/dialogs/${id}`}>{name}</NavLink>
         </DialogWrapper>
     )
 })

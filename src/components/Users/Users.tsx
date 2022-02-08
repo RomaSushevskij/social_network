@@ -4,7 +4,6 @@ import {User} from "./User/User";
 import {UsersPropsType} from "./UsersContainer";
 import axios from "axios"
 import {UserType} from "../../redux/redusers/usersReducer/usersReducer";
-import {Button} from "../generic/Button/Button";
 
 
 export type GetUsersDataType = {
@@ -15,11 +14,12 @@ export type GetUsersDataType = {
 
 export class Users extends React.Component<UsersPropsType> {
 
-    getUsers() {
-        const {usersPage} = this.props
+    componentDidMount(): void {
+        const {usersPage, setUsers} = this.props
+        //get request for getting users
         if (!usersPage.users.length) {
             axios.get<GetUsersDataType>('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                this.props.setUsers(response.data.items)
+                setUsers(response.data.items)
             })
         }
     }
@@ -37,9 +37,6 @@ export class Users extends React.Component<UsersPropsType> {
 
         return (
             <div className={styleModule.usersWrapper}>
-                <div className={styleModule.buttonBlock}>
-                    <Button name={'Get users'} onClick={this.getUsers}/>
-                </div>
                 <div className={styleModule.usersBlock}>
                     {userElements}
                 </div>
