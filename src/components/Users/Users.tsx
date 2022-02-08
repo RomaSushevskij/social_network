@@ -13,32 +13,39 @@ export type GetUsersDataType = {
     totalCount: number
 }
 
-export const Users = React.memo(({
-                                     usersPage,
-                                     becomeFollower,
-                                     stopBeingFollower,
-                                     ...props
-                                 }: UsersPropsType) => {
-    let userElements = usersPage.users.map(user => <User {...user}
-                                                         becomeFollower={becomeFollower}
-                                                         stopBeingFollower={stopBeingFollower}/>);
-    const getUsers = () => {
+export class Users extends React.Component<UsersPropsType> {
+
+    getUsers() {
+        const {usersPage} = this.props
         if (!usersPage.users.length) {
             axios.get<GetUsersDataType>('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                props.setUsers(response.data.items)
+                this.props.setUsers(response.data.items)
             })
         }
     }
 
-    return (
-        <div className={styleModule.usersWrapper}>
-            <div className={styleModule.buttonBlock}>
-                <Button name={'Get users'} onClick={getUsers}/>
+    //optimization of unnecessary rendering. Alternative of React.memo
+    shouldComponentUpdate(nextProps: Readonly<UsersPropsType>, nextState: Readonly<{}>): boolean {
+        return nextProps !== this.props || nextState !== this.state
+    }
+
+    render() {
+        const {usersPage, becomeFollower, stopBeingFollower} = this.props
+        let userElements = usersPage.users.map(user => <User {...user}
+                                                             becomeFollower={becomeFollower}
+                                                             stopBeingFollower={stopBeingFollower}/>);
+
+        return (
+            <div className={styleModule.usersWrapper}>
+                <div className={styleModule.buttonBlock}>
+                    <Button name={'Get users'} onClick={this.getUsers}/>
+                </div>
+                <div className={styleModule.usersBlock}>
+                    {userElements}
+                </div>
             </div>
-            <div className={styleModule.usersBlock}>
-                {userElements}
-            </div>
-        </div>
-    )
-})
+        )
+    }
+}
+
 
