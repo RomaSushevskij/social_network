@@ -18,7 +18,12 @@ export class Users extends React.Component<UsersPropsType> {
         const {usersPage, setUsers} = this.props
         //get request for getting users
         if (!usersPage.users.length) {
-            axios.get<GetUsersDataType>('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            axios.get<GetUsersDataType>('https://social-network.samuraijs.com/api/1.0/users', {
+                withCredentials: true,
+                headers: {
+                    "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
+                }
+            }).then(response => {
                 setUsers(response.data.items)
             })
         }
