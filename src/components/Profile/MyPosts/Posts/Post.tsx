@@ -7,29 +7,41 @@ import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
-type PostPropsType = PostType & { removePost: (id: number) => void };
+type PostPropsType = PostType &
+    {
+        removePost: (id: number) => void
+        likePost: (id: number) => void
+    };
 
 export const Post = React.memo(({
-                         id,
-                         name,
-                         message,
-                         likeCount,
-                         image,
-                         background,
-                         color,
-                         removePost,
-                         ...props
-                     }: PostPropsType) => {
+                                    id,
+                                    name,
+                                    message,
+                                    likes,
+                                    isLike,
+                                    image,
+                                    background,
+                                    color,
+                                    removePost,
+                                    likePost,
+                                    ...props
+                                }: PostPropsType) => {
     const PostWrapper = styled.div`
      & {
         background: ${background ? background : '#FF6347'};
         color:  ${color ? color : '#ffffff'};
     }
     `;
+    const LikesDiv = styled.div`
+    color: ${isLike ? '#ffbf47' : '#ffffff'};
+    `
 
     const onCrossClick = (id: number) => {
         removePost(id);
     };
+    const onLikeClick = (id: number) => {
+        likePost(id)
+    }
 
     return (
         <PostWrapper className={styleModule.postWrapper}>
@@ -41,9 +53,12 @@ export const Post = React.memo(({
             <div className={styleModule.messageBlock}>
                 {message}
             </div>
-            <div className={styleModule.likesBlock}>
-                <span>❤</span> {likeCount}
-            </div>
+            <LikesDiv>
+                <span onClick={() => onLikeClick(id)}
+                      className={styleModule.likesBlock}>
+                    {`${likes.icon} ${likes.likeCount}`}
+                </span>
+            </LikesDiv>
         </PostWrapper>
 
     );

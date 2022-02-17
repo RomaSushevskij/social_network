@@ -1,4 +1,12 @@
-import {followAC, InitialStateType, setUsersAC, unfollowAC, usersReducer} from "./usersReducer";
+import {
+    followAC,
+    InitialStateType,
+    setCurrentPageAC,
+    setUsersAC,
+    setUsersTotalCountAC,
+    unfollowAC,
+    usersReducer
+} from "./usersReducer";
 
 let startState: InitialStateType
 
@@ -38,7 +46,10 @@ beforeEach(() => {
                 followed: true,
                 uniqueUrlName: null
             }
-        ]
+        ],
+        usersTotalCount: 0,
+        pageSize: 12,
+        currentPage: 1,
     }
 })
 
@@ -78,4 +89,24 @@ test('new users should be set', () => {
     expect(endState.users.length).toBe(1)
     expect(endState.users).toStrictEqual(newUsers)
 })
+
+test('correct page should be set as currentPage', () => {
+
+    const endState = usersReducer(startState, setCurrentPageAC(6))
+
+    expect(endState.currentPage).toBe(6)
+    expect(endState.usersTotalCount).toBe(0)
+    expect(endState.pageSize).toBe(12)
+})
+
+test('usersTotalCount should be set', () => {
+
+    const endState = usersReducer(startState, setUsersTotalCountAC(13000))
+
+    expect(endState.currentPage).toBe(1)
+    expect(endState.usersTotalCount).toBe(13000)
+    expect(endState.pageSize).toBe(12)
+})
+
+
 

@@ -56,6 +56,7 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
                         background={POST_STYLE.background}
                         color={POST_STYLE.color}
                         removePost={props.removePost}
+                        likePost={props.likePost}
                         {...post}/>
                 )}
             </div>

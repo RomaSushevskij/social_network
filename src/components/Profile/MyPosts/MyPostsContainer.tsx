@@ -1,6 +1,12 @@
 import React, {KeyboardEvent} from "react";
 import {AppStateType} from "../../../redux/redux-store";
-import {addPostAC, PostType, removePostAC, updateNewPostTextAC} from "../../../redux/redusers/profileReducer/profileReducer";
+import {
+    addPostAC,
+    likePostAC,
+    PostType,
+    removePostAC,
+    updateNewPostTextAC
+} from "../../../redux/redusers/profileReducer/profileReducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
@@ -16,6 +22,7 @@ export type MapDispatchToPropsType = {
     addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newPostText: string) => void
     updateNewPostText: (newPostText: string) => void
     removePost: (id: number) => void
+    likePost: (id: number) => void
 }
 
 export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -23,7 +30,8 @@ export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         postsData: state.profilePage.postsData,
-        newPostText: state.profilePage.newPostText
+        newPostText: state.profilePage.newPostText,
+
     }
 }
 
@@ -43,6 +51,9 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         },
         removePost: (id: number) => {
             dispatch(removePostAC(id))
+        },
+        likePost: (id: number) => {
+            dispatch(likePostAC(id))
         }
     }
 }
