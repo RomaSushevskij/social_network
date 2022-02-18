@@ -22,7 +22,10 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
         props.addPost(props.newPostText);
     };
     const onAddPostWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        props.addPostWithEnter(e, props.newPostText);
+        if (!e.shiftKey && e.key === 'Enter') {
+            e.preventDefault();
+            props.newPostText.trim() && props.addPost(props.newPostText)
+        }
     };
     const onUpdatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewPostText(e.currentTarget.value);

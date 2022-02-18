@@ -1,10 +1,10 @@
 import {
-    followAC,
+    becomeFollower,
     InitialStateUsersType,
-    setCurrentPageAC, setIsFetchingAC,
-    setUsersAC,
-    setUsersTotalCountAC,
-    unfollowAC,
+    setCurrentPage, setIsFetchingValue,
+    setUsers,
+    setUsersTotalCount,
+    stopBeingFollower,
     usersReducer
 } from "./usersReducer";
 
@@ -55,7 +55,7 @@ beforeEach(() => {
 })
 
 test('correct user should become follower', () => {
-    const endState = usersReducer(startState, followAC(2))
+    const endState = usersReducer(startState, becomeFollower(2))
 
     expect(endState.users.length).toBe(3)
     expect(endState.users[0].followed).toBeFalsy()
@@ -65,7 +65,7 @@ test('correct user should become follower', () => {
 })
 
 test('correct user should stop being a follower', () => {
-    const endState = usersReducer(startState, unfollowAC(3))
+    const endState = usersReducer(startState, stopBeingFollower(3))
 
     expect(endState.users.length).toBe(3)
     expect(endState.users[0].followed).toBeFalsy()
@@ -85,7 +85,7 @@ test('new users should be set', () => {
         followed: false,
         uniqueUrlName: null
     }]
-    const endState = usersReducer(startState, setUsersAC(newUsers))
+    const endState = usersReducer(startState, setUsers(newUsers))
 
     expect(endState.users.length).toBe(1)
     expect(endState.users).toStrictEqual(newUsers)
@@ -93,7 +93,7 @@ test('new users should be set', () => {
 
 test('correct page should be set as currentPage', () => {
 
-    const endState = usersReducer(startState, setCurrentPageAC(6))
+    const endState = usersReducer(startState, setCurrentPage(6))
 
     expect(endState.currentPage).toBe(6)
     expect(endState.usersTotalCount).toBe(0)
@@ -102,7 +102,7 @@ test('correct page should be set as currentPage', () => {
 
 test('usersTotalCount should be set', () => {
 
-    const endState = usersReducer(startState, setUsersTotalCountAC(13000))
+    const endState = usersReducer(startState, setUsersTotalCount(13000))
 
     expect(endState.currentPage).toBe(1)
     expect(endState.usersTotalCount).toBe(13000)
@@ -110,8 +110,8 @@ test('usersTotalCount should be set', () => {
 })
 test('value of isFetching should be correct', () => {
 
-    const endState1 = usersReducer(startState, setIsFetchingAC(true))
-    const endState2 = usersReducer(endState1, setIsFetchingAC(false))
+    const endState1 = usersReducer(startState, setIsFetchingValue(true))
+    const endState2 = usersReducer(endState1, setIsFetchingValue(false))
 
     expect(endState1.isFetching).toBeTruthy()
     expect(endState1.usersTotalCount).toBe(0)

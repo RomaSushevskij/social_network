@@ -1,5 +1,5 @@
 
-import {profileReducer, addPostAC, updateNewPostTextAC} from "./redusers/profileReducer/profileReducer";
+import {profileReducer, addPost, updateNewPostText} from "./redusers/profileReducer/profileReducer";
 import {dialogsReducer, addMessageAC, updateNewMessageTextAC} from "./redusers/dialogsReducer/dialogsReducer";
 /*
 type DialogType = {

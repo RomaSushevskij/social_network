@@ -73,25 +73,25 @@ export const usersReducer = (state: InitialStateUsersType = initialState, action
 }
 
 export type ActionType =
-    ReturnType<typeof followAC> |
-    ReturnType<typeof unfollowAC> |
-    ReturnType<typeof setUsersAC> |
-    ReturnType<typeof setCurrentPageAC> |
-    ReturnType<typeof setUsersTotalCountAC> |
-    ReturnType<typeof setIsFetchingAC>
+    ReturnType<typeof becomeFollower> |
+    ReturnType<typeof stopBeingFollower> |
+    ReturnType<typeof setUsers> |
+    ReturnType<typeof setCurrentPage> |
+    ReturnType<typeof setUsersTotalCount> |
+    ReturnType<typeof setIsFetchingValue>
 
 
-export const followAC = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
-export const unfollowAC = (userID: number) => ({type: USERS_ACTIONS_TYPES.UNFOLLOW, payload: {userID}} as const)
-export const setUsersAC = (users: UserType[]) => ({type: USERS_ACTIONS_TYPES.SET_USERS, payload: {users}} as const)
-export const setCurrentPageAC = (currentPage: number) => ({
+export const becomeFollower = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
+export const stopBeingFollower = (userID: number) => ({type: USERS_ACTIONS_TYPES.UNFOLLOW, payload: {userID}} as const)
+export const setUsers = (users: UserType[]) => ({type: USERS_ACTIONS_TYPES.SET_USERS, payload: {users}} as const)
+export const setCurrentPage = (currentPage: number) => ({
     type: USERS_ACTIONS_TYPES.SET_CURRENT_PAGE,
     payload: {currentPage}
 } as const)
-export const setUsersTotalCountAC = (usersTotalCount: number) => ({
+export const setUsersTotalCount = (usersTotalCount: number) => ({
     type: USERS_ACTIONS_TYPES.SET_USERS_TOTAL_COUNT,
     payload: {usersTotalCount}
 } as const)
-export const setIsFetchingAC = (isFetching: boolean) => ({
+export const setIsFetchingValue = (isFetching: boolean) => ({
     type: USERS_ACTIONS_TYPES.SET_IS_FETCHING_VALUE, payload: {isFetching}
 } as const)

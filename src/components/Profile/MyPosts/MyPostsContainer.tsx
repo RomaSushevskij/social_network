@@ -1,15 +1,14 @@
-import React, {KeyboardEvent} from "react";
+import React from "react";
 import {AppStateType} from "../../../redux/redux-store";
 import {
-    addPostAC,
-    likePostAC,
+    addPost,
+    likePost,
     PostType,
-    removePostAC,
-    updateNewPostTextAC
+    removePost,
+    updateNewPostText
 } from "../../../redux/redusers/profileReducer/profileReducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
 
 
 export type MapStateToPropsType = {
@@ -19,7 +18,6 @@ export type MapStateToPropsType = {
 
 export type MapDispatchToPropsType = {
     addPost: (newPostText: string) => void
-    addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newPostText: string) => void
     updateNewPostText: (newPostText: string) => void
     removePost: (id: number) => void
     likePost: (id: number) => void
@@ -34,28 +32,9 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
     }
 }
-
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-    return {
-        addPost: (newPostText: string) => {
-            newPostText.trim() && dispatch(addPostAC())
-        },
-        addPostWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newPostText: string) => {
-            if (!e.shiftKey && e.key === 'Enter') {
-                e.preventDefault();
-                newPostText.trim() && dispatch(addPostAC())
-            }
-        },
-        updateNewPostText: (newPostText: string) => {
-            dispatch(updateNewPostTextAC(newPostText));
-        },
-        removePost: (id: number) => {
-            dispatch(removePostAC(id))
-        },
-        likePost: (id: number) => {
-            dispatch(likePostAC(id))
-        }
-    }
-}
-
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+export const MyPostsContainer = connect(mapStateToProps, {
+    addPost,
+    updateNewPostText,
+    removePost,
+    likePost,
+} as MapDispatchToPropsType)(MyPosts);

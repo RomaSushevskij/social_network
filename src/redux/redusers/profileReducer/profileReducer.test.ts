@@ -1,4 +1,4 @@
-import {addPostAC, InitialStateProfileType, likePostAC, PostType, profileReducer, removePostAC} from "./profileReducer";
+import {addPost, InitialStateProfileType, likePost, PostType, profileReducer, removePost} from "./profileReducer";
 
 let startState: InitialStateProfileType
 beforeEach(() => {
@@ -43,15 +43,16 @@ beforeEach(() => {
 })
 
 test('new post should be added to the start of postsData', () => {
-    const endState = profileReducer(startState, addPostAC())
+    const endState = profileReducer(startState, addPost())
 
     expect(endState.postsData.length).toBe(4)
     expect(endState.postsData[0].message).toBe(endState.newPostText)
     expect(endState.postsData[0].id).toBe(4)
 })
 
+
 test('newPostText should be has correct value after update', () => {
-    const endState = profileReducer(startState, addPostAC())
+    const endState = profileReducer(startState, addPost())
 
     expect(endState.postsData.length).toBe(4)
     expect(endState.postsData[0].message).toBe(endState.newPostText)
@@ -59,14 +60,14 @@ test('newPostText should be has correct value after update', () => {
 })
 
 test('correct post should be deleted', () => {
-    const endState = profileReducer(startState, removePostAC(2))
+    const endState = profileReducer(startState, removePost(2))
 
     expect(endState.postsData.length).toBe(2)
     expect(endState.postsData[0].id).toBe(1)
     expect(endState.postsData[1].id).toBe(3)
 })
 test('correct post should be liked', () => {
-    const endState = profileReducer(startState, likePostAC(2))
+    const endState = profileReducer(startState, likePost(2))
 
     expect(endState.postsData[1].isLike).toBeTruthy()
     expect(endState.postsData[2].isLike).toBeTruthy()

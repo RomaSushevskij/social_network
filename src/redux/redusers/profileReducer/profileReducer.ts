@@ -1,3 +1,10 @@
+export enum PROFILE_ACTIONS_TYPES {
+    ADD_POST = 'social/profile/ADD-POST',
+    UPDATE_NEW_POST_TEXT = 'social/profile/UPDATE_NEW_POST_TEXT',
+    REMOVE_POST = "social/profile/REMOVE_POST",
+    LIKE_POST = 'social/profile/LIKE_POST',
+}
+
 export type PostType = {
     id: number
     name: string
@@ -55,7 +62,7 @@ const initialState = {
 
 export const profileReducer = (state: InitialStateProfileType = initialState, action: ActionType): InitialStateProfileType => {
     switch (action.type) {
-        case "social/profile/ADD-POST":
+        case PROFILE_ACTIONS_TYPES.ADD_POST:
             const newPost: PostType = {
                 id: state.postsData.length + 1,
                 name: 'Someone',
@@ -68,18 +75,21 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
                 image: null
             };
             return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
-        case "social/profile/UPDATE-NEW-POST-TEXT":
+        case PROFILE_ACTIONS_TYPES.UPDATE_NEW_POST_TEXT:
             return {...state, newPostText: action.payload.newPostText}
-        case "social/profile/REMOVE-POST":
+        case PROFILE_ACTIONS_TYPES.REMOVE_POST:
             return (
                 {...state, postsData: state.postsData.filter(p => p.id !== action.payload.id)}
             );
-        case "social/profile/LIKE_POST":
+        case PROFILE_ACTIONS_TYPES.LIKE_POST:
             return (
-                {...state, postsData: state.postsData.
-                    map(p => p.id === action.payload.id ?
-                        {...p, isLike: !p.isLike, likes:
-                                {...p.likes, likeCount: p.isLike ? p.likes.likeCount - 1 : p.likes.likeCount + 1}} : p) }
+                {
+                    ...state, postsData: state.postsData.map(p => p.id === action.payload.id ?
+                        {
+                            ...p, isLike: !p.isLike, likes:
+                                {...p.likes, likeCount: p.isLike ? p.likes.likeCount - 1 : p.likes.likeCount + 1}
+                        } : p)
+                }
             )
         default:
             return state
@@ -87,15 +97,16 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
 };
 
 export type ActionType =
-    ReturnType<typeof addPostAC> |
-    ReturnType<typeof updateNewPostTextAC> |
-    ReturnType<typeof removePostAC> |
-    ReturnType<typeof likePostAC>
+    ReturnType<typeof addPost> |
+    ReturnType<typeof updateNewPostText> |
+    ReturnType<typeof removePost> |
+    ReturnType<typeof likePost>
 
-export const addPostAC = () => ({type: 'social/profile/ADD-POST'} as const);
-export const updateNewPostTextAC = (newPostText: string) => ({
-    type: 'social/profile/UPDATE-NEW-POST-TEXT',
+
+export const addPost = () => ({type: PROFILE_ACTIONS_TYPES.ADD_POST} as const);
+export const updateNewPostText = (newPostText: string) => ({
+    type: PROFILE_ACTIONS_TYPES.UPDATE_NEW_POST_TEXT,
     payload: {newPostText}
 } as const);
-export const removePostAC = (id: number) => ({type: 'social/profile/REMOVE-POST', payload: {id}} as const);
-export const likePostAC = (id: number) => ({type: 'social/profile/LIKE_POST', payload: {id}} as const);
+export const removePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.REMOVE_POST, payload: {id}} as const);
+export const likePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.LIKE_POST, payload: {id}} as const);
