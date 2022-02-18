@@ -4,7 +4,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {
     followAC,
     InitialStateUsersType,
-    setCurrentPageAC,
+    setCurrentPageAC, setIsFetchingAC,
     setUsersAC,
     setUsersTotalCountAC,
     unfollowAC,
@@ -18,15 +18,17 @@ import axios from "axios";
 class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     componentDidMount(): void {
-        const {usersPage, setUsers, setUsersTotalCount} = this.props
+        const {usersPage, setUsers, setUsersTotalCount, setIsFetchingValue} = this.props
         //get request for getting users
         if (!usersPage.users.length) {
+            setIsFetchingValue(true)
             axios.get<GetUsersDataType>(`https://social-network.samuraijs.com/api/1.0/users?count=12`, {
                 withCredentials: true,
                 headers: {
                     "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
                 }
             }).then(response => {
+                setIsFetchingValue(false)
                 setUsers(response.data.items)
                 setUsersTotalCount(response.data.totalCount)
             })
@@ -40,35 +42,25 @@ class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     // action for pressing on page number
     onChangePage = (pageNumber: number) => {
-        const {setUsers} = this.props
+        const {setUsers, setIsFetchingValue} = this.props
         this.props.setCurrentPage(pageNumber)
+        setIsFetchingValue(true)
         axios.get<GetUsersDataType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`, {
             withCredentials: true,
             headers: {
                 "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
             }
         }).then(response => {
+            setIsFetchingValue(false)
             setUsers(response.data.items)
         })
     }
 
     render() {
-        const {
-            usersPage,
-            becomeFollower,
-            stopBeingFollower,
-            currentPage,
-            pageSize,
-            usersTotalCount,
-        } = this.props
         return (
-            <Users usersPage={usersPage}
-                   becomeFollower={becomeFollower}
-                   stopBeingFollower={stopBeingFollower}
-                   currentPage={currentPage}
-                   pageSize={pageSize}
-                   usersTotalCount={usersTotalCount}
-                   onChangePage={this.onChangePage}/>
+            <Users {...this.props}
+                   onChangePage={this.onChangePage}
+            />
         )
     }
 }
@@ -80,6 +72,7 @@ type MapStateToPropsType = {
     usersTotalCount: number,
     pageSize: number,
     currentPage: number
+    isFetching: boolean
 }
 type MapDispatchToPropsType = {
     becomeFollower: (userID: number) => void
@@ -87,6 +80,7 @@ type MapDispatchToPropsType = {
     setUsers: (users: UserType[]) => void
     setCurrentPage: (page: number) => void
     setUsersTotalCount: (usersTotalCount: number) => void
+    setIsFetchingValue: (isFetching: boolean) => void
 }
 
 export type UsersApiContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -97,6 +91,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         usersTotalCount: state.usersPage.usersTotalCount,
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching,
     }
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
@@ -115,6 +110,9 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         },
         setUsersTotalCount: (usersTotalCount: number) => {
             dispatch(setUsersTotalCountAC(usersTotalCount))
+        },
+        setIsFetchingValue: (isFetching: boolean) => {
+            dispatch(setIsFetchingAC(isFetching))
         },
     }
 }

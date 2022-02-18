@@ -9,7 +9,7 @@ import {DialogsPropsType} from "./DialogsContainer";
 
 
 const MESSAGE_STYLE = {
-    background: '#ffffff',
+    background: '#e8e8e8',
     color: '#757575',
     meBackground:'#FFE1A9',
     meColor:'#757575',

@@ -2,10 +2,9 @@
     display: grid;
     grid-template-columns: 200px 1fr;
     grid-template-rows: 50px 1fr;
-    grid-template-areas:
-            "heading messages"
-            "dialogs_items messages";
-    }
+    grid-template-areas: "heading messages" "dialogs_items messages";
+}
+
 .heading {
     grid-area: heading;
     font-size: 20px;
@@ -14,6 +13,7 @@
     padding: 20px;
     letter-spacing: .2em;
 }
+
 .dialogs_items {
     grid-area: dialogs_items;
     padding: 20px;
@@ -33,6 +33,7 @@
     overflow-y: scroll;
     background: linear-gradient(90deg, rgb(255, 99, 71), rgb(62, 139, 134) 49%);
 }
+
 .meMessages {
     align-items: flex-end;
 }
@@ -40,28 +41,33 @@
 .messages::-webkit-scrollbar {
     width: 10px;
 }
+
 .messages::-webkit-scrollbar-thumb {
     background-color: #F4BC50;
     background-image: -webkit-gradient(linear, 0 0, 0 100%,
     color-stop(.5, rgba(255, 255, 255, .25)),
     color-stop(.5, transparent), to(transparent));
 }
+
 .messages::-webkit-scrollbar-track {
     -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
     background-color: #f9f9fd;
 }
+
 .writeMessage {
     margin-right: 20px;
 }
+
 .writeMessage textarea {
-    border-top-right-radius:0%;
-    border-top-left-radius:0%;
-    border-bottom-right-radius:0%;
+    border-top-right-radius: 0%;
+    border-top-left-radius: 0%;
+    border-bottom-right-radius: 0%;
 }
 
 .writeAndSendMessage {
     align-self: self-end;
 }
+
 .sendMessage {
     margin: 10px 0;
 }

@@ -3,6 +3,8 @@ import styleModule from './Users.module.css';
 import {User} from "./User/User";
 import {InitialStateUsersType, UserType} from "../../redux/redusers/usersReducer/usersReducer";
 import {Paginator} from "../generic/Paginator/Paginator";
+import {Preloader} from "../generic/Preloader/Preloader";
+import {UsersApiContainerPropsType} from "./UsersContainer";
 
 
 export type GetUsersDataType = {
@@ -11,13 +13,7 @@ export type GetUsersDataType = {
     totalCount: number
 }
 
-type UsersPropsType = {
-    usersPage: InitialStateUsersType
-    becomeFollower: (userID: number) => void
-    stopBeingFollower: (userID: number) => void
-    currentPage: number
-    pageSize: number
-    usersTotalCount: number
+type UsersPropsType = UsersApiContainerPropsType & {
     onChangePage: (pageNumber: number) => void
 }
 
@@ -31,6 +27,7 @@ export const Users = (props: UsersPropsType) => {
         pageSize,
         currentPage,
         onChangePage,
+        isFetching,
     } = props
 
     let userElements = usersPage.users.map(user => <User {...user}
@@ -45,9 +42,11 @@ export const Users = (props: UsersPropsType) => {
                            totalItemsCount={usersTotalCount}
                            onChangePage={onChangePage}/>
             </div>
-            <div className={styleModule.usersBlock}>
-                {userElements}
-            </div>
+            {isFetching ? <Preloader size={'100px'} color={'#ffffff'}/> :
+                <div className={styleModule.usersBlock}>
+                    {userElements}
+                </div>}
+
         </div>
     )
 

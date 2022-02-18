@@ -1,7 +1,7 @@
 import {
     followAC,
     InitialStateUsersType,
-    setCurrentPageAC,
+    setCurrentPageAC, setIsFetchingAC,
     setUsersAC,
     setUsersTotalCountAC,
     unfollowAC,
@@ -50,6 +50,7 @@ beforeEach(() => {
         usersTotalCount: 0,
         pageSize: 12,
         currentPage: 1,
+        isFetching: false
     }
 })
 
@@ -106,6 +107,22 @@ test('usersTotalCount should be set', () => {
     expect(endState.currentPage).toBe(1)
     expect(endState.usersTotalCount).toBe(13000)
     expect(endState.pageSize).toBe(12)
+})
+test('value of isFetching should be correct', () => {
+
+    const endState1 = usersReducer(startState, setIsFetchingAC(true))
+    const endState2 = usersReducer(endState1, setIsFetchingAC(false))
+
+    expect(endState1.isFetching).toBeTruthy()
+    expect(endState1.usersTotalCount).toBe(0)
+    expect(endState1.pageSize).toBe(12)
+    expect(endState1.currentPage).toBe(1)
+
+    expect(endState2.isFetching).toBeFalsy()
+    expect(endState2.usersTotalCount).toBe(0)
+    expect(endState2.pageSize).toBe(12)
+    expect(endState2.currentPage).toBe(1)
+
 })
 
 

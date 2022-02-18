@@ -4,6 +4,7 @@ export enum USERS_ACTIONS_TYPES {
     SET_USERS = 'social/users/SET_USERS',
     SET_CURRENT_PAGE = 'social/users/SET_CURRENT_PAGE',
     SET_USERS_TOTAL_COUNT = 'social/users/SET_USERS_TOTAL_COUNT',
+    SET_IS_FETCHING_VALUE = 'social/users/SET_IS_FETCHING_VALUE',
 }
 
 
@@ -40,6 +41,7 @@ const initialState = {
     usersTotalCount: 0,
     pageSize: 12,
     currentPage: 1,
+    isFetching: false
 }
 
 
@@ -61,6 +63,7 @@ export const usersReducer = (state: InitialStateUsersType = initialState, action
             }
         case USERS_ACTIONS_TYPES.SET_CURRENT_PAGE:
         case USERS_ACTIONS_TYPES.SET_USERS_TOTAL_COUNT:
+        case USERS_ACTIONS_TYPES.SET_IS_FETCHING_VALUE:
             return {
                 ...state, ...action.payload
             }
@@ -74,7 +77,8 @@ export type ActionType =
     ReturnType<typeof unfollowAC> |
     ReturnType<typeof setUsersAC> |
     ReturnType<typeof setCurrentPageAC> |
-    ReturnType<typeof setUsersTotalCountAC>
+    ReturnType<typeof setUsersTotalCountAC> |
+    ReturnType<typeof setIsFetchingAC>
 
 
 export const followAC = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
@@ -87,4 +91,7 @@ export const setCurrentPageAC = (currentPage: number) => ({
 export const setUsersTotalCountAC = (usersTotalCount: number) => ({
     type: USERS_ACTIONS_TYPES.SET_USERS_TOTAL_COUNT,
     payload: {usersTotalCount}
+} as const)
+export const setIsFetchingAC = (isFetching: boolean) => ({
+    type: USERS_ACTIONS_TYPES.SET_IS_FETCHING_VALUE, payload: {isFetching}
 } as const)
