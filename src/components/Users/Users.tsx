@@ -1,26 +1,19 @@
 import React from "react";
 import styleModule from './Users.module.css';
 import {User} from "./User/User";
-import {InitialStateUsersType, UserType} from "../../redux/redusers/usersReducer/usersReducer";
 import {Paginator} from "../generic/Paginator/Paginator";
 import {Preloader} from "../generic/Preloader/Preloader";
 import {UsersApiContainerPropsType} from "./UsersContainer";
 
 
-export type GetUsersDataType = {
-    error: string | null
-    items: Array<UserType>
-    totalCount: number
-}
-
 type UsersPropsType = UsersApiContainerPropsType & {
     onChangePage: (pageNumber: number) => void
 }
 
-export const Users = (props: UsersPropsType) => {
+export const Users = React.memo((props: UsersPropsType) => {
 
     const {
-        usersPage,
+        users,
         becomeFollower,
         stopBeingFollower,
         usersTotalCount,
@@ -30,7 +23,7 @@ export const Users = (props: UsersPropsType) => {
         isFetching,
     } = props
 
-    let userElements = usersPage.users.map(user => <User {...user}
+    let userElements = users.map(user => <User {...user}
                                                          becomeFollower={becomeFollower}
                                                          stopBeingFollower={stopBeingFollower}/>);
     return (
@@ -49,8 +42,7 @@ export const Users = (props: UsersPropsType) => {
 
         </div>
     )
-
-}
+})
 
 
 

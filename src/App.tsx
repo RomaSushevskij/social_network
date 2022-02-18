@@ -10,6 +10,7 @@ import {Settings} from "./components/Settings/Settings";
 import logo from './main-logo.png';
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
+import {ProfileContainer} from "./components/Profile/ProfileContainer";
 
 
 export type PATHType = {
@@ -48,7 +49,7 @@ function App() {
                 <div className="app_wrapper_content">
                     <Routes>
                         <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
-                        <Route path={PATH.PROFILE} element={<Profile />}/>
+                        <Route path={PATH.PROFILE} element={<ProfileContainer />}/>
                         <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
                         <Route path={PATH.MUSIC} element={<Music/>}/>
                         <Route path={PATH.NEWS} element={<News/>}/>

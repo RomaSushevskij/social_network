@@ -122,8 +122,8 @@ test('value of isFetching should be correct', () => {
     expect(endState2.usersTotalCount).toBe(0)
     expect(endState2.pageSize).toBe(12)
     expect(endState2.currentPage).toBe(1)
-
 })
+
 
 
 

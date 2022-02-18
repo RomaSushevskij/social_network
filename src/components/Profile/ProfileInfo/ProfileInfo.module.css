@@ -34,6 +34,67 @@
     width: 100%;
 }
 
+.profileInfo .description {
+    padding: 0 20px;
+    grid-area: description;
+    display: grid;
+    grid-template-areas: "fullNameAndAboutMe contacts" "lookingForAJob contacts";
+    grid-template-columns: 1fr 300px;
+    row-gap: 20px;
+}
+
+.fullNameAndAboutMe {
+    grid-area: fullNameAndAboutMe;
+    padding-right: 20px;
+
+}
+
+.lookingForAJob {
+    grid-area: lookingForAJob;
+    padding-right: 10px;
+    margin-top: 20px;
+}
+
+.fullName {
+    font-size: 34px;
+    color: white;
+    padding-bottom: 10px;
+    letter-spacing: .05em;
+    box-shadow: 0px 7px 10px -9px #000000;
+}
+
+.aboutMe {
+    color: white;
+    font-style: italic;
+    margin-top: 15px;
+
+}
+
+.statusJob {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.statusJob .heading {
+    align-self: center;
+    padding-right: 20px;
+    font-size: 1.1em;
+    letter-spacing: .1em;
+}
+
+.statusJob .logo img {
+    width: 30px;
+}
+
+.descriptionJob {
+    color: white;
+    font-style: italic;
+}
+
+
+
 
 
 

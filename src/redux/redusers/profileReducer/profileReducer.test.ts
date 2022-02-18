@@ -1,4 +1,13 @@
-import {addPost, InitialStateProfileType, likePost, PostType, profileReducer, removePost} from "./profileReducer";
+import {
+    addPost,
+    InitialStateProfileType,
+    likePost,
+    PostType,
+    profileReducer,
+    ProfileType,
+    removePost, setProfile
+} from "./profileReducer";
+import {setUsersTotalCount, usersReducer} from "../usersReducer/usersReducer";
 
 let startState: InitialStateProfileType
 beforeEach(() => {
@@ -38,7 +47,8 @@ beforeEach(() => {
                 image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
             }
         ] as Array<PostType>,
-        newPostText: ''
+        newPostText: '',
+        profile: null as ProfileType | null
     }
 })
 
@@ -75,4 +85,35 @@ test('correct post should be liked', () => {
     expect(endState.postsData[1].likes.likeCount).toBe(4)
     expect(endState.postsData[0].likes.likeCount).toBe(3)
     expect(endState.postsData[2].likes.likeCount).toBe(87)
+})
+
+test('selected profile should be set', () => {
+
+    const profile2 = {
+        "aboutMe": "я круто чувак 1001%",
+        "contacts": {
+            "facebook": "facebook.com",
+            "website": null,
+            "vk": "vk.com/dimych",
+            "twitter": "https://twitter.com/@sdf",
+            "instagram": "instagra.com/sds",
+            "youtube": null,
+            "github": "github.com",
+            "mainLink": null
+        },
+        "lookingForAJob": true,
+        "lookingForAJobDescription": "не ищу, а дурачусь",
+        "fullName": "samurai dimych",
+        "userId": 2,
+        "photos": {
+            "small": "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=29",
+            "large": "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=29"
+        }
+    }
+
+    const endState = profileReducer(startState, setProfile(profile2))
+
+    expect(endState.profile).not.toBeNull()
+    expect(endState.profile).toStrictEqual(profile2)
+
 })

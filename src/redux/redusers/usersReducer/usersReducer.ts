@@ -5,6 +5,7 @@ export enum USERS_ACTIONS_TYPES {
     SET_CURRENT_PAGE = 'social/users/SET_CURRENT_PAGE',
     SET_USERS_TOTAL_COUNT = 'social/users/SET_USERS_TOTAL_COUNT',
     SET_IS_FETCHING_VALUE = 'social/users/SET_IS_FETCHING_VALUE',
+
 }
 
 

@@ -1,9 +1,8 @@
 import {connect} from "react-redux";
-import {GetUsersDataType, Users} from "./Users";
+import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
     becomeFollower,
-    InitialStateUsersType,
     setCurrentPage,
     setIsFetchingValue,
     setUsers,
@@ -14,13 +13,18 @@ import {
 import React from "react";
 import axios from "axios";
 
+export type GetUsersDataType = {
+    error: string | null
+    items: Array<UserType>
+    totalCount: number
+}
 
 class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     componentDidMount(): void {
-        const {usersPage, setUsers, setUsersTotalCount, setIsFetchingValue} = this.props
+        const {users, setUsers, setUsersTotalCount, setIsFetchingValue} = this.props
         //get request for getting users
-        if (!usersPage.users.length) {
+        if (!users.length) {
             setIsFetchingValue(true)
             axios.get<GetUsersDataType>(`https://social-network.samuraijs.com/api/1.0/users?count=12`, {
                 withCredentials: true,
@@ -68,7 +72,7 @@ class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 //functionality for redux
 
 type MapStateToPropsType = {
-    usersPage: InitialStateUsersType,
+    users: UserType[],
     usersTotalCount: number,
     pageSize: number,
     currentPage: number
@@ -87,7 +91,7 @@ export type UsersApiContainerPropsType = MapStateToPropsType & MapDispatchToProp
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        usersPage: state.usersPage,
+        users: state.usersPage.users,
         usersTotalCount: state.usersPage.usersTotalCount,
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,

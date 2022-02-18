@@ -2,11 +2,14 @@ import React from "react";
 import styleModule from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ProfileAPIContainerPropsType} from "./ProfileContainer";
 
-export const Profile = React.memo(() => {
+type ProfilePropsType = ProfileAPIContainerPropsType
+
+export const Profile = React.memo((props:ProfilePropsType) => {
     return (
         <div className={styleModule.content}>
-            <ProfileInfo/>
+            <ProfileInfo {...props}/>
             <MyPostsContainer/>
         </div>
     );

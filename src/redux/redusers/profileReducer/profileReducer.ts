@@ -3,6 +3,7 @@ export enum PROFILE_ACTIONS_TYPES {
     UPDATE_NEW_POST_TEXT = 'social/profile/UPDATE_NEW_POST_TEXT',
     REMOVE_POST = "social/profile/REMOVE_POST",
     LIKE_POST = 'social/profile/LIKE_POST',
+    SET_PROFILE = 'social/users/SET_PROFILE',
 }
 
 export type PostType = {
@@ -17,6 +18,31 @@ export type PostType = {
     image: string | null
     background?: string
     color?: string
+}
+
+export type ContactsType = {
+    facebook: string | null,
+    website: string | null,
+    vk: string | null,
+    twitter: string | null,
+    instagram: string | null,
+    youtube: string | null,
+    github: string | null,
+    mainLink: string | null,
+}
+export type PhotosType = {
+    small: string | null,
+    large: string | null,
+}
+
+export type ProfileType = {
+    aboutMe: string | null,
+    contacts: ContactsType
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string | null,
+    fullName: string,
+    userId: number,
+    photos: PhotosType
 }
 export type InitialStateProfileType = typeof initialState
 
@@ -57,7 +83,8 @@ const initialState = {
             image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
         }
     ] as Array<PostType>,
-    newPostText: ''
+    newPostText: '',
+    profile: null as ProfileType | null,
 };
 
 export const profileReducer = (state: InitialStateProfileType = initialState, action: ActionType): InitialStateProfileType => {
@@ -76,7 +103,8 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
             };
             return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
         case PROFILE_ACTIONS_TYPES.UPDATE_NEW_POST_TEXT:
-            return {...state, newPostText: action.payload.newPostText}
+        case PROFILE_ACTIONS_TYPES.SET_PROFILE:
+            return {...state, ...action.payload}
         case PROFILE_ACTIONS_TYPES.REMOVE_POST:
             return (
                 {...state, postsData: state.postsData.filter(p => p.id !== action.payload.id)}
@@ -100,7 +128,9 @@ export type ActionType =
     ReturnType<typeof addPost> |
     ReturnType<typeof updateNewPostText> |
     ReturnType<typeof removePost> |
-    ReturnType<typeof likePost>
+    ReturnType<typeof likePost> |
+    ReturnType<typeof setProfile>
+
 
 
 export const addPost = () => ({type: PROFILE_ACTIONS_TYPES.ADD_POST} as const);
@@ -110,3 +140,4 @@ export const updateNewPostText = (newPostText: string) => ({
 } as const);
 export const removePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.REMOVE_POST, payload: {id}} as const);
 export const likePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.LIKE_POST, payload: {id}} as const);
+export const setProfile = (profile:ProfileType) => ({type: PROFILE_ACTIONS_TYPES.SET_PROFILE, payload: {profile}} as const);
