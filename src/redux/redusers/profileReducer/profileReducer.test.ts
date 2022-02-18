@@ -1,6 +1,6 @@
-import {addPostAC, InitialStateType, likePostAC, PostType, profileReducer, removePostAC} from "./profileReducer";
+import {addPostAC, InitialStateProfileType, likePostAC, PostType, profileReducer, removePostAC} from "./profileReducer";
 
-let startState: InitialStateType
+let startState: InitialStateProfileType
 beforeEach(() => {
     startState = {
         postsData: [

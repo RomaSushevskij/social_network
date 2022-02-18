@@ -10,7 +10,9 @@ import {DialogsPropsType} from "./DialogsContainer";
 
 const MESSAGE_STYLE = {
     background: '#ffffff',
-    color: '#757575'
+    color: '#757575',
+    meBackground:'#FFE1A9',
+    meColor:'#757575',
 };
 const DIALOG_STYLE = {
     background: 'inherit',
@@ -46,6 +48,8 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
                     {props.dialogsPage.messagesData.map(message => <Message key={message.id}
                                                                             background={MESSAGE_STYLE.background}
                                                                             color={MESSAGE_STYLE.color}
+                                                                            meBackground={MESSAGE_STYLE.meBackground}
+                                                                            meColor={MESSAGE_STYLE.meColor}
                                                                             {...message}/>)}
                 </div>
                 <div className={styleModule.writeAndSendMessage}>

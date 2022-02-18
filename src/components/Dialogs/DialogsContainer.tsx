@@ -1,12 +1,12 @@
 import React, {KeyboardEvent} from "react";
 import {AppStateType} from "../../redux/redux-store";
-import {addMessageAC, InitialStateType, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer/dialogsReducer";
+import {addMessageAC, InitialStateDialogsType, updateNewMessageTextAC} from "../../redux/redusers/dialogsReducer/dialogsReducer";
 import {Dialogs} from "./Dialogs";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 
 export type MapStateToPropsType = {
-    dialogsPage: InitialStateType
+    dialogsPage: InitialStateDialogsType
 }
 
 export type MapDispatchToPropsType = {

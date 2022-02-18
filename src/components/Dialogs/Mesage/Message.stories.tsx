@@ -14,6 +14,15 @@ const getCategoryObj = (categoryName: 'Colors' | 'Events' | 'Main') => {
 export default {
     title: 'Message',
     component: Message,
+    parameters: {
+        backgrounds: {
+            default: 'default',
+            values: [
+                {name: 'default', value: '#F0F0F8'},
+                {name: 'tomato', value: 'tomato'},
+            ],
+        },
+    },
     argTypes: {
         background: {
             ...getCategoryObj('Colors'),
@@ -21,6 +30,16 @@ export default {
             defaultValue: '#1EA7FD'
         },
         color: {
+            ...getCategoryObj('Colors'),
+            control: 'color',
+            defaultValue: '#ffffff'
+        },
+        meBackground: {
+            ...getCategoryObj('Colors'),
+            control: 'color',
+            defaultValue: '#1EA7FD'
+        },
+        meColor: {
             ...getCategoryObj('Colors'),
             control: 'color',
             defaultValue: '#ffffff'
@@ -47,13 +66,29 @@ export default {
 } as ComponentMeta<typeof Message>;
 
 const Template: ComponentStory<typeof Message> = (args) => <Message {...args} />;
-export const HelloMessage = Template.bind({});
-HelloMessage.args = {
-    name:'Lena',
+export const SomeOneMessage = Template.bind({});
+SomeOneMessage.args = {
+    id: 3,
+    name:'Someone',
     message:'Hello',
     time:'13:45',
-    background:'#1EA7FD',
-    color:'#ffffff',
+    background:'#FFFFFF',
+    color:'#293440',
+    meBackground:'#6B8AF4',
+    meColor:'#FCFDFE',
     image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
 };
+export const MyMessage = Template.bind({});
+MyMessage.args = {
+    id: 13,
+    name:'Me',
+    message:'Hello',
+    time:'13:45',
+    background:'#FFFFFF',
+    color:'#293440',
+    meBackground:'#6B8AF4',
+    meColor:'#FCFDFE',
+    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
+};
+
 

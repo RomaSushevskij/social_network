@@ -24,7 +24,7 @@ export type MessageType = {
     image: string | null,
     time: string
 };
-export type InitialStateType = typeof initialState
+export type InitialStateDialogsType = typeof initialState
 
 const initialState = {
     dialogsData: [
@@ -46,32 +46,50 @@ const initialState = {
         {
             id: 1,
             name: 'Ruslan',
-            message: 'Hi',
+            message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, rem!',
             image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album',
             time: '12:03'
         },
-        {id: 2, name: 'Dmitry', message: 'Hi, how are you?', image: null, time: '13:01'},
+
+        {id: 13, name: 'Me', message: 'Lorem ipsum dolor !', image: null, time: '12:10'},
+        {id: 2, name: 'Dmitry', message: 'Lorem ipsum dolor sit amet', image: null, time: '13:01'},
         {
             id: 3,
             name: 'Ivan',
-            message: 'Yo',
+            message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
             time: '13:08'
         },
-        {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05'}
+        {
+            id: 13,
+            name: 'Me',
+            message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+            image: null,
+            time: '13:49'
+        },
+        {id: 4, name: 'Mother', message: 'Lorem ipsum dolor !', image: null, time: '14:05'},
+        {id: 13, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
+        {
+            id: 13,
+            name: 'Me',
+            message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit dolor sit amet, consectetur.',
+            image: null,
+            time: '14:10'
+        },
+        {id: 4, name: 'Mother', message: 'Lorem  consectetur adipisicin ipsum dolor !', image: null, time: '14:23'},
     ] as Array<MessageType>,
     newMessageText: ''
 };
 
-export const dialogsReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const dialogsReducer = (state: InitialStateDialogsType = initialState, action: ActionType): InitialStateDialogsType => {
     switch (action.type) {
         case "social/dialogs/ADD-MESSAGE":
             const newMessage: MessageType = {
-                id: state.messagesData.length + 1,
-                name: 'Someone',
+                id: 13,
+                name: 'Me',
                 message: state.newMessageText,
                 image: null,
-                time: new Date().toJSON().slice(11, 16)
+                time: new Date().toLocaleTimeString().slice(0, 5)
             };
             return {...state, messagesData: [...state.messagesData, newMessage], newMessageText: ''}
         case "social/dialogs/UPDATE-NEW-MESSAGE-TEXT":

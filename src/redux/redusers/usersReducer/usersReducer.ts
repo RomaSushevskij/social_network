@@ -33,7 +33,7 @@ export type UserType = {
     followed: boolean
 }
 
-export type InitialStateType = typeof initialState
+export type InitialStateUsersType = typeof initialState
 
 const initialState = {
     users: [] as UserType[],
@@ -43,7 +43,7 @@ const initialState = {
 }
 
 
-export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const usersReducer = (state: InitialStateUsersType = initialState, action: ActionType): InitialStateUsersType => {
     switch (action.type) {
         case USERS_ACTIONS_TYPES.SET_USERS:
             return {

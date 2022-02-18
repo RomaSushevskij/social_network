@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styleModule from './Message.module.css';
 import messageAva from '../../../usersAvatars/user.png'
 import styled from "styled-components";
@@ -23,23 +23,30 @@ export type MessagePropsType = {
     time: string
     background: string
     color: string
+    meBackground: string
+    meColor: string
 }
 
 export const Message = React.memo(({
-                            name,
-                            message,
-                            image,
-                            time,
-                            color,
-                            background, ...props
-                        }: MessagePropsType) => {
+                                       id,
+                                       name,
+                                       message,
+                                       image,
+                                       time,
+                                       color,
+                                       background,
+                                       meBackground,
+                                       meColor,
+                                       ...props
+                                   }: MessagePropsType) => {
+
     const MessageBlock = styled.div`
     & {
-    background: ${background};
-    color: ${color}
+    background: ${id === 13 ? meBackground : background};
+    color: ${id === 13 ? meColor : color}
     }
     &:before {
-    background: radial-gradient(circle at top left, transparent 50%, ${background} 50%);
+    background: radial-gradient(circle at top left, transparent 50%, ${id === 13 ? meBackground : background} 50%);
     }
     `;
     const Avatar = styled.div`
@@ -47,12 +54,17 @@ export const Message = React.memo(({
     border-color: ${background}
     }
     `;
+
+    // if the message is mine, then one style, if not, then another
+    const messageWrapperStyle = id === 13 ?
+        `${styleModule.messageWrapper} ${styleModule.meMessageWrapper}` :
+        styleModule.messageWrapper
+    const messageBlockStyle = id === 13 ?
+        `${styleModule.messageBlock} ${styleModule.meMessageBlock}` :
+        styleModule.messageBlock
     return (
-        <div className={styleModule.messageWrapper}>
-            <Avatar className={styleModule.avatar}>
-                <img src={image ? image : messageAva}/>
-            </Avatar>
-            <MessageBlock className={styleModule.messageBlock}>
+        <div className={messageWrapperStyle}>
+            <MessageBlock className={messageBlockStyle}>
                 <div className={styleModule.name}>
                     {name}
                 </div>
@@ -63,6 +75,10 @@ export const Message = React.memo(({
                     {time}
                 </div>
             </MessageBlock>
+            <Avatar className={styleModule.avatar}>
+                <img src={image ? image : messageAva}/>
+            </Avatar>
+
         </div>
     )
 })

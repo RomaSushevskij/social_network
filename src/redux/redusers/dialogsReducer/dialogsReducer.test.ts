@@ -4,10 +4,10 @@ import {
     DialogType,
     MessageType,
     updateNewMessageTextAC,
-    InitialStateType
+    InitialStateDialogsType
 } from "./dialogsReducer";
 
-let startState: InitialStateType
+let startState: InitialStateDialogsType
 
 beforeEach(() => {
     startState = {

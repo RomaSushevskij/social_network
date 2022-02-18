@@ -1,6 +1,6 @@
 import {
     followAC,
-    InitialStateType,
+    InitialStateUsersType,
     setCurrentPageAC,
     setUsersAC,
     setUsersTotalCountAC,
@@ -8,7 +8,7 @@ import {
     usersReducer
 } from "./usersReducer";
 
-let startState: InitialStateType
+let startState: InitialStateUsersType
 
 beforeEach(() => {
     startState = {

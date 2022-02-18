@@ -11,7 +11,7 @@ export type PostType = {
     background?: string
     color?: string
 }
-export type InitialStateType = typeof initialState
+export type InitialStateProfileType = typeof initialState
 
 
 const initialState = {
@@ -53,7 +53,7 @@ const initialState = {
     newPostText: ''
 };
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const profileReducer = (state: InitialStateProfileType = initialState, action: ActionType): InitialStateProfileType => {
     switch (action.type) {
         case "social/profile/ADD-POST":
             const newPost: PostType = {
