@@ -11,7 +11,12 @@ class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> 
 
     componentDidMount(): void {
         const {setProfile} = this.props
-        axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${20392}`)
+        axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${20392}`, {
+            withCredentials: true,
+            headers: {
+                "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
+            }
+        })
             .then(response => {
                 setProfile(response.data)
             })
