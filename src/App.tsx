@@ -2,8 +2,7 @@ import React from 'react';
 import './App.css';
 import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
-import {Profile} from "./components/Profile/Profile";
-import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {Settings} from "./components/Settings/Settings";
@@ -22,7 +21,7 @@ export type PATHType = {
     SETTINGS: string
 }
 const PATH: PATHType = {
-    PROFILE: '/profile',
+    PROFILE: '/profile/*',
     DIALOGS: '/dialogs/*',
     MUSIC: '/music',
     NEWS: '/news',
@@ -38,7 +37,6 @@ export const HEADER_STYLE = {
 
 function App() {
     return (
-        <HashRouter>
             <div className="app_wrapper">
                 <Header title={'Cloudpaper'}
                         description={'Connecting Network'}
@@ -58,7 +56,6 @@ function App() {
                     </Routes>
                 </div>
             </div>
-        </HashRouter>
     );
 }
 

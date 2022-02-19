@@ -19,7 +19,7 @@ export const POST_STYLE = {
 export const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     const onAddPostButton = () => {
-        props.addPost(props.newPostText);
+        props.newPostText.trim() && props.addPost(props.newPostText);
     };
     const onAddPostWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (!e.shiftKey && e.key === 'Enter') {

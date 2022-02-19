@@ -3,8 +3,8 @@ import styleModule from './ProfileInfo.module.css';
 import top_wallpaper from "../../../top-wallpaper.jpg";
 import logo_avatar from '../../../usersAvatars/user.png';
 import {ProfileAPIContainerPropsType} from "../ProfileContainer";
-import yes from "../../../contacts_logo/yes.png"
-import no from "../../../contacts_logo/no.png";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
 
 type ProfileInfoPropsType = ProfileAPIContainerPropsType
 
@@ -15,10 +15,11 @@ export const ProfileInfo = React.memo(({profile}: ProfileInfoPropsType) => {
             <div className={styleModule.top_wallpaper}>
                 <img src={top_wallpaper} alt="top_wallpaper"/>
             </div>
-            <div className={styleModule.avatar}>
+            <div className={styleModule.avatarAndFullName}>
                 <div className={styleModule.image}>
                     <img src={profile?.photos.large || logo_avatar}/>
                 </div>
+                <div className={styleModule.fullName}>{profile?.fullName}</div>
 
                 {/*кнопка изменения фото*/}
                 {/*{isOwner &&
@@ -38,18 +39,18 @@ export const ProfileInfo = React.memo(({profile}: ProfileInfoPropsType) => {
                 {/*{!editProfileMode &&*/}
 
                 <div className={styleModule.wrapper_description}>
-                    <div className={styleModule.fullNameAndAboutMe}>
-                        <div className={styleModule.fullName}>{profile?.fullName}</div>
 
-                        {/*<ProfileStatus status={status} updateStatus={updateStatus}/>*/}
 
-                        <div className={styleModule.aboutMe}>{profile?.aboutMe}</div>
-                    </div>
+                    {/*<ProfileStatus status={status} updateStatus={updateStatus}/>*/}
+
+                    <div className={styleModule.aboutMe}>{profile?.aboutMe}</div>
+
                     <div className={styleModule.lookingForAJob}>
                         <div className={styleModule.statusJob}>
                             <div className={styleModule.heading}>OPEN TO WORK:</div>
                             <div className={styleModule.logo}>{profile?.lookingForAJob ?
-                                <img src={yes}/> : <img src={no}/>}
+                                <FontAwesomeIcon icon={faCheck} className={styleModule.iconYes}/> :
+                                <FontAwesomeIcon icon={faTimes} className={styleModule.iconNot}/>}
                             </div>
                         </div>
                         <div className={styleModule.descriptionJob}>{profile?.lookingForAJobDescription}</div>
