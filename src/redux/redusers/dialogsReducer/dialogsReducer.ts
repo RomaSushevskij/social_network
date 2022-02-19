@@ -51,7 +51,7 @@ const initialState = {
             time: '12:03'
         },
 
-        {id: 13, name: 'Me', message: 'Lorem ipsum dolor !', image: null, time: '12:10'},
+        {id: 20392, name: 'Me', message: 'Lorem ipsum dolor !', image: null, time: '12:10'},
         {id: 2, name: 'Dmitry', message: 'Lorem ipsum dolor sit amet', image: null, time: '13:01'},
         {
             id: 3,
@@ -61,16 +61,16 @@ const initialState = {
             time: '13:08'
         },
         {
-            id: 13,
+            id: 20392,
             name: 'Me',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             image: null,
             time: '13:49'
         },
         {id: 4, name: 'Mother', message: 'Lorem ipsum dolor !', image: null, time: '14:05'},
-        {id: 13, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
+        {id: 20392, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
         {
-            id: 13,
+            id: 20392,
             name: 'Me',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit dolor sit amet, consectetur.',
             image: null,
@@ -85,7 +85,7 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
     switch (action.type) {
         case "social/dialogs/ADD-MESSAGE":
             const newMessage: MessageType = {
-                id: 13,
+                id: 20392,
                 name: 'Me',
                 message: state.newMessageText,
                 image: null,
@@ -99,7 +99,7 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
     }
 };
 
-export type ActionType =
+type ActionType =
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC>
 

@@ -3,7 +3,7 @@ export enum PROFILE_ACTIONS_TYPES {
     UPDATE_NEW_POST_TEXT = 'social/profile/UPDATE_NEW_POST_TEXT',
     REMOVE_POST = "social/profile/REMOVE_POST",
     LIKE_POST = 'social/profile/LIKE_POST',
-    SET_PROFILE = 'social/users/SET_PROFILE',
+    SET_PROFILE = 'social/profile/SET_PROFILE',
 }
 
 export type PostType = {
@@ -124,7 +124,7 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
     }
 };
 
-export type ActionType =
+type ActionType =
     ReturnType<typeof addPost> |
     ReturnType<typeof updateNewPostText> |
     ReturnType<typeof removePost> |

@@ -11,7 +11,6 @@ import {useParams} from "react-router-dom";
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
 
     componentDidMount(): void {
-        debugger
         const {setProfile,params} = this.props
         let userId = params["*"]
         if(!userId || userId === '*') {
@@ -30,7 +29,6 @@ class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> 
 
     //getting own profile after switching from someone profile to your own
     componentDidUpdate(prevProps: Readonly<ProfileAPIContainerPropsType>, prevState: Readonly<{}>, snapshot?: any): void {
-        debugger
         if(prevProps.params ! == this.props.params) {
             const {setProfile, params} = this.props
             let userId = params["*"]

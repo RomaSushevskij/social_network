@@ -23,7 +23,10 @@ export type MapDispatchToPropsType = {
     likePost: (id: number) => void
 }
 
-export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
+export type MyPostsPropsType =
+    MapStateToPropsType &
+    MapDispatchToPropsType &
+    {params: {['*']:string}}
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {

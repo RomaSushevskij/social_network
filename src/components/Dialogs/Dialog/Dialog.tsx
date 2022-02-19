@@ -28,11 +28,10 @@ export const Dialog = React.memo(({
     border: 1px solid ${color ? color : '#ffffff'};
     }
     `
-
     return (
         <DialogWrapper className={styleModule.dialog}>
             <ContactAvatar className={styleModule.contactAvatar}>
-                <img src={image ? image : userLogo}/>
+                <img src={image ? image : userLogo} alt={'message avatar'}/>
             </ContactAvatar>
             <NavLink className={dialog => dialog.isActive ? styleModule.dialogActive : ''} to={`/dialogs/${id}`}>{name}</NavLink>
         </DialogWrapper>

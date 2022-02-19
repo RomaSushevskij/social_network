@@ -1,6 +1,9 @@
 import React from "react";
 import styleModule from './Header.module.css';
 import styled from "styled-components";
+import {NavLink} from "react-router-dom";
+import {HeaderAPIContainerPropsType} from "./HeaderContainer";
+import logo_avatar from '../../usersAvatars/user.png'
 
 export type HeaderPropsType = {
     title: string
@@ -8,15 +11,21 @@ export type HeaderPropsType = {
     background: string
     color: string
     logo?: string
-}
+} & HeaderAPIContainerPropsType
 
-export const Header = React.memo(({
-                           title,
-                           description,
-                           background,
-                           color,
-                           logo, ...props
-                       }: HeaderPropsType) => {
+
+
+export const Header = React.memo((props: HeaderPropsType) => {
+    const {
+        title,
+            description,
+            background,
+            color,
+            logo,
+        avatar,
+        fullName,
+        auth,
+    } = props
     const Header = styled.header`
     & {
     background: ${background}
@@ -39,6 +48,19 @@ export const Header = React.memo(({
             </div>
             <div className={styleModule.loginStatus}>
 
+                {auth.isAuth ?
+                    <div className={styleModule.loginAndAvatar}>
+                        <div className={styleModule.avatar}>
+                            <img src={avatar ? avatar : logo_avatar}/>
+                        </div>
+                        <div className={styleModule.loginValue}>{fullName}</div>
+
+                        {/*<div className={styleModule.logoutButton}><button onClick={props.logout} >LOGOUT</button></div>*/}
+
+                    </div> :
+                    <NavLink to={'/login'}>
+                        LOGIN
+                    </NavLink>}
             </div>
         </Header>
     );

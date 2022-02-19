@@ -39,14 +39,13 @@ export const Message = React.memo(({
                                        meColor,
                                        ...props
                                    }: MessagePropsType) => {
-
     const MessageBlock = styled.div`
     & {
-    background: ${id === 13 ? meBackground : background};
-    color: ${id === 13 ? meColor : color}
+    background: ${id === 20392 ? meBackground : background};
+    color: ${id === 20392 ? meColor : color}
     }
     &:before {
-    background: radial-gradient(circle at top left, transparent 50%, ${id === 13 ? meBackground : background} 50%);
+    background: radial-gradient(circle at top left, transparent 50%, ${id === 20392 ? meBackground : background} 50%);
     }
     `;
     const Avatar = styled.div`
@@ -56,10 +55,11 @@ export const Message = React.memo(({
     `;
 
     // if the message is mine, then one style, if not, then another
-    const messageWrapperStyle = id === 13 ?
+    const messageWrapperStyle = id === 20392 ?
         `${styleModule.messageWrapper} ${styleModule.meMessageWrapper}` :
         styleModule.messageWrapper
-    const messageBlockStyle = id === 13 ?
+    const messageBlockStyle = id === 20392
+        ?
         `${styleModule.messageBlock} ${styleModule.meMessageBlock}` :
         styleModule.messageBlock
     return (

@@ -10,6 +10,7 @@ import logo from './main-logo.png';
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
+import {HeaderContainer} from "./components/Header/HeaderContainer";
 
 
 export type PATHType = {
@@ -38,11 +39,7 @@ export const HEADER_STYLE = {
 function App() {
     return (
             <div className="app_wrapper">
-                <Header title={'Cloudpaper'}
-                        description={'Connecting Network'}
-                        background={HEADER_STYLE.background}
-                        color={HEADER_STYLE.color}
-                        logo={HEADER_STYLE.logo}/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className="app_wrapper_content">
                     <Routes>

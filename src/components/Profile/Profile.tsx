@@ -10,7 +10,7 @@ export const Profile = React.memo((props:ProfilePropsType) => {
     return (
         <div className={styleModule.content}>
             <ProfileInfo {...props}/>
-            <MyPostsContainer/>
+            <MyPostsContainer params={props.params}/>
         </div>
     );
 })

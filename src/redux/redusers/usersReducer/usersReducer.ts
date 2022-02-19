@@ -8,7 +8,6 @@ export enum USERS_ACTIONS_TYPES {
 
 }
 
-
 export type UserPhotoType = {
     small: null | string
     large: null | string
