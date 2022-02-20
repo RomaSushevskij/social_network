@@ -21,11 +21,15 @@ export const Users = React.memo((props: UsersPropsType) => {
         currentPage,
         onChangePage,
         isFetching,
+        followingInProcessUsersId,
+        toggleFollowingInProcess,
     } = props
 
     let userElements = users.map(user => <User {...user}
                                                becomeFollower={becomeFollower}
-                                               stopBeingFollower={stopBeingFollower}/>);
+                                               stopBeingFollower={stopBeingFollower}
+                                               followingInProcessUsersId={followingInProcessUsersId}
+                                               toggleFollowingInProcess={toggleFollowingInProcess}/>);
     return (
         <div className={styleModule.usersWrapper}>
             <div>

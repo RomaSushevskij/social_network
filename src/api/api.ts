@@ -76,7 +76,7 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userId: string) {
+    getProfile(userId: string | number) {
         return instance_1.get<GetProfileDataType>(`profile/${userId}`)
             .then(response => {
                 return response.data

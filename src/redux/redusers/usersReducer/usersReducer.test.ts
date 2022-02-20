@@ -4,7 +4,7 @@ import {
     setCurrentPage, setIsFetchingValue,
     setUsers,
     setUsersTotalCount,
-    stopBeingFollower,
+    stopBeingFollower, toggleFollowingInProcess,
     usersReducer
 } from "./usersReducer";
 
@@ -50,7 +50,8 @@ beforeEach(() => {
         usersTotalCount: 0,
         pageSize: 12,
         currentPage: 1,
-        isFetching: false
+        isFetching: false,
+        followingInProcessUsersId: [] as Array<number>
     }
 })
 
@@ -123,6 +124,22 @@ test('value of isFetching should be correct', () => {
     expect(endState2.pageSize).toBe(12)
     expect(endState2.currentPage).toBe(1)
 })
+
+test('followings button of user with selected id should be disabled at the time of request', () => {
+
+    let endState1 = usersReducer(startState, toggleFollowingInProcess(2, true))
+    expect(endState1.followingInProcessUsersId[0]).toBe(2)
+    setInterval(()=>{
+        endState1 = usersReducer(endState1, toggleFollowingInProcess(2, false))
+    }, 3000)
+    setInterval(()=>{
+        expect(endState1.followingInProcessUsersId.length).toBe(0)
+    }, )
+
+
+})
+
+
 
 
 

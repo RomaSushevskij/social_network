@@ -5,6 +5,7 @@ export enum USERS_ACTIONS_TYPES {
     SET_CURRENT_PAGE = 'social/users/SET_CURRENT_PAGE',
     SET_USERS_TOTAL_COUNT = 'social/users/SET_USERS_TOTAL_COUNT',
     SET_IS_FETCHING_VALUE = 'social/users/SET_IS_FETCHING_VALUE',
+    TOGGLE_FOLLOWING_IN_PROCESS = 'social/users/TOGGLE_FOLLOWING_IN_PROCESS',
 
 }
 
@@ -41,7 +42,8 @@ const initialState = {
     usersTotalCount: 0,
     pageSize: 12,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProcessUsersId: [] as Array<number>
 }
 
 
@@ -67,6 +69,12 @@ export const usersReducer = (state: InitialStateUsersType = initialState, action
             return {
                 ...state, ...action.payload
             }
+        case USERS_ACTIONS_TYPES.TOGGLE_FOLLOWING_IN_PROCESS:
+            return {
+                ...state, followingInProcessUsersId: action.payload.followingInProcess ?
+                    [...state.followingInProcessUsersId, action.payload.userId] :
+                    state.followingInProcessUsersId.filter(id => id !== action.payload.userId)
+            }
         default:
             return state
     }
@@ -78,7 +86,8 @@ export type ActionType =
     ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> |
     ReturnType<typeof setUsersTotalCount> |
-    ReturnType<typeof setIsFetchingValue>
+    ReturnType<typeof setIsFetchingValue> |
+    ReturnType<typeof toggleFollowingInProcess>
 
 
 export const becomeFollower = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
@@ -94,4 +103,8 @@ export const setUsersTotalCount = (usersTotalCount: number) => ({
 } as const)
 export const setIsFetchingValue = (isFetching: boolean) => ({
     type: USERS_ACTIONS_TYPES.SET_IS_FETCHING_VALUE, payload: {isFetching}
+} as const)
+export const toggleFollowingInProcess = (userId: number, followingInProcess: boolean) => ({
+    type: USERS_ACTIONS_TYPES.TOGGLE_FOLLOWING_IN_PROCESS,
+    payload: {userId, followingInProcess}
 } as const)

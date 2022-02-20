@@ -18,6 +18,8 @@ type UserPropsType = {
      * Callbock that remove someone user from followers
      */
     stopBeingFollower: (userID: number) => void
+    followingInProcessUsersId: number[]
+    toggleFollowingInProcess: (userId: number, followingInProcess: boolean) => void
     background?: string
     color?: string
 } & UserType
@@ -35,20 +37,26 @@ export const User = React.memo((props: UserPropsType) => {
     }
     `
     let onFollowClick = () => {
+        props.toggleFollowingInProcess(props.id, true)
         usersAPI.becomeFollower(props.id).then(data => {
             if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
-                props.becomeFollower(props.id);
+                props.becomeFollower(props.id)
             }
+            props.toggleFollowingInProcess(props.id, false)
         })
     };
     let onUnfollowClick = () => {
+        props.toggleFollowingInProcess(props.id, true)
         usersAPI.stopBeingFollower(props.id).then(data => {
             if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
                 props.stopBeingFollower(props.id)
             }
+            props.toggleFollowingInProcess(props.id, false)
         })
 
     };
+    //is follow button disabled?
+    const isFollowingButtonDisabled = props.followingInProcessUsersId.includes(props.id)
     return (
         <UserWrapper className={styleModule.userWrapper}>
             <div className={styleModule.avatar}>
@@ -68,12 +76,14 @@ export const User = React.memo((props: UserPropsType) => {
                             onClick={onUnfollowClick}
                             backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
                             background={BUTTON_STYLE.BACKGROUND}
-                            colorHover={BUTTON_STYLE.COLOR_HOVER}/> :
+                            colorHover={BUTTON_STYLE.COLOR_HOVER}
+                            disabled={isFollowingButtonDisabled}/> :
                     <Button name={'Follow'}
                             onClick={onFollowClick}
                             backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
                             background={BUTTON_STYLE.BACKGROUND}
-                            colorHover={BUTTON_STYLE.COLOR_HOVER}/>
+                            colorHover={BUTTON_STYLE.COLOR_HOVER}
+                            disabled={isFollowingButtonDisabled}/>
                 }
             </div>
         </UserWrapper>

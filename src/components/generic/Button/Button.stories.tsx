@@ -61,5 +61,10 @@ SendButton.args = {
     background: '#ffffff',
     backgroundHover: 'tomato'
 };
+export const DisabledButton = Template.bind({});
+DisabledButton.args = {
+    name: 'Send',
+    disabled: true
+};
 
 

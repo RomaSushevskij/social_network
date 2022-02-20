@@ -7,7 +7,7 @@ import {
     setIsFetchingValue,
     setUsers,
     setUsersTotalCount,
-    stopBeingFollower,
+    stopBeingFollower, toggleFollowingInProcess,
     UserType
 } from "../../redux/redusers/usersReducer/usersReducer";
 import React from "react";
@@ -62,6 +62,7 @@ type MapStateToPropsType = {
     pageSize: number,
     currentPage: number
     isFetching: boolean
+    followingInProcessUsersId: number[]
 }
 type MapDispatchToPropsType = {
     becomeFollower: (userID: number) => void
@@ -70,6 +71,7 @@ type MapDispatchToPropsType = {
     setCurrentPage: (page: number) => void
     setUsersTotalCount: (usersTotalCount: number) => void
     setIsFetchingValue: (isFetching: boolean) => void
+    toggleFollowingInProcess: (userId: number, followingInProcess: boolean) => void
 }
 
 export type UsersApiContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -81,6 +83,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProcessUsersId: state.usersPage.followingInProcessUsersId,
     }
 }
 
@@ -91,4 +94,5 @@ export const UsersContainer = connect(mapStateToProps, {
     setCurrentPage,
     setUsersTotalCount,
     setIsFetchingValue,
+    toggleFollowingInProcess,
 } as MapDispatchToPropsType)(UsersApiContainer)

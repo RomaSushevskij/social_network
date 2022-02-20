@@ -4,7 +4,22 @@ import {Header} from "./Header";
 import {AppStateType} from "../../redux/redux-store";
 import {InitialStateAuthType, setAuthUserData, setFullNameAndAvatar} from "../../redux/redusers/auth/authReducer";
 import {HEADER_STYLE} from "../../App";
+import axios from "axios";
+import {ProfileType} from "../../redux/redusers/profileReducer/profileReducer";
 import {AUTH_ME_RESULT_CODES, authMeAPI, profileAPI} from "../../api/api";
+
+export type DataType = {
+    id: number,
+    email: string,
+    login: string
+}
+export type GetAuthUserDataType = {
+    data: DataType
+    fieldsErrors: Array<any>
+    messages: Array<string>
+    resultCode: number
+}
+
 
 class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType> {
     componentDidMount(): void {
@@ -14,14 +29,12 @@ class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType> {
                 setAuthUserData(data.data)
             }
         }).then(() => {
-                if (this.props.auth.id) {
-                    profileAPI.getProfile(this.props.auth.id.toString())
-                        .then(data => {
-                            const fullName = data.fullName
-                            const avatar = data.photos.small
-                            setFullNameAndAvatar(fullName, avatar)
-                        })
-                }
+            this.props.auth.id &&  profileAPI.getProfile(this.props.auth.id)
+               .then(data => {
+                    const fullName = data.fullName
+                    const avatar = data.photos.small
+                    setFullNameAndAvatar(fullName, avatar)
+                })
             }
         )
     }
@@ -43,7 +56,7 @@ export type HeaderAPIContainerPropsType = MapStateToPropsType & MapDispatchToPro
 type MapStateToPropsType = {
     auth: InitialStateAuthType
     fullName: string | null
-    avatar: string | null
+    avatar: string | null | undefined
 }
 type MapDispatchToPropsType = {
     setAuthUserData: ({id, email, login}: { id: number, email: string, login: string }) => void
