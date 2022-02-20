@@ -1,49 +1,35 @@
 import React from "react";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {ProfileType, setProfile} from "../../redux/redusers/profileReducer/profileReducer";
 import {Profile} from "./Profile";
 import {Preloader} from "../generic/Preloader/Preloader";
-import {useParams} from "react-router-dom";
+import {withRouter} from "../../hoc/withRouter";
+import {profileAPI} from "../../api/api";
 
 
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
 
-    componentDidMount(): void {
-        const {setProfile,params} = this.props
+    refreshProfile = () => {
+        const {setProfile, params} = this.props
         let userId = params["*"]
-        if(!userId || userId === '*') {
+        if (!userId || userId === '*') {
             userId = '20392'
         }
-        axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`, {
-            withCredentials: true,
-            headers: {
-                "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
-            }
-        })
-            .then(response => {
-                setProfile(response.data)
+        profileAPI.getProfile(userId)
+            .then(data => {
+                setProfile(data)
             })
+    }
+
+    componentDidMount(): void {
+        this.refreshProfile()
     }
 
     //getting own profile after switching from someone profile to your own
     componentDidUpdate(prevProps: Readonly<ProfileAPIContainerPropsType>, prevState: Readonly<{}>, snapshot?: any): void {
-        if(prevProps.params ! == this.props.params) {
-            const {setProfile, params} = this.props
-            let userId = params["*"]
-            if (!userId || userId === '*') {
-                userId = '20392'
-            }
-            axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`, {
-                withCredentials: true,
-                headers: {
-                    "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
-                }
-            })
-                .then(response => {
-                    setProfile(response.data)
-                })
+        if (prevProps.params !== this.props.params) {
+            this.refreshProfile()
         }
     }
 
@@ -59,7 +45,7 @@ class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> 
 export type ProfileAPIContainerPropsType =
     MapStateToPropsType &
     MapDispatchToPropsType &
-    {params: {['*']:string}} //... <= profile/*... => type for props
+    { params: { ['*']: string } } //... <= profile/*... => type for props
 
 type MapStateToPropsType = {
     profile: ProfileType | null
@@ -72,16 +58,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile
 })
 
-//hoc for getting params
-const withRouter = (WrappedComponent: typeof React.Component) => {
-    const ComponentWithRouter = (props: object) => {
-        const params = useParams<'*'>() //... <= profile/*
-        return (
-            <WrappedComponent {...props} params={params}/>
-        )
-    }
-    return ComponentWithRouter
-}
 
 export const ProfileContainer = connect(mapStateToProps, {setProfile} as MapDispatchToPropsType)(withRouter(ProfileAPIContainer))
 

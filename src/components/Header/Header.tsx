@@ -14,14 +14,13 @@ export type HeaderPropsType = {
 } & HeaderAPIContainerPropsType
 
 
-
 export const Header = React.memo((props: HeaderPropsType) => {
     const {
         title,
-            description,
-            background,
-            color,
-            logo,
+        description,
+        background,
+        color,
+        logo,
         avatar,
         fullName,
         auth,

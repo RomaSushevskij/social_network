@@ -1,5 +1,5 @@
 import {authReducer, InitialStateAuthType, setAuthUserData, setFullNameAndAvatar} from "./authReducer";
-import {DataType} from "../../../components/Header/HeaderContainer";
+import {AuthUserDataType} from "../../../api/api";
 
 let startState: InitialStateAuthType
 beforeEach(()=>{
@@ -14,7 +14,7 @@ beforeEach(()=>{
 })
 
 test('correct data should be set', () => {
-    const data: DataType = {id:13, email: 'roma.sushevskij@yandex.ru', login:'react&redux'}
+    const data: AuthUserDataType = {id:13, email: 'roma.sushevskij@yandex.ru', login:'react&redux'}
     const endState = authReducer(startState, setAuthUserData(data))
 
     expect(endState.isAuth).toBeTruthy()

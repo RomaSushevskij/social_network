@@ -4,45 +4,24 @@ import {Header} from "./Header";
 import {AppStateType} from "../../redux/redux-store";
 import {InitialStateAuthType, setAuthUserData, setFullNameAndAvatar} from "../../redux/redusers/auth/authReducer";
 import {HEADER_STYLE} from "../../App";
-import axios from "axios";
-import {ProfileType} from "../../redux/redusers/profileReducer/profileReducer";
-
-export type DataType = {
-    id: number,
-    email: string,
-    login: string
-}
-export type GetAuthUserDataType = {
-    data: DataType
-    fieldsErrors: Array<any>
-    messages: Array<string>
-    resultCode: number
-}
-
+import {AUTH_ME_RESULT_CODES, authMeAPI, profileAPI} from "../../api/api";
 
 class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType> {
     componentDidMount(): void {
         const {setAuthUserData, setFullNameAndAvatar} = this.props
-        axios.get<GetAuthUserDataType>(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true,
-            headers: {
-                "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
-            }
-        }).then(response => {
-            if (response.data.resultCode === 0) {
-                setAuthUserData(response.data.data)
+        authMeAPI.getAuthorizationInfo().then(data => {
+            if (data.resultCode === AUTH_ME_RESULT_CODES.success) {
+                setAuthUserData(data.data)
             }
         }).then(() => {
-                axios.get<ProfileType>(`https://social-network.samuraijs.com/api/1.0/profile/${this.props.auth.id}`, {
-                    withCredentials: true,
-                    headers: {
-                        "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
-                    }
-                }).then(response => {
-                    const fullName = response.data.fullName
-                    const avatar = response.data.photos?.small
-                    setFullNameAndAvatar(fullName, avatar)
-                })
+                if (this.props.auth.id) {
+                    profileAPI.getProfile(this.props.auth.id.toString())
+                        .then(data => {
+                            const fullName = data.fullName
+                            const avatar = data.photos.small
+                            setFullNameAndAvatar(fullName, avatar)
+                        })
+                }
             }
         )
     }
@@ -64,7 +43,7 @@ export type HeaderAPIContainerPropsType = MapStateToPropsType & MapDispatchToPro
 type MapStateToPropsType = {
     auth: InitialStateAuthType
     fullName: string | null
-    avatar: string | null | undefined
+    avatar: string | null
 }
 type MapDispatchToPropsType = {
     setAuthUserData: ({id, email, login}: { id: number, email: string, login: string }) => void

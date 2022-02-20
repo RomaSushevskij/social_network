@@ -1,4 +1,5 @@
-import {DataType} from "../../../components/Header/HeaderContainer";
+import {AuthUserDataType} from "../../../api/api";
+
 
 export enum AUTH_ACTIONS_TYPES {
     SET_AUTH_USER_DATA = 'social/auth/SET_AUTH_USER_DATA',
@@ -33,7 +34,7 @@ type ActionType =
     ReturnType<typeof setFullNameAndAvatar>
 
 
-export const setAuthUserData = ({id, email, login}: DataType) => ({
+export const setAuthUserData = ({id, email, login}: AuthUserDataType) => ({
     type: AUTH_ACTIONS_TYPES.SET_AUTH_USER_DATA,
     payload: {id, email, login}
 })

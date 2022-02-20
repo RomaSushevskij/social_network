@@ -11,30 +11,20 @@ import {
     UserType
 } from "../../redux/redusers/usersReducer/usersReducer";
 import React from "react";
-import axios from "axios";
+import {usersAPI} from "../../api/api";
 
-export type GetUsersDataType = {
-    error: string | null
-    items: Array<UserType>
-    totalCount: number
-}
 
 class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     componentDidMount(): void {
-        const {users, setUsers, setUsersTotalCount, setIsFetchingValue} = this.props
+        const {currentPage, pageSize, users, setUsers, setUsersTotalCount, setIsFetchingValue} = this.props
         //get request for getting users
         if (!users.length) {
             setIsFetchingValue(true)
-            axios.get<GetUsersDataType>(`https://social-network.samuraijs.com/api/1.0/users?count=12`, {
-                withCredentials: true,
-                headers: {
-                    "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
-                }
-            }).then(response => {
+            usersAPI.getUsers(pageSize, currentPage).then(data => {
                 setIsFetchingValue(false)
-                setUsers(response.data.items)
-                setUsersTotalCount(response.data.totalCount)
+                setUsers(data.items)
+                setUsersTotalCount(data.totalCount)
             })
         }
     }
@@ -46,17 +36,12 @@ class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     // action for pressing on page number
     onChangePage = (pageNumber: number) => {
-        const {setUsers, setIsFetchingValue} = this.props
+        const {pageSize, setUsers, setIsFetchingValue} = this.props
         this.props.setCurrentPage(pageNumber)
         setIsFetchingValue(true)
-        axios.get<GetUsersDataType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`, {
-            withCredentials: true,
-            headers: {
-                "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
-            }
-        }).then(response => {
+        usersAPI.getUsers(pageSize, pageNumber).then(data => {
             setIsFetchingValue(false)
-            setUsers(response.data.items)
+            setUsers(data.items)
         })
     }
 
