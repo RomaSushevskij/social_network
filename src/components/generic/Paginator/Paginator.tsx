@@ -24,8 +24,13 @@ export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorProp
     let [portionNumber, setPortionNumber] = useState<number>(1);
     const portionCount: number = Math.ceil(pageCount / portionSize);
 
-    const leftPortionPageNumber: number = portionSize * (portionNumber - 1) + 1;
-    const rightPortionPageNumber: number = portionSize * portionNumber;
+    const leftPortionPageNumber: number = useMemo(() => {
+        return portionSize * (portionNumber - 1) + 1
+    }, [portionSize,
+        portionNumber])
+    const rightPortionPageNumber: number = useMemo(() => {
+        return portionSize * portionNumber;
+    }, [portionSize, portionNumber])
     return (
         <div className={styleModule.paginator}>
             {portionNumber > 1 && <button className={styleModule.firstPage} onClick={() => {

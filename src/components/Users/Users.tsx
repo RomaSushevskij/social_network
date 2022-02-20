@@ -24,8 +24,8 @@ export const Users = React.memo((props: UsersPropsType) => {
     } = props
 
     let userElements = users.map(user => <User {...user}
-                                                         becomeFollower={becomeFollower}
-                                                         stopBeingFollower={stopBeingFollower}/>);
+                                               becomeFollower={becomeFollower}
+                                               stopBeingFollower={stopBeingFollower}/>);
     return (
         <div className={styleModule.usersWrapper}>
             <div>

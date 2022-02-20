@@ -6,6 +6,16 @@ import {UserType} from "../../../redux/redusers/usersReducer/usersReducer";
 import {Button} from "../../generic/Button/Button";
 import {BUTTON_STYLE} from "../../Profile/MyPosts/MyPosts";
 import styled from "styled-components";
+import axios from "axios";
+
+
+export type PostFollowDataType = {
+    resultCode: number
+    messages: Array<string>
+    data: object
+    fieldsErrors: Array<any>
+}
+export type DeleteFollowDataType = PostFollowDataType
 
 type UserPropsType = {
     /**
@@ -16,8 +26,8 @@ type UserPropsType = {
      * Callbock that remove someone user from followers
      */
     stopBeingFollower: (userID: number) => void
-    background?:string
-    color?:string
+    background?: string
+    color?: string
 } & UserType
 
 export const User = React.memo((props: UserPropsType) => {
@@ -33,10 +43,29 @@ export const User = React.memo((props: UserPropsType) => {
     }
     `
     let onFollowClick = () => {
-        props.becomeFollower(props.id);
+        axios.post<PostFollowDataType>(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {}, {
+            withCredentials: true,
+            headers: {
+                "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
+            }
+        }).then(response => {
+            if (response.data.resultCode === 0) {
+                props.becomeFollower(props.id);
+            }
+        })
     };
     let onUnfollowClick = () => {
-        props.stopBeingFollower(props.id)
+        axios.delete<DeleteFollowDataType>(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {
+            withCredentials: true,
+            headers: {
+                "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
+            }
+        }).then(response => {
+            if (response.data.resultCode === 0) {
+                props.stopBeingFollower(props.id)
+            }
+        })
+
     };
     return (
         <UserWrapper className={styleModule.userWrapper}>
