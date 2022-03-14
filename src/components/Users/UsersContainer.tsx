@@ -2,31 +2,23 @@ import {connect} from "react-redux";
 import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
-    becomeFollower,
-    setCurrentPage,
-    setIsFetchingValue,
-    setUsers,
-    setUsersTotalCount,
-    stopBeingFollower, toggleFollowingInProcess,
-    UserType
+
+    getUsers,
+    repeatGetUsers,
+    unfollow,
+    toggleFollowingInProcess,
+    UserType, becomeFollower, stopBeingFollower
 } from "../../redux/redusers/usersReducer/usersReducer";
 import React from "react";
-import {usersAPI} from "../../api/api";
 
 
 class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     componentDidMount(): void {
-        const {currentPage, pageSize, users, setUsers, setUsersTotalCount, setIsFetchingValue} = this.props
-        //get request for getting users
-        if (!users.length) {
-            setIsFetchingValue(true)
-            usersAPI.getUsers(pageSize, currentPage).then(data => {
-                setIsFetchingValue(false)
-                setUsers(data.items)
-                setUsersTotalCount(data.totalCount)
-            })
-        }
+        const {currentPage, pageSize, getUsers} = this.props
+        //get request for getting users (with thunk)
+        getUsers(pageSize, currentPage)
+
     }
 
     //optimization of unnecessary rendering. Alternative of React.memo
@@ -36,13 +28,8 @@ class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     // action for pressing on page number
     onChangePage = (pageNumber: number) => {
-        const {pageSize, setUsers, setIsFetchingValue} = this.props
-        this.props.setCurrentPage(pageNumber)
-        setIsFetchingValue(true)
-        usersAPI.getUsers(pageSize, pageNumber).then(data => {
-            setIsFetchingValue(false)
-            setUsers(data.items)
-        })
+        const {pageSize,repeatGetUsers,} = this.props
+        repeatGetUsers(pageSize, pageNumber)
     }
 
     render() {
@@ -67,11 +54,9 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     becomeFollower: (userID: number) => void
     stopBeingFollower: (userID: number) => void
-    setUsers: (users: UserType[]) => void
-    setCurrentPage: (page: number) => void
-    setUsersTotalCount: (usersTotalCount: number) => void
-    setIsFetchingValue: (isFetching: boolean) => void
     toggleFollowingInProcess: (userId: number, followingInProcess: boolean) => void
+    getUsers: (pageSize: number, currentPage: number) => void
+    repeatGetUsers: (pageSize:number, pageNumber:number) => void
 }
 
 export type UsersApiContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -90,9 +75,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 export const UsersContainer = connect(mapStateToProps, {
     becomeFollower,
     stopBeingFollower,
-    setUsers,
-    setCurrentPage,
-    setUsersTotalCount,
-    setIsFetchingValue,
     toggleFollowingInProcess,
+    getUsers,
+    repeatGetUsers,
 } as MapDispatchToPropsType)(UsersApiContainer)

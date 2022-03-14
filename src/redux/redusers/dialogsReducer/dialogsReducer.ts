@@ -81,7 +81,7 @@ const initialState = {
     newMessageText: ''
 };
 
-export const dialogsReducer = (state: InitialStateDialogsType = initialState, action: ActionType): InitialStateDialogsType => {
+export const dialogsReducer = (state: InitialStateDialogsType = initialState, action: DialogsActionType): InitialStateDialogsType => {
     switch (action.type) {
         case "social/dialogs/ADD-MESSAGE":
             const newMessage: MessageType = {
@@ -99,7 +99,7 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
     }
 };
 
-type ActionType =
+export type DialogsActionType =
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC>
 

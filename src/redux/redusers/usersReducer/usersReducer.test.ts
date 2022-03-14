@@ -1,10 +1,10 @@
 import {
-    becomeFollower,
+    follow,
     InitialStateUsersType,
     setCurrentPage, setIsFetchingValue,
     setUsers,
     setUsersTotalCount,
-    stopBeingFollower, toggleFollowingInProcess,
+    unfollow, toggleFollowingInProcess,
     usersReducer
 } from "./usersReducer";
 
@@ -56,7 +56,7 @@ beforeEach(() => {
 })
 
 test('correct user should become follower', () => {
-    const endState = usersReducer(startState, becomeFollower(2))
+    const endState = usersReducer(startState, follow(2))
 
     expect(endState.users.length).toBe(3)
     expect(endState.users[0].followed).toBeFalsy()
@@ -66,7 +66,7 @@ test('correct user should become follower', () => {
 })
 
 test('correct user should stop being a follower', () => {
-    const endState = usersReducer(startState, stopBeingFollower(3))
+    const endState = usersReducer(startState, unfollow(3))
 
     expect(endState.users.length).toBe(3)
     expect(endState.users[0].followed).toBeFalsy()

@@ -2,7 +2,12 @@ import React from "react";
 import {connect} from "react-redux";
 import {Header} from "./Header";
 import {AppStateType} from "../../redux/redux-store";
-import {InitialStateAuthType, setAuthUserData, setFullNameAndAvatar} from "../../redux/redusers/auth/authReducer";
+import {
+    getAuthorizationInfo,
+    InitialStateAuthType,
+    setAuthUserData,
+    setFullNameAndAvatar
+} from "../../redux/redusers/auth/authReducer";
 import {HEADER_STYLE} from "../../App";
 import axios from "axios";
 import {ProfileType} from "../../redux/redusers/profileReducer/profileReducer";
@@ -23,20 +28,8 @@ export type GetAuthUserDataType = {
 
 class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType> {
     componentDidMount(): void {
-        const {setAuthUserData, setFullNameAndAvatar} = this.props
-        authMeAPI.getAuthorizationInfo().then(data => {
-            if (data.resultCode === AUTH_ME_RESULT_CODES.success) {
-                setAuthUserData(data.data)
-            }
-        }).then(() => {
-            this.props.auth.id &&  profileAPI.getProfile(this.props.auth.id)
-               .then(data => {
-                    const fullName = data.fullName
-                    const avatar = data.photos.small
-                    setFullNameAndAvatar(fullName, avatar)
-                })
-            }
-        )
+        const {getAuthorizationInfo} = this.props
+        getAuthorizationInfo()
     }
 
     render = () => {
@@ -59,8 +52,7 @@ type MapStateToPropsType = {
     avatar: string | null | undefined
 }
 type MapDispatchToPropsType = {
-    setAuthUserData: ({id, email, login}: { id: number, email: string, login: string }) => void
-    setFullNameAndAvatar: (fullName: string, avatar: string | null) => void
+    getAuthorizationInfo: () => void
 }
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -72,8 +64,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 };
 
 export const HeaderContainer = connect(mapStateToProps, {
-    setAuthUserData,
-    setFullNameAndAvatar
+    getAuthorizationInfo
 } as MapDispatchToPropsType)(HeaderAPIContainer)
 
 

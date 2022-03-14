@@ -1,3 +1,7 @@
+import {profileAPI} from "../../../api/api";
+import {Dispatch} from "redux";
+import {AppActionsType, AppThunk} from "../../redux-store";
+
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
     UPDATE_NEW_POST_TEXT = 'social/profile/UPDATE_NEW_POST_TEXT',
@@ -87,7 +91,7 @@ const initialState = {
     profile: null as ProfileType | null,
 };
 
-export const profileReducer = (state: InitialStateProfileType = initialState, action: ActionType): InitialStateProfileType => {
+export const profileReducer = (state: InitialStateProfileType = initialState, action: ProfileActionType): InitialStateProfileType => {
     switch (action.type) {
         case PROFILE_ACTIONS_TYPES.ADD_POST:
             const newPost = {
@@ -124,13 +128,12 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
     }
 };
 
-type ActionType =
+export type ProfileActionType =
     ReturnType<typeof addPost> |
     ReturnType<typeof updateNewPostText> |
     ReturnType<typeof removePost> |
     ReturnType<typeof likePost> |
     ReturnType<typeof setProfile>
-
 
 
 export const addPost = () => ({type: PROFILE_ACTIONS_TYPES.ADD_POST} as const);
@@ -140,4 +143,13 @@ export const updateNewPostText = (newPostText: string) => ({
 } as const);
 export const removePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.REMOVE_POST, payload: {id}} as const);
 export const likePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.LIKE_POST, payload: {id}} as const);
-export const setProfile = (profile:ProfileType) => ({type: PROFILE_ACTIONS_TYPES.SET_PROFILE, payload: {profile}} as const);
+export const setProfile = (profile: ProfileType) => ({
+    type: PROFILE_ACTIONS_TYPES.SET_PROFILE,
+    payload: {profile}
+} as const);
+export const getProfile = (userId: number): AppThunk => dispatch => {
+    profileAPI.getProfile(userId)
+        .then(data => {
+            dispatch(setProfile(data))
+        })
+}

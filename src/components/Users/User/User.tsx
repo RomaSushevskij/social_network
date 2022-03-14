@@ -2,7 +2,7 @@ import React from "react";
 import styleModule from "./User.module.css";
 import userPhotoDefault from "./../../../usersAvatars/user.png";
 import {NavLink} from "react-router-dom";
-import {UserType} from "../../../redux/redusers/usersReducer/usersReducer";
+import {becomeFollower, UserType} from "../../../redux/redusers/usersReducer/usersReducer";
 import {Button} from "../../generic/Button/Button";
 import {BUTTON_STYLE} from "../../Profile/MyPosts/MyPosts";
 import styled from "styled-components";
@@ -36,27 +36,10 @@ export const User = React.memo((props: UserPropsType) => {
     border-color: ${props.color ? props.color : 'white'}
     }
     `
-    let onFollowClick = () => {
-        props.toggleFollowingInProcess(props.id, true)
-        usersAPI.becomeFollower(props.id).then(data => {
-            if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
-                props.becomeFollower(props.id)
-            }
-            props.toggleFollowingInProcess(props.id, false)
-        })
-    };
-    let onUnfollowClick = () => {
-        props.toggleFollowingInProcess(props.id, true)
-        usersAPI.stopBeingFollower(props.id).then(data => {
-            if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
-                props.stopBeingFollower(props.id)
-            }
-            props.toggleFollowingInProcess(props.id, false)
-        })
 
-    };
     //is follow button disabled?
     const isFollowingButtonDisabled = props.followingInProcessUsersId.includes(props.id)
+
     return (
         <UserWrapper className={styleModule.userWrapper}>
             <div className={styleModule.avatar}>
@@ -73,13 +56,13 @@ export const User = React.memo((props: UserPropsType) => {
             <div className={styleModule.followed}>
                 {props.followed ?
                     <Button name={'Unfollow'}
-                            onClick={onUnfollowClick}
+                            onClick={()=> props.stopBeingFollower(props.id)}
                             backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
                             background={BUTTON_STYLE.BACKGROUND}
                             colorHover={BUTTON_STYLE.COLOR_HOVER}
                             disabled={isFollowingButtonDisabled}/> :
                     <Button name={'Follow'}
-                            onClick={onFollowClick}
+                            onClick={() => props.becomeFollower(props.id)}
                             backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
                             background={BUTTON_STYLE.BACKGROUND}
                             colorHover={BUTTON_STYLE.COLOR_HOVER}

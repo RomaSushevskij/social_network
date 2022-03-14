@@ -1,3 +1,7 @@
+import {Dispatch} from 'redux';
+import {AppActionsType, AppThunk} from "../../redux-store";
+import {FOLLOW_UNFOLLOW_RESULT_CODES, usersAPI} from "../../../api/api";
+
 export enum USERS_ACTIONS_TYPES {
     FOLLOW = 'social/users/FOLLOW',
     UNFOLLOW = 'social/users/UNFOLLOW',
@@ -47,7 +51,7 @@ const initialState = {
 }
 
 
-export const usersReducer = (state: InitialStateUsersType = initialState, action: ActionType): InitialStateUsersType => {
+export const usersReducer = (state: InitialStateUsersType = initialState, action: UsersActionType): InitialStateUsersType => {
     switch (action.type) {
         case USERS_ACTIONS_TYPES.SET_USERS:
             return {
@@ -80,9 +84,9 @@ export const usersReducer = (state: InitialStateUsersType = initialState, action
     }
 }
 
-export type ActionType =
-    ReturnType<typeof becomeFollower> |
-    ReturnType<typeof stopBeingFollower> |
+export type UsersActionType =
+    ReturnType<typeof follow> |
+    ReturnType<typeof unfollow> |
     ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> |
     ReturnType<typeof setUsersTotalCount> |
@@ -90,8 +94,8 @@ export type ActionType =
     ReturnType<typeof toggleFollowingInProcess>
 
 
-export const becomeFollower = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
-export const stopBeingFollower = (userID: number) => ({type: USERS_ACTIONS_TYPES.UNFOLLOW, payload: {userID}} as const)
+export const follow = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
+export const unfollow = (userID: number) => ({type: USERS_ACTIONS_TYPES.UNFOLLOW, payload: {userID}} as const)
 export const setUsers = (users: UserType[]) => ({type: USERS_ACTIONS_TYPES.SET_USERS, payload: {users}} as const)
 export const setCurrentPage = (currentPage: number) => ({
     type: USERS_ACTIONS_TYPES.SET_CURRENT_PAGE,
@@ -108,3 +112,42 @@ export const toggleFollowingInProcess = (userId: number, followingInProcess: boo
     type: USERS_ACTIONS_TYPES.TOGGLE_FOLLOWING_IN_PROCESS,
     payload: {userId, followingInProcess}
 } as const)
+
+export const getUsers = (pageSize: number, currentPage: number): AppThunk => dispatch => {
+    dispatch(setIsFetchingValue(true))
+    usersAPI.getUsers(pageSize, currentPage)
+        .then(data => {
+            dispatch(setIsFetchingValue(false))
+            dispatch(setUsers(data.items))
+            dispatch(setUsersTotalCount(data.totalCount))
+        })
+}
+export const becomeFollower = (id: number): AppThunk => dispatch => {
+    dispatch(toggleFollowingInProcess(id, true))
+    usersAPI.becomeFollower(id).then(data => {
+        if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
+            dispatch(follow(id))
+        }
+        dispatch(toggleFollowingInProcess(id, false))
+    })
+}
+export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => dispatch => {
+    dispatch(setCurrentPage(pageNumber))
+    dispatch(setIsFetchingValue(true))
+    usersAPI.getUsers(pageSize, pageNumber).then(data => {
+        dispatch(setIsFetchingValue(false))
+        dispatch(setUsers(data.items))
+    })
+}
+
+export const stopBeingFollower = (id: number):AppThunk => dispatch => {
+    dispatch(toggleFollowingInProcess(id, true))
+    usersAPI.stopBeingFollower(id).then(data => {
+        if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
+            dispatch(unfollow(id))
+        }
+        dispatch(toggleFollowingInProcess(id, false))
+    })
+
+}
+
