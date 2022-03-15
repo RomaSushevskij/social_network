@@ -2,11 +2,10 @@ import React from "react";
 import styleModule from "./User.module.css";
 import userPhotoDefault from "./../../../usersAvatars/user.png";
 import {NavLink} from "react-router-dom";
-import {becomeFollower, UserType} from "../../../redux/redusers/usersReducer/usersReducer";
+import {UserType} from "../../../redux/redusers/usersReducer/usersReducer";
 import {Button} from "../../generic/Button/Button";
 import {BUTTON_STYLE} from "../../Profile/MyPosts/MyPosts";
 import styled from "styled-components";
-import {FOLLOW_UNFOLLOW_RESULT_CODES, usersAPI} from "../../../api/api";
 
 
 type UserPropsType = {

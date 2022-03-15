@@ -11,6 +11,8 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
+import {Login} from "./components/Login/Login";
+import {SettingsContainer} from "./components/Settings/SettingsContainer";
 
 
 export type PATHType = {
@@ -20,14 +22,16 @@ export type PATHType = {
     NEWS: string
     USERS: string
     SETTINGS: string
+    LOGIN:string
 }
-const PATH: PATHType = {
+export const PATH: PATHType = {
     PROFILE: '/profile/*',
     DIALOGS: '/dialogs/*',
     MUSIC: '/music',
     NEWS: '/news',
     USERS: '/users',
-    SETTINGS: '/settings'
+    SETTINGS: '/settings',
+    LOGIN: '/login',
 };
 
 export const HEADER_STYLE = {
@@ -37,6 +41,7 @@ export const HEADER_STYLE = {
 };
 
 function App() {
+
     return (
             <div className="app_wrapper">
                 <HeaderContainer/>
@@ -49,7 +54,8 @@ function App() {
                         <Route path={PATH.MUSIC} element={<Music/>}/>
                         <Route path={PATH.NEWS} element={<News/>}/>
                         <Route path={PATH.USERS} element={<UsersContainer/>}/>
-                        <Route path={PATH.SETTINGS} element={<Settings/>}/>
+                        <Route path={PATH.SETTINGS} element={<SettingsContainer/>}/>
+                        <Route path={PATH.LOGIN} element={<Login/>}/>
                     </Routes>
                 </div>
             </div>

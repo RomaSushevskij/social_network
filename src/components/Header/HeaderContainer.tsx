@@ -2,16 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {Header} from "./Header";
 import {AppStateType} from "../../redux/redux-store";
-import {
-    getAuthorizationInfo,
-    InitialStateAuthType,
-    setAuthUserData,
-    setFullNameAndAvatar
-} from "../../redux/redusers/auth/authReducer";
+import {getAuthorizationInfo, InitialStateAuthType} from "../../redux/redusers/auth/authReducer";
 import {HEADER_STYLE} from "../../App";
-import axios from "axios";
-import {ProfileType} from "../../redux/redusers/profileReducer/profileReducer";
-import {AUTH_ME_RESULT_CODES, authMeAPI, profileAPI} from "../../api/api";
 
 export type DataType = {
     id: number,

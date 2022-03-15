@@ -1,5 +1,4 @@
-import {Dispatch} from 'redux';
-import {AppActionsType, AppThunk} from "../../redux-store";
+import {AppThunk} from "../../redux-store";
 import {FOLLOW_UNFOLLOW_RESULT_CODES, usersAPI} from "../../../api/api";
 
 export enum USERS_ACTIONS_TYPES {

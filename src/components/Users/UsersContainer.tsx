@@ -2,12 +2,12 @@ import {connect} from "react-redux";
 import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
-
+    becomeFollower,
     getUsers,
     repeatGetUsers,
-    unfollow,
+    stopBeingFollower,
     toggleFollowingInProcess,
-    UserType, becomeFollower, stopBeingFollower
+    UserType
 } from "../../redux/redusers/usersReducer/usersReducer";
 import React from "react";
 

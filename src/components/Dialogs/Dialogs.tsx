@@ -6,6 +6,8 @@ import {Button} from "../generic/Button/Button";
 import {Textarea} from "../generic/Textarea/Textarea";
 import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Navigate} from "react-router-dom";
+import {PATH} from "../../App";
 
 
 const MESSAGE_STYLE = {
@@ -31,7 +33,11 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
     const onUpdateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageText(e.currentTarget.value)
     };
-
+    if (!props.isAuth) {
+        return (
+            <Navigate to={PATH.LOGIN}/>
+        )
+    }
     return (
         <div className={styleModule.dialogs}>
             <div className={styleModule.heading}>
