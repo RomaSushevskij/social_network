@@ -4,7 +4,7 @@ import styleModule from './Login.module.css';
 
 export function Login(props:any) {
     return (
-        <div>
+        <div className={styleModule.wrapped}>
            Login
         </div>
     );

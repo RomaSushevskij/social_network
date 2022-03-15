@@ -1,8 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import './Navbar.module.css';
 import styleModule from './Navbar.module.css';
-import {NavLink} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faCommentDots,
     faHeadphonesAlt,
@@ -11,46 +9,63 @@ import {
     faUserAlt,
     faUsers
 } from "@fortawesome/free-solid-svg-icons";
+import {AppStateType} from "../../redux/redux-store";
+import {connect} from "react-redux";
+import {CustomNavLink} from "./NavLink/CustomNavLink";
+import {Button} from "../generic/Button/Button";
+import {Navigate,useNavigate} from 'react-router-dom';
 
-export const Navbar = React.memo(() => {
+
+export type NavLinkItem = {
+    title: string
+    path: string
+    iconTitle: string
+    withAuthRedirect: boolean
+}
+
+
+export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
+    const navigate = useNavigate()
+
+    const navLinksArr: NavLinkItem[] = [
+        {title: 'Profile', path: '/profile', iconTitle: JSON.stringify(faUserAlt), withAuthRedirect: true,},
+        {title: 'Messages', path: '/dialogs', iconTitle: JSON.stringify(faCommentDots), withAuthRedirect: true,},
+        {title: 'News', path: '/news', iconTitle: JSON.stringify(faNewspaper), withAuthRedirect: false,},
+        {title: 'Music', path: '/music', iconTitle: JSON.stringify(faHeadphonesAlt), withAuthRedirect: false,},
+        {title: 'Users', path: '/users', iconTitle: JSON.stringify(faUsers), withAuthRedirect: false,},
+        {title: 'Settings', path: '/settings', iconTitle: JSON.stringify(faSlidersH), withAuthRedirect: true,},
+    ]
+    const [navLinks, setNavLinks] = useState<NavLinkItem[]>(navLinksArr)
+
+    let resultNavLinks = navLinks
+    if (!props.isAuth) {
+        resultNavLinks = navLinks.filter(nav => !nav.withAuthRedirect)
+    }
+
+    const customNavLinks = resultNavLinks.map(navLink => {
+            return (
+                <CustomNavLink key={navLink.title} {...navLink}/>
+            )
+
+    })
     return (
         <>
             <nav className={styleModule.nav}>
-                <div className={styleModule.item}>
-                    <NavLink to={'/profile'}
-                             className={profile => profile.isActive ? styleModule.active : ''}>
-                        <FontAwesomeIcon icon={faUserAlt} className={styleModule.icon}/> Profile
-                    </NavLink>
-                </div>
-                <div className={styleModule.item}>
-                    <NavLink to={'/dialogs'}
-                             className={dialogs => dialogs.isActive ? styleModule.active : ''}>
-                        <FontAwesomeIcon icon={faCommentDots} className={styleModule.icon}/> Messages
-                    </NavLink>
-                </div>
-                <div className={styleModule.item}>
-                    <NavLink to={'/news'} className={news => news.isActive ? styleModule.active : ''}>
-                        <FontAwesomeIcon icon={faNewspaper} className={styleModule.icon}/> News
-                    </NavLink>
-                </div>
-                <div className={styleModule.item}>
-                    <NavLink to={'/music'} className={music => music.isActive ? styleModule.active : ''}>
-                        <FontAwesomeIcon icon={faHeadphonesAlt} className={styleModule.icon}/> Music
-                    </NavLink>
-                </div>
-                <div className={`${styleModule.item} ${styleModule.users}`}>
-                    <NavLink to={'/users'} className={users => users.isActive ? styleModule.active : ''}>
-                        <FontAwesomeIcon icon={faUsers} className={styleModule.icon}/> Users
-                    </NavLink>
-                </div>
-                <div className={`${styleModule.item} ${styleModule.settings}`}>
-                    <NavLink to={'/settings'}
-                             className={settings => settings.isActive ? styleModule.active : ''}>
-                        <FontAwesomeIcon icon={faSlidersH} className={styleModule.icon}/> Settings
-                    </NavLink>
-                </div>
-
+                {customNavLinks}
+                {!props.isAuth && <div className={styleModule.buttonBlock}>
+                    <Button name={'Login'} onClick={()=>navigate('/login')}/>
+                </div>}
             </nav>
+
         </>
     )
 })
+
+const mapStateToProps = (state: AppStateType) => ({
+    isAuth: state.auth.isAuth
+})
+type MapStateToPropsType = {
+    isAuth: boolean
+}
+
+export const Navbar = connect(mapStateToProps)(NavbarContainer)

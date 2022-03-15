@@ -5,14 +5,16 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
-import {Settings} from "./components/Settings/Settings";
+import {SettingsContainer} from "./components/Settings/Settings";
 import logo from './main-logo.png';
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
-import {SettingsContainer} from "./components/Settings/SettingsContainer";
+import {AppStateType} from "./redux/redux-store";
+import {connect} from "react-redux";
+
 
 
 export type PATHType = {

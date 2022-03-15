@@ -5,7 +5,7 @@ import {getProfile, ProfileType} from "../../redux/redusers/profileReducer/profi
 import {Profile} from "./Profile";
 import {Preloader} from "../generic/Preloader/Preloader";
 import {withRouter} from "../../hoc/withRouter";
-import {Navigate} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
@@ -31,11 +31,6 @@ class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> 
     }
 
     render() {
-        if (!this.props.isAuth) {
-            return (
-                <Navigate to={'/login'}/>
-            )
-        }
         return this.props.profile ? (
                 <Profile {...this.props}/>) :
             (<Preloader size={'100px'} color={'#ffffff'}/>
@@ -50,10 +45,10 @@ export type ProfileAPIContainerPropsType =
 
 type MapStateToPropsType = {
     profile: ProfileType | null
-    isAuth:boolean
+    isAuth: boolean
 }
 type MapDispatchToPropsType = {
-    getProfile: (userId:number) => void
+    getProfile: (userId: number) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
@@ -62,6 +57,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 })
 
 
-export const ProfileContainer = connect(mapStateToProps, {getProfile} as MapDispatchToPropsType)(withRouter(ProfileAPIContainer))
+export const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {getProfile} as MapDispatchToPropsType)(withRouter(ProfileAPIContainer)))
 
 

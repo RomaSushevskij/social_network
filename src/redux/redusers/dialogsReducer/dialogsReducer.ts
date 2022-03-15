@@ -18,10 +18,11 @@ export type DialogType = {
     color?: string
 };
 export type MessageType = {
-    id: number,
-    name: string,
-    message: string,
-    image: string | null,
+    id: number
+    userId: number
+    name: string
+    message: string
+    image: string | null
     time: string
 };
 export type InitialStateDialogsType = typeof initialState
@@ -45,38 +46,42 @@ const initialState = {
     messagesData: [
         {
             id: 1,
+            userId: 1,
             name: 'Ruslan',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, rem!',
             image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album',
             time: '12:03'
         },
 
-        {id: 20392, name: 'Me', message: 'Lorem ipsum dolor !', image: null, time: '12:10'},
-        {id: 2, name: 'Dmitry', message: 'Lorem ipsum dolor sit amet', image: null, time: '13:01'},
+        {id: 2, userId: 20392, name: 'Me', message: 'Lorem ipsum dolor !', image: null, time: '12:10'},
+        {id: 3, name: 'Dmitry', userId: 2, message: 'Lorem ipsum dolor sit amet', image: null, time: '13:01'},
         {
-            id: 3,
+            id: 4,
             name: 'Ivan',
+            userId: 3,
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
             time: '13:08'
         },
         {
-            id: 20392,
+            id: 5,
+            userId: 20392,
             name: 'Me',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             image: null,
             time: '13:49'
         },
-        {id: 4, name: 'Mother', message: 'Lorem ipsum dolor !', image: null, time: '14:05'},
-        {id: 20392, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
+        {id: 6, name: 'Mother', userId: 4, message: 'Lorem ipsum dolor !', image: null, time: '14:05'},
+        {id: 7, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
         {
-            id: 20392,
+            id: 8,
             name: 'Me',
+            userId: 20392,
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit dolor sit amet, consectetur.',
             image: null,
             time: '14:10'
         },
-        {id: 4, name: 'Mother', message: 'Lorem  consectetur adipisicin ipsum dolor !', image: null, time: '14:23'},
+        {id: 9, name: 'Mother', userId: 5, message: 'Lorem  consectetur adipisicin ipsum dolor !', image: null, time: '14:23'},
     ] as Array<MessageType>,
     newMessageText: ''
 };
@@ -85,7 +90,8 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
     switch (action.type) {
         case "social/dialogs/ADD-MESSAGE":
             const newMessage: MessageType = {
-                id: 20392,
+                id: state.messagesData.length + 1,
+                userId: 20392,
                 name: 'Me',
                 message: state.newMessageText,
                 image: null,

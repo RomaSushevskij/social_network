@@ -1,22 +1,15 @@
 import React from "react";
 import styleModule from './Settings.module.css';
 import {UnderConstruction} from "../generic/UnderConstruction/UnderConstruction";
-import {Navigate} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
-type SettingsPropType = {
-    isAuth:boolean
-}
-
-export function Settings(props:SettingsPropType) {
-    if (!props.isAuth) {
-        return (
-            <Navigate to={'/login'}/>
-        )
-    }
-    return (
+function Settings(props:any) {
+       return (
         <div>
             <UnderConstruction/>
         </div>
     );
 }
+
+export const SettingsContainer = withAuthRedirect(Settings)
 

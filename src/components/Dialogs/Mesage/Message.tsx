@@ -8,6 +8,7 @@ export type MessagePropsType = {
     /**
      * Name of the interlocutor
      */
+    userId: number
     name: string,
     /**
      * Text of message
@@ -29,6 +30,7 @@ export type MessagePropsType = {
 
 export const Message = React.memo(({
                                        id,
+                                       userId,
                                        name,
                                        message,
                                        image,
@@ -41,11 +43,11 @@ export const Message = React.memo(({
                                    }: MessagePropsType) => {
     const MessageBlock = styled.div`
     & {
-    background: ${id === 20392 ? meBackground : background};
-    color: ${id === 20392 ? meColor : color}
+    background: ${userId === 20392 ? meBackground : background};
+    color: ${userId === 20392 ? meColor : color}
     }
     &:before {
-    background: radial-gradient(circle at top left, transparent 50%, ${id === 20392 ? meBackground : background} 50%);
+    background: radial-gradient(circle at top left, transparent 50%, ${userId === 20392 ? meBackground : background} 50%);
     }
     `;
     const Avatar = styled.div`
@@ -55,10 +57,10 @@ export const Message = React.memo(({
     `;
 
     // if the message is mine, then one style, if not, then another
-    const messageWrapperStyle = id === 20392 ?
+    const messageWrapperStyle = userId === 20392 ?
         `${styleModule.messageWrapper} ${styleModule.meMessageWrapper}` :
         styleModule.messageWrapper
-    const messageBlockStyle = id === 20392
+    const messageBlockStyle = userId === 20392
         ?
         `${styleModule.messageBlock} ${styleModule.meMessageBlock}` :
         styleModule.messageBlock

@@ -12,7 +12,7 @@
 }
 .item .icon {
     color: #ffffff;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 .item a {
     color: white;
@@ -40,11 +40,12 @@
     margin-left: 0;
 }
 
-.settings {
-    margin-top: 30px;
-}
-
 .users {
-    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.buttonBlock {
+    width: 95%;
+    display: flex;
+    justify-content: center;
 }
 
