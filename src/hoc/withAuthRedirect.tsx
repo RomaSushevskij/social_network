@@ -11,7 +11,7 @@ type WithAuthRedirectComponentType = {
     isAuth:boolean
 }
 
-export const withAuthRedirect = (WrappedComponent:typeof React.Component | React.FC) => {
+export const withAuthRedirect = (WrappedComponent: any) => {
 
     const WithAuthRedirectComponent = (props:WithAuthRedirectComponentType) => {
         if(!props.isAuth) {
