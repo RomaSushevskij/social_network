@@ -43,7 +43,6 @@ export const Users = React.memo((props: UsersPropsType) => {
                 <div className={styleModule.usersBlock}>
                     {userElements}
                 </div>}
-
         </div>
     )
 })

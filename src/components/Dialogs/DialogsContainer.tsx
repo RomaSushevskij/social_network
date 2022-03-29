@@ -1,4 +1,4 @@
-import React, {KeyboardEvent} from "react";
+import React, {ComponentType, KeyboardEvent} from "react";
 import {AppStateType} from "../../redux/redux-store";
 import {
     addMessageAC,
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     }
 }
 
-export const DialogsContainer = compose(
+export const DialogsContainer = compose<ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, mapDispatchToProps),
 )(Dialogs)

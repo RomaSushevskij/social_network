@@ -1,7 +1,7 @@
 .userWrapper {
-    padding: 20px;
-    min-width: 150px;
-    width: 163px;
+    padding: 10px;
+    min-width: 120px;
+    width: 130px;
     border-radius: 4px;
     box-shadow: 0 0 13px rgba(0, 0, 0, 0.3);
     display: grid;
@@ -18,8 +18,8 @@
 }
 
 .avatar img {
-    width: 90px;
-    height: 90px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border-width: 1px;
     border-style: solid;
