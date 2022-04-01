@@ -34,12 +34,12 @@ const InputText: React.FC<InputTextPropsType> = (
     };
 
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`;
-    const finalInputClassName = `${error ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className}`;
+    const finalInputClassName = `${error ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className ? s[className] : className}`;
 
     return (
         <div className={customStyle ? `${customStyle} ${s.inputWrapper}` : s.inputWrapper}>
             <input name={name}
-                   type={'text'}
+                   type={type}
                    onChange={onChangeCallback}
                    onKeyPress={onKeyPressCallback}
                    className={finalInputClassName}

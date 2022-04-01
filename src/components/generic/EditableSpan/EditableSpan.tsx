@@ -66,6 +66,7 @@ class EditableSpan extends React.Component<EditableSpanType> {
                                mountOnEnter>
                     <div className={style.inputWrapper}>
                         <InputText
+                            className={'forStatus'}
                             autoFocus
                             onBlur={this.onBlurCallback}
                             onEnter={this.onEnterCallback}

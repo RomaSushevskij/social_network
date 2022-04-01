@@ -1,0 +1,26 @@
+.wrapperLoginForm {
+    padding: 70px 100px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0F2F5;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    flex-direction: column;
+}
+.formWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.formElement {
+    margin:15px 0;
+}
+.formElement.checkMark {
+    align-self: flex-start;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+}

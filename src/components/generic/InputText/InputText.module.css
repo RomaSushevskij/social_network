@@ -1,6 +1,5 @@
 .inputWrapper {
     position: relative;
-    padding-bottom: 30px;
     color: #1c1e21;
 }
 
@@ -12,15 +11,26 @@
     font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
     font-size: 15px;
     line-height: 16px;
+    border-radius: 5px;
     margin: 0;
-    border: none;
+    border: 1px solid #ccd0d5;
     transition: all .3s ease;
+}
+.superInput.forStatus, .errorInput.forStatus  {
     background-color: transparent;
+    color: #ffffff;
+    border:none
 }
 
 .superInput:focus {
-    color: #ffffff;
+    border-color: #007FFF;
+    box-shadow: 0 0 12px rgba(0, 127, 255, .4);
+}
+.superInput.forStatus:focus {
     box-shadow: 0px 7px 10px -9px #ffffff;
+}
+.superInput.forStatus {
+    background-color: transparent;
 }
 
 .superInput:focus, .errorInput:focus {
