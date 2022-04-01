@@ -65,10 +65,12 @@
 }
 
 .loginAndAvatar .loginValue, .logoutButton {
-    letter-spacing: .05em;
-    color: white;
+
     align-self: center;
     margin-left: 20px;
+    text-transform: uppercase;
+    letter-spacing: .17em;
+    color: #ffffff;
 }
 
 .loginAndAvatar .avatar {

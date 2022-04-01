@@ -11,6 +11,15 @@ export class ProfileStatus extends React.PureComponent<ProfileStatusPropsType> {
     state = {
         status: this.props.status
     }
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>, snapshot?: any): void {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     onChangeText = (status: string) => {
         this.setState({
             status
