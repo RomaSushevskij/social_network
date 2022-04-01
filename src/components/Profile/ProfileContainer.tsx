@@ -1,22 +1,24 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {getProfile, ProfileType} from "../../redux/redusers/profileReducer/profileReducer";
+import {getProfile, getStatus, ProfileType, updateStatus} from "../../redux/redusers/profileReducer/profileReducer";
 import {Profile} from "./Profile";
 import {Preloader} from "../generic/Preloader/Preloader";
 import {withRouter} from "../../hoc/withRouter";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {profileAPI} from "../../api/api";
 
 
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
 
     refreshProfile = () => {
-        const {getProfile, params} = this.props
+        const {getProfile, getStatus,  params} = this.props
         let userId = params["*"]
         if (!userId || userId === '*') {
             userId = '20392'
         }
         getProfile(Number(userId))
+        getStatus(Number(userId))
     }
 
     componentDidMount(): void {
@@ -46,17 +48,21 @@ export type ProfileAPIContainerPropsType =
 type MapStateToPropsType = {
     profile: ProfileType | null
     isAuth: boolean
+    status:string
 }
 type MapDispatchToPropsType = {
     getProfile: (userId: number) => void
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    status: state.profilePage.status,
 })
 
 
-export const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {getProfile} as MapDispatchToPropsType)(withRouter(ProfileAPIContainer)))
+export const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {getProfile, getStatus, updateStatus} as MapDispatchToPropsType)(withRouter(ProfileAPIContainer)))
 
 

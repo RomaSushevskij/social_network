@@ -1,6 +1,5 @@
-import {profileAPI} from "../../../api/api";
-import {Dispatch} from "redux";
-import {AppActionsType, AppThunk} from "../../redux-store";
+import {profileAPI, RESPONSE_RESULT_CODES} from "../../../api/api";
+import {AppThunk} from "../../redux-store";
 
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
@@ -8,6 +7,7 @@ export enum PROFILE_ACTIONS_TYPES {
     REMOVE_POST = "social/profile/REMOVE_POST",
     LIKE_POST = 'social/profile/LIKE_POST',
     SET_PROFILE = 'social/profile/SET_PROFILE',
+    SET_STATUS = 'social/profile/SET_STATUS',
 }
 
 export type PostType = {
@@ -89,6 +89,7 @@ const initialState = {
     ] as Array<PostType>,
     newPostText: '',
     profile: null as ProfileType | null,
+    status: "",
 };
 
 export const profileReducer = (state: InitialStateProfileType = initialState, action: ProfileActionType): InitialStateProfileType => {
@@ -108,6 +109,7 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
             return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
         case PROFILE_ACTIONS_TYPES.UPDATE_NEW_POST_TEXT:
         case PROFILE_ACTIONS_TYPES.SET_PROFILE:
+        case PROFILE_ACTIONS_TYPES.SET_STATUS:
             return {...state, ...action.payload}
         case PROFILE_ACTIONS_TYPES.REMOVE_POST:
             return (
@@ -133,9 +135,10 @@ export type ProfileActionType =
     ReturnType<typeof updateNewPostText> |
     ReturnType<typeof removePost> |
     ReturnType<typeof likePost> |
-    ReturnType<typeof setProfile>
+    ReturnType<typeof setProfile> |
+    ReturnType<typeof setStatus>
 
-
+//A C T I O N S   C R E A T O R S
 export const addPost = () => ({type: PROFILE_ACTIONS_TYPES.ADD_POST} as const);
 export const updateNewPostText = (newPostText: string) => ({
     type: PROFILE_ACTIONS_TYPES.UPDATE_NEW_POST_TEXT,
@@ -147,9 +150,29 @@ export const setProfile = (profile: ProfileType) => ({
     type: PROFILE_ACTIONS_TYPES.SET_PROFILE,
     payload: {profile}
 } as const);
+export const setStatus = (status: string) => ({
+    type: PROFILE_ACTIONS_TYPES.SET_STATUS,
+    payload: {status}
+} as const);
+
+//T H U N K S
 export const getProfile = (userId: number): AppThunk => dispatch => {
     profileAPI.getProfile(userId)
         .then(data => {
             dispatch(setProfile(data))
+        })
+}
+export const getStatus = (userId: number): AppThunk => dispatch => {
+    profileAPI.getStatus(userId)
+        .then(data => {
+            dispatch(setStatus(data))
+        })
+}
+export const updateStatus = (status: string): AppThunk => dispatch => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if (response.data.resultCode === RESPONSE_RESULT_CODES.success) {
+                dispatch(setStatus(status))
+            }
         })
 }

@@ -1,4 +1,4 @@
-import {AUTH_ME_RESULT_CODES, authMeAPI, AuthUserDataType, profileAPI} from "../../../api/api";
+import {RESPONSE_RESULT_CODES, authMeAPI, AuthUserDataType, profileAPI} from "../../../api/api";
 import {AppActionsType, AppThunk, GetStateType} from "../../redux-store";
 import {Dispatch} from "redux";
 
@@ -47,7 +47,7 @@ export const setFullNameAndAvatar = (fullName: string, avatar: string | null) =>
 export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStateType) => {
     authMeAPI.getAuthorizationInfo()
         .then(data => {
-            if (data.resultCode === AUTH_ME_RESULT_CODES.success) {
+            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(setAuthUserData(data.data))
             }
         }).then(() => {

@@ -5,10 +5,15 @@ import logo_avatar from '../../../usersAvatars/user.png';
 import {ProfileAPIContainerPropsType} from "../ProfileContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 
 type ProfileInfoPropsType = ProfileAPIContainerPropsType
 
-export const ProfileInfo = React.memo(({profile}: ProfileInfoPropsType) => {
+export const ProfileInfo = React.memo(({
+                                           profile,
+                                           status,
+                                           updateStatus,
+                                       }: ProfileInfoPropsType) => {
 
     return (
         <div className={styleModule.profileInfo}>
@@ -42,7 +47,7 @@ export const ProfileInfo = React.memo(({profile}: ProfileInfoPropsType) => {
 
 
                     {/*<ProfileStatus status={status} updateStatus={updateStatus}/>*/}
-
+                    <ProfileStatus status={status} updateStatus={updateStatus}/>
                     <div className={styleModule.aboutMe}>{profile?.aboutMe}</div>
 
                     <div className={styleModule.lookingForAJob}>

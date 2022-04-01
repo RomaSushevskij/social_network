@@ -5,7 +5,7 @@ import {
     PostType,
     profileReducer,
     ProfileType,
-    removePost, setProfile
+    removePost, setProfile, setStatus
 } from "./profileReducer";
 import {setUsersTotalCount, usersReducer} from "../usersReducer/usersReducer";
 
@@ -48,7 +48,8 @@ beforeEach(() => {
             }
         ] as Array<PostType>,
         newPostText: '',
-        profile: null as ProfileType | null
+        profile: null as ProfileType | null,
+        status: "",
     }
 })
 
@@ -115,5 +116,12 @@ test('selected profile should be set', () => {
 
     expect(endState.profile).not.toBeNull()
     expect(endState.profile).toStrictEqual(profile2)
+})
+test('new status should be set to state', () => {
+    const status = "My new status"
+    const endState = profileReducer(startState, setStatus(status))
 
+    expect(startState.status).toBe("")
+    expect(endState.status).toBe(status)
+    expect(endState.newPostText).toBe("")
 })

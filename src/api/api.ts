@@ -24,6 +24,12 @@ export enum FOLLOW_UNFOLLOW_RESULT_CODES {
 
 //PROFILE---
 type GetProfileDataType = ProfileType
+type UpdateStatusDataType = {
+    data: {}
+    fieldsErrors: string[]
+    messages: string[]
+    resultCode: number
+}
 
 //AUTH---
 export type AuthUserDataType = {
@@ -37,7 +43,7 @@ export type GetAuthUserDataType = {
     messages: Array<string>
     resultCode: number
 }
-export enum AUTH_ME_RESULT_CODES {
+export enum RESPONSE_RESULT_CODES {
     success = 0,
     error = 1,
 }
@@ -82,6 +88,18 @@ export const profileAPI = {
                 return response.data
             })
     },
+    getStatus(userId:number) {
+        return instance_1.get<string>(`profile/status/${userId}`)
+            .then(response => {
+                return response.data
+            })
+    },
+    updateStatus(status:string) {
+        return instance_1.put<UpdateStatusDataType>(`/profile/status`, {status})
+            .then(response => {
+                return response
+            })
+    }
 }
 
 export let authMeAPI = {
