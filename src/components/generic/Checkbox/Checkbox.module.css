@@ -4,15 +4,14 @@
 
 .label {
     display: flex;
-
     align-items: center;
-    margin: 10px
-
+    margin: 10px;
+    cursor: pointer;
 }
 
 .fakeFlag {
     display: inline-block;
-    width: 15px;
+    min-width: 15px;
     height: 15px;
     border: 2px solid #666666;
     position: relative;
@@ -47,10 +46,7 @@
 }
 
 .label:hover .checkbox:checked + .fakeFlag {
-    box-shadow: 0 0 8px rgba(0, 127, 255, 1);
 }
 
-.checkbox:checked + .fakeFlag {
-    background-color: #007FFF;
-    border-color: #007FFF;
+.label .checkbox:checked + .fakeFlag {
 }

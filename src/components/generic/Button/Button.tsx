@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 type ButtonPropsType = {
     name: string
-    onClick: () => void
+    onClick?: () => void
     backgroundHover?: string
     background?: string
     colorHover?: string
@@ -28,7 +28,7 @@ color: ${props.colorHover ? props.colorHover : '#ffffff'}
 `;
 
     const onClickButton = () => {
-        onClick()
+        onClick && onClick()
     };
 
     return (

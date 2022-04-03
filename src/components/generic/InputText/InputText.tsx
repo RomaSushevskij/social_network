@@ -10,16 +10,19 @@ type InputTextPropsType = DefaultInputPropsType & {
     error?: string
     spanClassName?: string
     customStyle?: string
+    field?: any
+    form?: any
+    meta?: any
 }
 
 const InputText: React.FC<InputTextPropsType> = (
     {
-        type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
+        type,
         onChange, onChangeText,
         onKeyPress, onEnter,
         error,
         className, spanClassName, name, title,
-        customStyle,
+        customStyle, field, form, meta,
 
         ...restProps
     }
@@ -43,6 +46,7 @@ const InputText: React.FC<InputTextPropsType> = (
                    onChange={onChangeCallback}
                    onKeyPress={onKeyPressCallback}
                    className={finalInputClassName}
+                   {...field}
                    {...restProps}
             />
 
