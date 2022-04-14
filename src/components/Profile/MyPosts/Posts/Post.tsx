@@ -33,7 +33,8 @@ export const Post = React.memo(({
     }
     `;
     const LikesDiv = styled.div`
-    color: ${isLike ? '#ffbf47' : '#ffffff'};
+    color: ${isLike ? '#FFCC03' : '#ffffff'};
+    fontWeight:${isLike ? 'bold' : 'normal'};
     `
 
     const onCrossClick = (id: number) => {

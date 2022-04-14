@@ -1,6 +1,6 @@
 
-import {profileReducer, addPost, updateNewPostText} from "./redusers/profileReducer/profileReducer";
-import {dialogsReducer, addMessageAC, updateNewMessageTextAC} from "./redusers/dialogsReducer/dialogsReducer";
+import {profileReducer, addPost} from "./redusers/profileReducer/profileReducer";
+import {dialogsReducer, } from "./redusers/dialogsReducer/dialogsReducer";
 /*
 type DialogType = {
     id: number

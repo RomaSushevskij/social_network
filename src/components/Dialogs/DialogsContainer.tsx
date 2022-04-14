@@ -1,15 +1,10 @@
-import React, {ComponentType, KeyboardEvent} from "react";
+import React, {ComponentType} from "react";
 import {AppStateType} from "../../redux/redux-store";
-import {
-    addMessageAC,
-    InitialStateDialogsType,
-    updateNewMessageTextAC
-} from "../../redux/redusers/dialogsReducer/dialogsReducer";
+import {addMessage, InitialStateDialogsType,} from "../../redux/redusers/dialogsReducer/dialogsReducer";
 import {Dialogs} from "./Dialogs";
-import {Dispatch} from "redux";
+import {compose} from "redux";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {compose} from 'redux';
 
 export type MapStateToPropsType = {
     dialogsPage: InitialStateDialogsType
@@ -18,8 +13,6 @@ export type MapStateToPropsType = {
 
 export type MapDispatchToPropsType = {
     addMessage: (newMessageText: string) => void
-    addMessageWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newMessageText: string) => void
-    updateNewMessageText: (newMessageText: string) => void
 }
 
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -30,26 +23,10 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         isAuth: state.auth.isAuth
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-    return {
-        addMessage: (newMessageText: string) => {
-            newMessageText.trim() && dispatch(addMessageAC())
-        },
-        addMessageWithEnter: (e: KeyboardEvent<HTMLTextAreaElement>, newMessageText: string) => {
-            if (!e.shiftKey && e.key === 'Enter') {
-                e.preventDefault()
-                newMessageText.trim() && dispatch(addMessageAC())
-            }
-        },
-        updateNewMessageText: (newMessageText: string) => {
-            dispatch(updateNewMessageTextAC(newMessageText));
-        }
-    }
-}
 
 export const DialogsContainer = compose<ComponentType>(
     withAuthRedirect,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {addMessage} as MapDispatchToPropsType),
 )(Dialogs)
 
 

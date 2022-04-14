@@ -1,11 +1,4 @@
-import {
-    addMessageAC,
-    dialogsReducer,
-    DialogType,
-    MessageType,
-    updateNewMessageTextAC,
-    InitialStateDialogsType
-} from "./dialogsReducer";
+import {addMessage, dialogsReducer, DialogType, InitialStateDialogsType, MessageType} from "./dialogsReducer";
 
 let startState: InitialStateDialogsType
 
@@ -43,25 +36,15 @@ beforeEach(() => {
                 time: '13:08'
             },
             {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05'}
-        ] as Array<MessageType>,
-        newMessageText: ''
+        ] as Array<MessageType>
     }
 })
 
 test('new message should be added to the end of messaagesData', () => {
-    const endState = dialogsReducer(startState, addMessageAC())
+    const newMessageText = 'It is your latest message'
+    const endState = dialogsReducer(startState, addMessage(newMessageText))
 
     expect(endState.dialogsData.length).toBe(5)
     expect(endState.messagesData.length).toBe(5)
-    expect(endState.messagesData[4].message).toBe(endState.newMessageText)
-})
-
-test('newMessageText should be has correct value after update', () => {
-    const newMessageText = 'Hello world'
-
-    const endState = dialogsReducer(startState, updateNewMessageTextAC(newMessageText))
-
-    expect(endState.dialogsData.length).toBe(5)
-    expect(endState.messagesData.length).toBe(4)
-    expect(endState.newMessageText).toBe(newMessageText)
+    expect(endState.messagesData[4].message).toBe(newMessageText)
 })

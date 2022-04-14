@@ -9,10 +9,16 @@ type ButtonPropsType = {
     background?: string
     colorHover?: string
     disabled?: boolean
+    type?: "button" | "submit" | "reset" | undefined
 }
 
 
-export const Button = React.memo(({name, onClick, disabled, ...props}: ButtonPropsType) => {
+export const Button = React.memo(({
+                                      name,
+                                      onClick,
+                                      disabled,
+                                      type, ...props
+                                  }: ButtonPropsType) => {
     const ButtonWithBefore = styled.button`
 & {
 border-color: ${props.backgroundHover ? props.backgroundHover : '#ffbf47'};
@@ -34,7 +40,8 @@ color: ${props.colorHover ? props.colorHover : '#ffffff'}
     return (
         <ButtonWithBefore onClick={onClickButton}
                           className={style.button}
-                          disabled={disabled}>
+                          disabled={disabled}
+                          type={type}>
             {name}
         </ButtonWithBefore>
     )

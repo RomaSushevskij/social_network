@@ -31,7 +31,7 @@
     flex-direction: column;
     align-items: flex-start;
     overflow-y: scroll;
-    background: linear-gradient(90deg, rgb(255, 99, 71), rgb(62, 139, 134) 49%);
+    background: linear-gradient(90deg, rgb(255, 99, 71), rgb(0, 126, 83) 60%);
 }
 
 .meMessages {
@@ -54,23 +54,6 @@
     background-color: #f9f9fd;
 }
 
-.writeMessage {
-    margin-right: 20px;
-}
-
-.writeMessage textarea {
-    border-top-right-radius: 0%;
-    border-top-left-radius: 0%;
-    border-bottom-right-radius: 0%;
-}
-
-.writeAndSendMessage {
-    align-self: self-end;
-}
-
-.sendMessage {
-    margin: 10px 0;
-}
 
 
 

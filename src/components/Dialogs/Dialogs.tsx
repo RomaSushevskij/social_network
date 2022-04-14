@@ -1,20 +1,16 @@
-import React, {ChangeEvent, KeyboardEvent} from "react";
+import React from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
-import {Button} from "../generic/Button/Button";
-import {Textarea} from "../generic/Textarea/Textarea";
-import {BUTTON_STYLE} from "../Profile/MyPosts/MyPosts";
 import {DialogsPropsType} from "./DialogsContainer";
-import {Navigate} from "react-router-dom";
-import {PATH} from "../../App";
+import {AddMessageForm} from '../forms/AddMessageForm/AddMessageForm';
 
 
 const MESSAGE_STYLE = {
     background: '#e8e8e8',
     color: '#757575',
-    meBackground:'#FFE1A9',
-    meColor:'#757575',
+    meBackground: '#FFE1A9',
+    meColor: '#757575',
 };
 const DIALOG_STYLE = {
     background: 'inherit',
@@ -22,17 +18,6 @@ const DIALOG_STYLE = {
 };
 
 export const Dialogs = React.memo((props: DialogsPropsType) => {
-
-
-    const onAddMessageButton = () => {
-        props.addMessage(props.dialogsPage.newMessageText);
-    };
-    const onAddMessageWithEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        props.addMessageWithEnter(e, props.dialogsPage.newMessageText)
-    };
-    const onUpdateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageText(e.currentTarget.value)
-    };
     return (
         <div className={styleModule.dialogs}>
             <div className={styleModule.heading}>
@@ -53,24 +38,7 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
                                                                             meColor={MESSAGE_STYLE.meColor}
                                                                             {...message}/>)}
                 </div>
-                <div className={styleModule.writeAndSendMessage}>
-                    <div className={styleModule.writeMessage}>
-                        <Textarea textareaValue={props.dialogsPage.newMessageText}
-                                  setTextareaValue={onUpdateNewMessageText}
-                                  onAddWithEnter={onAddMessageWithEnter}
-                                  placeholder={'Enter your message'}
-                                  background={'#ffffff'}
-                                  color={'#60575A'}/>
-
-                    </div>
-                    <div className={styleModule.sendMessage}>
-                        <Button name={'Send'}
-                                onClick={onAddMessageButton}
-                                backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
-                                background={BUTTON_STYLE.BACKGROUND}
-                                colorHover={BUTTON_STYLE.COLOR_HOVER}/>
-                    </div>
-                </div>
+                <AddMessageForm addMessage={props.addMessage}/>
             </div>
         </div>
     );

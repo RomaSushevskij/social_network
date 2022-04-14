@@ -81,9 +81,15 @@ const initialState = {
             image: null,
             time: '14:10'
         },
-        {id: 9, name: 'Mother', userId: 5, message: 'Lorem  consectetur adipisicin ipsum dolor !', image: null, time: '14:23'},
+        {
+            id: 9,
+            name: 'Mother',
+            userId: 5,
+            message: 'Lorem  consectetur adipisicin ipsum dolor !',
+            image: null,
+            time: '14:23'
+        },
     ] as Array<MessageType>,
-    newMessageText: ''
 };
 
 export const dialogsReducer = (state: InitialStateDialogsType = initialState, action: DialogsActionType): InitialStateDialogsType => {
@@ -93,24 +99,20 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
                 id: state.messagesData.length + 1,
                 userId: 20392,
                 name: 'Me',
-                message: state.newMessageText,
+                message: action.payload.newMessageText,
                 image: null,
                 time: new Date().toLocaleTimeString().slice(0, 5)
             };
-            return {...state, messagesData: [...state.messagesData, newMessage], newMessageText: ''}
-        case "social/dialogs/UPDATE-NEW-MESSAGE-TEXT":
-            return {...state, newMessageText: action.payload.newMessageText}
+            return {...state, messagesData: [...state.messagesData, newMessage]}
         default:
             return state
     }
 };
 
 export type DialogsActionType =
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof updateNewMessageTextAC>
+    ReturnType<typeof addMessage>
 
-export const addMessageAC = () => ({type: 'social/dialogs/ADD-MESSAGE'} as const);
-export const updateNewMessageTextAC = (newMessageText: string) => ({
-    type: 'social/dialogs/UPDATE-NEW-MESSAGE-TEXT',
+export const addMessage = (newMessageText: string) => ({
+    type: 'social/dialogs/ADD-MESSAGE',
     payload: {newMessageText}
 } as const);

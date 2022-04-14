@@ -47,26 +47,17 @@ beforeEach(() => {
                 image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
             }
         ] as Array<PostType>,
-        newPostText: '',
         profile: null as ProfileType | null,
         status: "",
     }
 })
 
 test('new post should be added to the start of postsData', () => {
-    const endState = profileReducer(startState, addPost())
+    const newPostText = 'It is a new post'
+    const endState = profileReducer(startState, addPost(newPostText))
 
     expect(endState.postsData.length).toBe(4)
-    expect(endState.postsData[0].message).toBe(endState.newPostText)
-    expect(endState.postsData[0].id).toBe(4)
-})
-
-
-test('newPostText should be has correct value after update', () => {
-    const endState = profileReducer(startState, addPost())
-
-    expect(endState.postsData.length).toBe(4)
-    expect(endState.postsData[0].message).toBe(endState.newPostText)
+    expect(endState.postsData[0].message).toBe(newPostText)
     expect(endState.postsData[0].id).toBe(4)
 })
 
@@ -123,5 +114,4 @@ test('new status should be set to state', () => {
 
     expect(startState.status).toBe("")
     expect(endState.status).toBe(status)
-    expect(endState.newPostText).toBe("")
 })

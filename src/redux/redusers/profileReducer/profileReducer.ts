@@ -3,7 +3,6 @@ import {AppThunk} from "../../redux-store";
 
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
-    UPDATE_NEW_POST_TEXT = 'social/profile/UPDATE_NEW_POST_TEXT',
     REMOVE_POST = "social/profile/REMOVE_POST",
     LIKE_POST = 'social/profile/LIKE_POST',
     SET_PROFILE = 'social/profile/SET_PROFILE',
@@ -87,7 +86,6 @@ const initialState = {
             image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
         }
     ] as Array<PostType>,
-    newPostText: '',
     profile: null as ProfileType | null,
     status: "",
 };
@@ -98,7 +96,7 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
             const newPost = {
                 id: state.postsData.length + 1,
                 name: 'Someone',
-                message: state.newPostText,
+                message: action.payload.newPostText,
                 likes: {
                     icon: '❤',
                     likeCount: 0,
@@ -106,8 +104,7 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
                 isLike: false,
                 image: null
             };
-            return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
-        case PROFILE_ACTIONS_TYPES.UPDATE_NEW_POST_TEXT:
+            return {...state, postsData: [newPost, ...state.postsData]}
         case PROFILE_ACTIONS_TYPES.SET_PROFILE:
         case PROFILE_ACTIONS_TYPES.SET_STATUS:
             return {...state, ...action.payload}
@@ -132,16 +129,14 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
 
 export type ProfileActionType =
     ReturnType<typeof addPost> |
-    ReturnType<typeof updateNewPostText> |
     ReturnType<typeof removePost> |
     ReturnType<typeof likePost> |
     ReturnType<typeof setProfile> |
     ReturnType<typeof setStatus>
 
 //A C T I O N S   C R E A T O R S
-export const addPost = () => ({type: PROFILE_ACTIONS_TYPES.ADD_POST} as const);
-export const updateNewPostText = (newPostText: string) => ({
-    type: PROFILE_ACTIONS_TYPES.UPDATE_NEW_POST_TEXT,
+export const addPost = (newPostText: string) => ({
+    type: PROFILE_ACTIONS_TYPES.ADD_POST,
     payload: {newPostText}
 } as const);
 export const removePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.REMOVE_POST, payload: {id}} as const);
