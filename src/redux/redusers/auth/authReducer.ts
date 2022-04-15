@@ -64,11 +64,14 @@ export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStat
     )
 }
 
-export const login = (email: string, password: string, rememberMe: boolean): AppThunk => dispatch => {
+export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void): AppThunk => dispatch => {
     authMeAPI.login(email, password, rememberMe)
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(getAuthorizationInfo())
+            } else {
+                const message = data.messages.length > 0 ? data.messages[0] : 'Some error'
+                setStatus(message)
             }
 
         })

@@ -26,7 +26,7 @@ type MapStateToPropsType = {
     isAuth: boolean
 }
 type MapDispatchToProps = {
-    login: (email: string, password: string, rememberMe: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({

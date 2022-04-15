@@ -32,6 +32,9 @@
     align-items: flex-start;
     overflow-y: scroll;
     background: -webkit-linear-gradient(90deg,#e37b5f,#96e5fd); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(90deg,#e37b5f,#96e5fd); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-left: 1px solid #ffffff;
+    padding-left: 10px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.3);
 }
 
 .meMessages {

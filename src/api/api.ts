@@ -22,7 +22,7 @@ export type DeleteFollowDataType = PostFollowDataType
 type GetProfileDataType = ProfileType
 type UpdateStatusDataType = {
     data: {}
-    fieldsErrors: string[]
+    fieldsErrors: any[]
     messages: string[]
     resultCode: RESPONSE_RESULT_CODES
 }
@@ -44,13 +44,13 @@ export type LoginResponseType = {
         userId: number
     },
     messages: string[],
-    fieldsErrors: string[],
+    fieldsErrors: any[],
     resultCode: RESPONSE_RESULT_CODES
 }
 export type LogoutResponseType = {
     "data": {},
     "messages": string[],
-    "fieldsErrors": string[],
+    "fieldsErrors": any[],
     "resultCode": RESPONSE_RESULT_CODES
 }
 

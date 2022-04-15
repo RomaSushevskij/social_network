@@ -6,21 +6,28 @@ import Checkbox from "../../generic/Checkbox/Checkbox";
 import {Field, Form, Formik} from "formik";
 import {composeValidators, maxLength, requiredField} from '../../../utils/validators';
 import {LoginWithApiPropsType} from '../../Login/Login';
+import s from '../../generic/InputText/InputText.module.css';
+import {CSSTransition} from 'react-transition-group';
 
 type LoginFormValuesType = {
     email: string
     password: string
     rememberMe: boolean
 }
+type OnSubmitParamsType = {
+    setSubmitting: (isSubmitting: boolean) => void
+    setStatus: (status?: any) => void
+}
+
 type LoginFormPropsType = LoginWithApiPropsType
 
 const maxLength30 = maxLength(30)
 
 export function LoginForm({login}: LoginFormPropsType) {
 
-    const onSubmitGHandler = (values: LoginFormValuesType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
+    const onSubmitGHandler = (values: LoginFormValuesType, {setSubmitting, setStatus}: OnSubmitParamsType) => {
         const {email, password, rememberMe} = values;
-        login(email, password, rememberMe)
+        login(email, password, rememberMe, setStatus)
         setSubmitting(false)
     }
     const onAddMessageWithEnter = (e: KeyboardEvent<HTMLFormElement>,
@@ -36,10 +43,17 @@ export function LoginForm({login}: LoginFormPropsType) {
             <Formik
                 initialValues={{email: '', password: '', rememberMe: true}}
                 onSubmit={onSubmitGHandler}>
-                {({isSubmitting, handleSubmit}) => (
+                {({isSubmitting, handleSubmit, status}) => (
                     <Form className={styleModule.formWrapper}
                           onSubmit={handleSubmit}
                           onKeyPress={(e) => onAddMessageWithEnter(e, handleSubmit)}>
+                        <CSSTransition in={status}
+                                       timeout={300}
+                                       classNames={s}
+                                       unmountOnExit
+                                       mountOnEnter>
+                            <div className={styleModule.formErrorBlock}>{status}</div>
+                        </CSSTransition>
                         <div className={styleModule.formElement}>
                             <Field type="email"
                                    name="email"
