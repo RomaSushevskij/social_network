@@ -1,6 +1,5 @@
-import {RESPONSE_RESULT_CODES, authMeAPI, AuthUserDataType, profileAPI} from "../../../api/api";
-import {AppActionsType, AppThunk, GetStateType} from "../../redux-store";
-import {Dispatch} from "redux";
+import {authMeAPI, AuthUserDataType, profileAPI, RESPONSE_RESULT_CODES} from "../../../api/api";
+import {AppThunk, GetStateType} from "../../redux-store";
 
 
 export enum AUTH_ACTIONS_TYPES {
@@ -24,7 +23,7 @@ export const authReducer = (state: InitialStateAuthType = initialState, action: 
         case AUTH_ACTIONS_TYPES.SET_AUTH_USER_DATA:
         case AUTH_ACTIONS_TYPES.SET_FULL_NAME_AND_AVATAR:
             return {
-                ...state, isAuth: true, ...action.payload
+                ...state, ...action.payload
             }
         default:
             return state
@@ -36,19 +35,22 @@ export type AuthActionType =
     ReturnType<typeof setFullNameAndAvatar>
 
 
-export const setAuthUserData = ({id, email, login}: AuthUserDataType) => ({
+export const setAuthUserData = ({id, email, login}: AuthUserDataType, isAuth: boolean) => ({
     type: AUTH_ACTIONS_TYPES.SET_AUTH_USER_DATA,
-    payload: {id, email, login}
+    payload: {id, email, login, isAuth}
 })
 export const setFullNameAndAvatar = (fullName: string, avatar: string | null) => ({
     type: AUTH_ACTIONS_TYPES.SET_FULL_NAME_AND_AVATAR,
     payload: {fullName, avatar}
 })
+
+// T H U N K S
+
 export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStateType) => {
     authMeAPI.getAuthorizationInfo()
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-                dispatch(setAuthUserData(data.data))
+                dispatch(setAuthUserData(data.data, true))
             }
         }).then(() => {
             const id = getState().auth.id
@@ -60,4 +62,23 @@ export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStat
                 })
         }
     )
+}
+
+export const login = (email: string, password: string, rememberMe: boolean): AppThunk => dispatch => {
+    authMeAPI.login(email, password, rememberMe)
+        .then(data => {
+            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+                dispatch(getAuthorizationInfo())
+            }
+
+        })
+}
+
+export const logout = (): AppThunk => dispatch => {
+    authMeAPI.logout()
+        .then(data => {
+            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+                dispatch(setAuthUserData({id: null, email: null, login: null}, false))
+            }
+        })
 }

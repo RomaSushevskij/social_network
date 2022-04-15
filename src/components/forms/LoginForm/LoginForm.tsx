@@ -1,32 +1,45 @@
-import React from "react";
+import React, {FormEvent, KeyboardEvent} from "react";
 import styleModule from './LoginForm.module.css';
 import InputText from "../../generic/InputText/InputText";
 import {Button} from "../../generic/Button/Button";
 import Checkbox from "../../generic/Checkbox/Checkbox";
 import {Field, Form, Formik} from "formik";
 import {composeValidators, maxLength, requiredField} from '../../../utils/validators';
+import {LoginWithApiPropsType} from '../../Login/Login';
 
 type LoginFormValuesType = {
     email: string
     password: string
     rememberMe: boolean
 }
+type LoginFormPropsType = LoginWithApiPropsType
 
 const maxLength30 = maxLength(30)
 
-export function LoginForm() {
+export function LoginForm({login}: LoginFormPropsType) {
+
     const onSubmitGHandler = (values: LoginFormValuesType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
-        console.log(values)
+        const {email, password, rememberMe} = values;
+        login(email, password, rememberMe)
         setSubmitting(false)
     }
+    const onAddMessageWithEnter = (e: KeyboardEvent<HTMLFormElement>,
+                                   handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void) => {
+        if (!e.shiftKey && e.key === 'Enter') {
+            e.preventDefault();
+            handleSubmit()
+        }
+    };
     return (
         <div className={styleModule.wrapperLoginForm}>
             <div className={styleModule.title}>login</div>
             <Formik
                 initialValues={{email: '', password: '', rememberMe: true}}
                 onSubmit={onSubmitGHandler}>
-                {({isSubmitting}) => (
-                    <Form className={styleModule.formWrapper}>
+                {({isSubmitting, handleSubmit}) => (
+                    <Form className={styleModule.formWrapper}
+                          onSubmit={handleSubmit}
+                          onKeyPress={(e) => onAddMessageWithEnter(e, handleSubmit)}>
                         <div className={styleModule.formElement}>
                             <Field type="email"
                                    name="email"
@@ -66,6 +79,8 @@ const CheckBoxField = (props: any) => {
         </Checkbox>
     )
 }
+
+
 
 
 

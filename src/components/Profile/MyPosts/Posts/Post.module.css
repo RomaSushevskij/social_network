@@ -3,9 +3,9 @@
     padding: 15px;
     max-width: 50%;
     word-break: break-word;
+    box-shadow: 0px 7px 15px -8px #000000;
     margin: 5px 0;
     border-radius: 8px;
-    border:2px solid #ffffff;
 }
 
 .postWrapper .avaBlock {

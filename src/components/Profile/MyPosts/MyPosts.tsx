@@ -15,6 +15,7 @@ export const POST_STYLE = {
     color: '#ffffff'
 };
 
+
 export const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     return (

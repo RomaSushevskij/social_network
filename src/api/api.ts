@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 import {UserType} from "../redux/redusers/usersReducer/usersReducer";
 import {ProfileType} from "../redux/redusers/profileReducer/profileReducer";
 
@@ -17,10 +17,6 @@ export type PostFollowDataType = {
     fieldsErrors: Array<any>
 }
 export type DeleteFollowDataType = PostFollowDataType
-export enum FOLLOW_UNFOLLOW_RESULT_CODES {
-    success = 0,
-    error = 1,
-}
 
 //PROFILE---
 type GetProfileDataType = ProfileType
@@ -28,24 +24,41 @@ type UpdateStatusDataType = {
     data: {}
     fieldsErrors: string[]
     messages: string[]
-    resultCode: number
+    resultCode: RESPONSE_RESULT_CODES
 }
 
 //AUTH---
 export type AuthUserDataType = {
-    id: number,
-    email: string,
-    login: string
+    id: number | null
+    email: string | null
+    login: string | null
 }
 export type GetAuthUserDataType = {
     data: AuthUserDataType
     fieldsErrors: Array<any>
     messages: Array<string>
-    resultCode: number
+    resultCode: RESPONSE_RESULT_CODES
 }
+export type LoginResponseType = {
+    data: {
+        userId: number
+    },
+    messages: string[],
+    fieldsErrors: string[],
+    resultCode: RESPONSE_RESULT_CODES
+}
+export type LogoutResponseType = {
+    "data": {},
+    "messages": string[],
+    "fieldsErrors": string[],
+    "resultCode": RESPONSE_RESULT_CODES
+}
+
 export enum RESPONSE_RESULT_CODES {
     success = 0,
     error = 1,
+    needCaptcha = 10
+
 }
 
 //↑
@@ -88,13 +101,13 @@ export const profileAPI = {
                 return response.data
             })
     },
-    getStatus(userId:number) {
+    getStatus(userId: number) {
         return instance_1.get<string>(`profile/status/${userId}`)
             .then(response => {
                 return response.data
             })
     },
-    updateStatus(status:string) {
+    updateStatus(status: string) {
         return instance_1.put<UpdateStatusDataType>(`/profile/status`, {status})
             .then(response => {
                 return response
@@ -109,4 +122,20 @@ export let authMeAPI = {
                 return response.data
             })
     },
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean }>(`auth/login`, {
+            email,
+            password,
+            rememberMe
+        })
+            .then(response => {
+                return response.data
+            })
+    },
+    logout() {
+        return instance_1.delete<any, AxiosResponse<LogoutResponseType>>(`auth/login`)
+            .then(response => {
+                return response.data
+            })
+    }
 }

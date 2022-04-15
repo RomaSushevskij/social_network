@@ -53,9 +53,9 @@ export const Header = React.memo((props: HeaderPropsType) => {
                             <img src={avatar ? avatar : logo_avatar}/>
                         </div>
                         <div className={styleModule.loginValue}>{fullName}</div>
-
-                        {/*<div className={styleModule.logoutButton}><button onClick={props.logout} >LOGOUT</button></div>*/}
-
+                        <div className={styleModule.logoutButton}>
+                            <button onClick={props.logout}>LOGOUT</button>
+                        </div>
                     </div> :
                     <NavLink to={'/login'}>
                         LOGIN

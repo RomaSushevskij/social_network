@@ -1,5 +1,5 @@
 import {AppThunk} from "../../redux-store";
-import {FOLLOW_UNFOLLOW_RESULT_CODES, usersAPI} from "../../../api/api";
+import {RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
 
 export enum USERS_ACTIONS_TYPES {
     FOLLOW = 'social/users/FOLLOW',
@@ -124,7 +124,7 @@ export const getUsers = (pageSize: number, currentPage: number): AppThunk => dis
 export const becomeFollower = (id: number): AppThunk => dispatch => {
     dispatch(toggleFollowingInProcess(id, true))
     usersAPI.becomeFollower(id).then(data => {
-        if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             dispatch(follow(id))
         }
         dispatch(toggleFollowingInProcess(id, false))
@@ -139,10 +139,10 @@ export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk =
     })
 }
 
-export const stopBeingFollower = (id: number):AppThunk => dispatch => {
+export const stopBeingFollower = (id: number): AppThunk => dispatch => {
     dispatch(toggleFollowingInProcess(id, true))
     usersAPI.stopBeingFollower(id).then(data => {
-        if (data.resultCode === FOLLOW_UNFOLLOW_RESULT_CODES.success) {
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             dispatch(unfollow(id))
         }
         dispatch(toggleFollowingInProcess(id, false))
