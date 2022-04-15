@@ -1,7 +1,6 @@
 .header {
     grid-area: header;
     padding: 10px;
-    background-color: #7D823F;
     display: grid;
     grid-template-columns: 1fr 1fr;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

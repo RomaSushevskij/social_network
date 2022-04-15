@@ -33,7 +33,7 @@ export const PATH: PATHType = {
 };
 
 export const HEADER_STYLE = {
-    background: '#7D823F',
+    background: '#87BBD0',
     color: '#ffffff',
     logo: logo
 };

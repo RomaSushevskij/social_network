@@ -1,5 +1,7 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
 import s from './InputText.module.css'
+import {CSSTransition} from 'react-transition-group';
+import style from '../EditableSpan/EditableSpan.module.css';
 
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -13,6 +15,7 @@ type InputTextPropsType = DefaultInputPropsType & {
     field?: any
     form?: any
     meta?: any
+    name?: string
 }
 
 const InputText: React.FC<InputTextPropsType> = (
@@ -37,8 +40,7 @@ const InputText: React.FC<InputTextPropsType> = (
     };
 
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`;
-    const finalInputClassName = `${error ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className ? s[className] : className}`;
-
+    const finalInputClassName = `${error || form.errors[field.name] ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className ? s[className] : className}`;
     return (
         <div className={customStyle ? `${customStyle} ${s.inputWrapper}` : s.inputWrapper}>
             <input name={name}
@@ -49,10 +51,13 @@ const InputText: React.FC<InputTextPropsType> = (
                    {...field}
                    {...restProps}
             />
-
-
-            {error && <div className={finalSpanClassName}>{error}</div>}
-
+            <CSSTransition in={error || form.errors[field.name] && form.touched[field.name]}
+                           timeout={300}
+                           classNames={s}
+                           unmountOnExit
+                           mountOnEnter>
+                <div className={finalSpanClassName}>{form.errors[field.name]}</div>
+            </CSSTransition>
         </div>
     )
 };

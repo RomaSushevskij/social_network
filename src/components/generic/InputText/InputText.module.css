@@ -5,7 +5,7 @@
 
 .superInput, .errorInput {
     box-sizing: border-box;
-    width:100%;
+    width: 100%;
     padding: 11px;
     outline: none;
     font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
@@ -15,20 +15,25 @@
     margin: 0;
     border: 1px solid #ccd0d5;
     transition: all .3s ease;
+
 }
-.superInput.forStatus, .errorInput.forStatus  {
+
+.superInput.forStatus, .errorInput.forStatus {
     background-color: transparent;
     color: #ffffff;
-    border:none
+    border: none
 }
 
 .superInput:focus {
     border-color: #007FFF;
     box-shadow: 0 0 12px rgba(0, 127, 255, .4);
+    transition: all .4s ease-out;
 }
+
 .superInput.forStatus:focus {
     box-shadow: 0px 7px 10px -9px #ffffff;
 }
+
 .superInput.forStatus {
     background-color: transparent;
 }
@@ -40,6 +45,7 @@
 .error {
     max-width: 200px;
     min-width: 100px;
+    min-height: 40px;
     background-color: #BE4B49;
     border-color: #9C3735;
     display: inline-block;
@@ -53,6 +59,7 @@
     box-shadow: 0 0 5px rgba(200, 53, 53, .5);
     word-wrap: break-word;
     font-size: 14px;
+    transition: all .4s ease-out;
 }
 
 .error:before {
@@ -66,32 +73,55 @@
     transform-origin: 50% 50%;
     transform: rotate(45deg);
     box-shadow: 0 0 5px rgba(200, 53, 53, .5);
-
+    transition: all .4s ease-out;
 }
 
 .error:after {
     content: "!";
-    width: 10px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
     background-color: #BE4B49;
     position: absolute;
-    top: 7px;
-    left: -40px;
+    top: 9px;
+    left: -35px;
     border-radius: 50%;
     text-align: center;
     padding: 5px;
     line-height: .55em;
     box-shadow: 0 0 5px rgba(200, 53, 53, .5);
-
+    font-weight: bold;
+    transition: all .4s ease-out;
 }
 
 .superInput.errorInput {
     border: 1px solid #C83535;
+    transition: all .4s ease-out;
 }
 
 .superInput:focus.errorInput:focus {
     box-shadow: 0 0 12px rgba(200, 53, 53, .5);
+    transition: all .4s ease-out;
+}
 
+.enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.enterActive {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.exit {
+    opacity: 1;
+}
+
+.exitActive {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 100ms, transform 100ms;
 }
 
 

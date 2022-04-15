@@ -4,12 +4,15 @@ import InputText from "../../generic/InputText/InputText";
 import {Button} from "../../generic/Button/Button";
 import Checkbox from "../../generic/Checkbox/Checkbox";
 import {Field, Form, Formik} from "formik";
+import {composeValidators, maxLength, requiredField} from '../../../utils/validators';
 
 type LoginFormValuesType = {
     email: string
     password: string
     rememberMe: boolean
 }
+
+const maxLength30 = maxLength(30)
 
 export function LoginForm() {
     const onSubmitGHandler = (values: LoginFormValuesType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
@@ -28,14 +31,16 @@ export function LoginForm() {
                             <Field type="email"
                                    name="email"
                                    component={InputText}
-                                   placeholder={'Login'}/>
+                                   placeholder={'Login'}
+                                   validate={composeValidators(requiredField, maxLength30)}/>
 
                         </div>
                         <div className={styleModule.formElement}>
                             <Field type="password"
                                    name="password"
                                    component={InputText}
-                                   placeholder={'Password'}/>
+                                   placeholder={'Password'}
+                                   validate={composeValidators(requiredField, maxLength30)}/>
                         </div>
                         <div className={`${styleModule.formElement} ${styleModule.checkMark}`}>
                             <Field type="checkbox"
@@ -61,6 +66,7 @@ const CheckBoxField = (props: any) => {
         </Checkbox>
     )
 }
+
 
 
 
