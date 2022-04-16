@@ -40,7 +40,7 @@ const InputText: React.FC<InputTextPropsType> = (
     };
 
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`;
-    const finalInputClassName = `${error || form.errors[field.name] ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className ? s[className] : className}`;
+    const finalInputClassName = `${error || form?.errors[field.name] ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className ? s[className] : className}`;
     return (
         <div className={customStyle ? `${customStyle} ${s.inputWrapper}` : s.inputWrapper}>
             <input name={name}
@@ -51,12 +51,12 @@ const InputText: React.FC<InputTextPropsType> = (
                    {...field}
                    {...restProps}
             />
-            <CSSTransition in={error || form.errors[field.name] && form.touched[field.name]}
+            <CSSTransition in={error || form?.errors[field.name] && form?.touched[field.name]}
                            timeout={300}
                            classNames={s}
                            unmountOnExit
                            mountOnEnter>
-                <div className={finalSpanClassName}>{form.errors[field.name]}</div>
+                <div className={finalSpanClassName}>{form?.errors[field.name]}</div>
             </CSSTransition>
         </div>
     )
