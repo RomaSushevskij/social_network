@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Header} from "./Header";
 import {AppStateType} from "../../redux/redux-store";
-import {getAuthorizationInfo, InitialStateAuthType, logout} from "../../redux/redusers/auth/authReducer";
+import {InitialStateAuthType, logout} from "../../redux/redusers/auth/authReducer";
 import {HEADER_STYLE} from "../../App";
 
 export type DataType = {
@@ -19,11 +19,6 @@ export type GetAuthUserDataType = {
 
 
 class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType> {
-    componentDidMount(): void {
-        const {getAuthorizationInfo} = this.props
-        getAuthorizationInfo()
-    }
-
     render = () => {
         return (
             <Header title={'Cloudpaper'}
@@ -44,7 +39,6 @@ type MapStateToPropsType = {
     avatar: string | null | undefined
 }
 type MapDispatchToPropsType = {
-    getAuthorizationInfo: () => void
     logout: () => void
 }
 
@@ -57,7 +51,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 };
 
 export const HeaderContainer = connect(mapStateToProps, {
-    getAuthorizationInfo, logout
+    logout
 } as MapDispatchToPropsType)(HeaderAPIContainer)
 
 

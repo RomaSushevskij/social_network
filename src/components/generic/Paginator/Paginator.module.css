@@ -48,12 +48,12 @@
     cursor: pointer;
     margin: 0 .1em;
     border-radius: 15px;
-    border: 1px solid tomato;
+    border: 1px solid #ffffff;
     transition: all 0.5s ease;
 }
 
 .paginator span:hover {
-    border: 1px solid #ffbf47;
+    background-color: #ffbf47;
     transition: all 0.5s ease;
 }
 
@@ -69,7 +69,8 @@
 .paginator .threeDots:hover {
     cursor: default;
     border: none;
-    box-shadow: none;
+    background-color: transparent;
+
 }
 
 .paginator .threeDots {

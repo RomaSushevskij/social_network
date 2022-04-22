@@ -6,16 +6,20 @@ import {Profile} from "./Profile";
 import {Preloader} from "../generic/Preloader/Preloader";
 import {withRouter} from "../../hoc/withRouter";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {profileAPI} from "../../api/api";
+import {PATH} from '../../App';
 
 
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
 
     refreshProfile = () => {
-        const {getProfile, getStatus,  params} = this.props
+        const {getProfile, getStatus, params, navigate, ...restProps} = this.props
         let userId = params["*"]
         if (!userId || userId === '*') {
-            userId = '20392'
+            if (restProps.userId) {
+                userId = restProps.userId.toString()
+            } else {
+                navigate(PATH.LOGIN)
+            }
         }
         getProfile(Number(userId))
         getStatus(Number(userId))
@@ -35,7 +39,7 @@ class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> 
     render() {
         return this.props.profile ? (
                 <Profile {...this.props}/>) :
-            (<Preloader size={'100px'} color={'#ffffff'}/>
+            (<Preloader size={'60px'} color={'#ffffff'}/>
             )
     }
 }
@@ -43,12 +47,18 @@ class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> 
 export type ProfileAPIContainerPropsType =
     MapStateToPropsType &
     MapDispatchToPropsType &
-    { params: { ['*']: string } } //... <= profile/*... => type for props
+    {
+        params: {
+            ['*']: string,
+        }
+        navigate: (path: string) => void
+    } //... <= profile/*... => type for props
 
 type MapStateToPropsType = {
     profile: ProfileType | null
     isAuth: boolean
-    status:string
+    status: string
+    userId: number | null
 }
 type MapDispatchToPropsType = {
     getProfile: (userId: number) => void
@@ -60,9 +70,14 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
     isAuth: state.auth.isAuth,
     status: state.profilePage.status,
+    userId: state.auth.id
 })
 
 
-export const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {getProfile, getStatus, updateStatus} as MapDispatchToPropsType)(withRouter(ProfileAPIContainer)))
+export const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {
+    getProfile,
+    getStatus,
+    updateStatus
+} as MapDispatchToPropsType)(withRouter(ProfileAPIContainer)))
 
 

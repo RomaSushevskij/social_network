@@ -8,6 +8,7 @@ import {composeValidators, maxLength, requiredField} from '../../../utils/valida
 import {LoginWithApiPropsType} from '../../Login/Login';
 import s from '../../generic/InputText/InputText.module.css';
 import {CSSTransition} from 'react-transition-group';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 type LoginFormValuesType = {
     email: string

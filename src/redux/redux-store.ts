@@ -2,32 +2,32 @@ import {ProfileActionType, profileReducer} from "./redusers/profileReducer/profi
 import {DialogsActionType, dialogsReducer} from "./redusers/dialogsReducer/dialogsReducer";
 import {UsersActionType, usersReducer} from "./redusers/usersReducer/usersReducer";
 import {AuthActionType, authReducer} from "./redusers/auth/authReducer";
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunkMiddleware from 'redux-thunk';
-import {ThunkAction} from 'redux-thunk';
+import {applyMiddleware, combineReducers, createStore} from "redux";
+import thunkMiddleware, {ThunkAction} from 'redux-thunk';
+import {AppActionType, appReducer} from './redusers/app/appReducer';
 
 export const rootReducer = combineReducers({
         profilePage: profileReducer,
         dialogsPage: dialogsReducer,
         usersPage: usersReducer,
         auth: authReducer,
+        app: appReducer
     }
 );
 export type AppStateType = ReturnType<typeof rootReducer>
 export type AppActionsType =
     UsersActionType |
     ProfileActionType |
-    DialogsActionType|
-    AuthActionType
+    DialogsActionType |
+    AuthActionType |
+    AppActionType
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 export type GetStateType = typeof store.getState
-export type AppThunk<ReturnType = void> = ThunkAction<
-    ReturnType,
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
     AppStateType,
     unknown,
-    AppActionsType
-    >
+    AppActionsType>
 
 // @ts-ignore
 window.store = store

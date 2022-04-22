@@ -4,6 +4,8 @@ import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {HeaderAPIContainerPropsType} from "./HeaderContainer";
 import logo_avatar from '../../usersAvatars/user.png'
+import {PATH} from '../../App';
+import {useNavigate} from 'react-router-dom';
 
 export type HeaderPropsType = {
     title: string
@@ -15,6 +17,7 @@ export type HeaderPropsType = {
 
 
 export const Header = React.memo((props: HeaderPropsType) => {
+    const navigate = useNavigate()
     const {
         title,
         description,
@@ -49,7 +52,8 @@ export const Header = React.memo((props: HeaderPropsType) => {
 
                 {auth.isAuth ?
                     <div className={styleModule.loginAndAvatar}>
-                        <div className={styleModule.avatar}>
+                        <div className={styleModule.avatar}
+                        onClick={()=>{navigate(PATH.PROFILE)}}>
                             <img src={avatar ? avatar : logo_avatar}/>
                         </div>
                         <div className={styleModule.loginValue}>{fullName}</div>

@@ -76,12 +76,17 @@
 
 .loginAndAvatar .avatar {
     width: 50px;
-
+    cursor: pointer;
 }
 
 .loginAndAvatar .avatar img {
     width: 100%;
     border-radius: 50%;
+    transition: all .4s ease-out;
+}
+.loginAndAvatar .avatar img:hover {
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    transition: all .4s ease-out;
 }
 
 .logoutButton button {

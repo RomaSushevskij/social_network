@@ -11,6 +11,10 @@ import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
+import {connect} from 'react-redux';
+import {AppStateType} from './redux/redux-store';
+import {initializeApp} from './redux/redusers/app/appReducer';
+import {Preloader} from './components/generic/Preloader/Preloader';
 
 
 export type PATHType = {
@@ -20,7 +24,7 @@ export type PATHType = {
     NEWS: string
     USERS: string
     SETTINGS: string
-    LOGIN:string
+    LOGIN: string
 }
 export const PATH: PATHType = {
     PROFILE: '/profile/*',
@@ -38,16 +42,24 @@ export const HEADER_STYLE = {
     logo: logo
 };
 
-function App() {
+class App extends React.Component<AppAPIContainerPropsType> {
+    componentDidMount(): void {
+        const {initializeApp} = this.props
+        initializeApp()
+    }
 
-    return (
+    render() {
+        if(!this.props.initialized) {
+            return <Preloader size={'60px'} color={'#ffffff'}/>
+        }
+        return (
             <div className="app_wrapper">
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app_wrapper_content">
                     <Routes>
                         <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
-                        <Route path={PATH.PROFILE} element={<ProfileContainer />}/>
+                        <Route path={PATH.PROFILE} element={<ProfileContainer/>}/>
                         <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
                         <Route path={PATH.MUSIC} element={<Music/>}/>
                         <Route path={PATH.NEWS} element={<News/>}/>
@@ -57,7 +69,23 @@ function App() {
                     </Routes>
                 </div>
             </div>
-    );
+        );
+    }
 }
 
-export default App;
+export type AppAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+type MapStateToPropsType = {
+    initialized: boolean
+}
+type MapDispatchToPropsType = {
+    initializeApp: () => void
+}
+
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        initialized: state.app.initialized
+    }
+};
+
+export default connect(mapStateToProps, {initializeApp} as MapDispatchToPropsType)(App);

@@ -15,12 +15,13 @@ beforeEach(()=>{
 
 test('correct data should be set', () => {
     const data: AuthUserDataType = {id:13, email: 'roma.sushevskij@yandex.ru', login:'react&redux'}
-    const endState = authReducer(startState, setAuthUserData(data))
+    const endState = authReducer(startState, setAuthUserData(data, true))
 
     expect(endState.isAuth).toBeTruthy()
     expect(endState.id).toBe(data.id)
     expect(endState.email).toBe(data.email)
     expect(endState.login).toBe(data.login)
+    expect(endState.isAuth).toBeTruthy()
 })
 
 test('fullName and avatar should be set', () => {

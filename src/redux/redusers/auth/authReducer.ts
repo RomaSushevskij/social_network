@@ -34,6 +34,7 @@ export type AuthActionType =
     ReturnType<typeof setAuthUserData> |
     ReturnType<typeof setFullNameAndAvatar>
 
+// A C T I O N S
 
 export const setAuthUserData = ({id, email, login}: AuthUserDataType, isAuth: boolean) => ({
     type: AUTH_ACTIONS_TYPES.SET_AUTH_USER_DATA,
@@ -47,7 +48,7 @@ export const setFullNameAndAvatar = (fullName: string, avatar: string | null) =>
 // T H U N K S
 
 export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStateType) => {
-    authMeAPI.getAuthorizationInfo()
+    return authMeAPI.getAuthorizationInfo()
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(setAuthUserData(data.data, true))

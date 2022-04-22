@@ -2,7 +2,7 @@
     width: 90%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 2fr 10fr;
+    grid-template-columns: 150px 1fr;
     grid-template-rows: 80px 1fr;
     grid-template-areas: 'header header' 'nav content';
     grid-gap: 15px;
@@ -16,4 +16,5 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     min-height: calc(100vh - 110px);
     border-radius: 10px;
+    margin-left: 30px;
 }

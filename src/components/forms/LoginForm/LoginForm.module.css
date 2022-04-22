@@ -40,10 +40,29 @@
     display: inline-block;
     vertical-align: top;
     top: 90px;
-    padding: 5px 10px;
+    padding: 5px 10px 5px 35px;
     color: #ffffff;
     border-radius: 3px;
     box-shadow: 0 0 5px rgba(200, 53, 53, .5);
     word-wrap: break-word;
     font-size: 14px;
 }
+
+.formErrorBlock::before {
+    content: "!";
+    width: 7px;
+    height: 7px;
+    color: #BE4B49;
+    background-color: #ffffff;
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    border-radius: 50%;
+    text-align: center;
+    padding: 5px;
+    line-height: .55em;
+    box-shadow: 0 0 5px rgba(255, 255, 255, .5);
+    font-weight: bold;
+    transition: all .4s ease-out;
+}
+
