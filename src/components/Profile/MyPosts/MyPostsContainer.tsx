@@ -3,6 +3,7 @@ import {AppStateType} from "../../../redux/redux-store";
 import {addPost, likePost, PostType, removePost} from "../../../redux/redusers/profileReducer/profileReducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
+import {getPostsDataSelector} from '../../../redux/selectors/profileSelectors';
 
 
 export type MapStateToPropsType = {
@@ -22,7 +23,7 @@ export type MyPostsPropsType =
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        postsData: state.profilePage.postsData
+        postsData: getPostsDataSelector(state)
     }
 }
 export const MyPostsContainer = connect(mapStateToProps, {

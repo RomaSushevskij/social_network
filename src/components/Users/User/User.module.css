@@ -1,7 +1,7 @@
 .userWrapper {
     padding: 10px;
     min-width: 120px;
-    width: 130px;
+    width: 145px;
     border-radius: 8px;
     box-shadow: 0 0 13px rgba(0, 0, 0, 0.3);
     display: grid;
@@ -9,9 +9,9 @@
     align-content: space-between;
     margin: 10px;
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
     color: #ffffff;
+
 }
 .avatar {
     justify-self: center;
@@ -32,6 +32,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     font-style: italic;
+    word-break: break-all;
 }
 
 .fullName {
@@ -39,6 +40,7 @@
     font-weight: 700;
     font-size: 1em;
     justify-self: center;
+    word-break: break-all;
 }
 
 .status, .fullName {

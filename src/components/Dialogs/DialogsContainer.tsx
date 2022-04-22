@@ -5,6 +5,7 @@ import {Dialogs} from "./Dialogs";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {getIsAuthSelector} from '../../redux/selectors/authSelectors';
 
 export type MapStateToPropsType = {
     dialogsPage: InitialStateDialogsType
@@ -20,7 +21,7 @@ export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
+        isAuth: getIsAuthSelector(state)
     }
 }
 

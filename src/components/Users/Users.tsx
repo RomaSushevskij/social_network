@@ -11,7 +11,6 @@ type UsersPropsType = UsersApiContainerPropsType & {
 }
 
 export const Users = React.memo((props: UsersPropsType) => {
-
     const {
         users,
         becomeFollower,
@@ -25,7 +24,8 @@ export const Users = React.memo((props: UsersPropsType) => {
         toggleFollowingInProcess,
     } = props
 
-    let userElements = users.map(user => <User {...user}
+    let userElements = users.map(user => <User key={user.id}
+                                               {...user}
                                                becomeFollower={becomeFollower}
                                                stopBeingFollower={stopBeingFollower}
                                                followingInProcessUsersId={followingInProcessUsersId}

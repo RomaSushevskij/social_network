@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import {AppStateType} from './redux/redux-store';
 import {initializeApp} from './redux/redusers/app/appReducer';
 import {Preloader} from './components/generic/Preloader/Preloader';
+import {getInitializedSelector} from './redux/selectors/appSelectors';
 
 
 export type PATHType = {
@@ -84,7 +85,7 @@ type MapDispatchToPropsType = {
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        initialized: state.app.initialized
+        initialized: getInitializedSelector(state)
     }
 };
 

@@ -10,9 +10,17 @@ import {
     UserType
 } from "../../redux/redusers/usersReducer/usersReducer";
 import React from "react";
+import {
+    getCurrentPageSelector,
+    getFollowingInProcessUsersIdSelector,
+    getIsFetchingSelector,
+    getPageSizeSelector,
+    getUsersSelector,
+    getUsersTotalCountSelector
+} from '../../redux/selectors/usersSelectors';
 
 
-class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
+class UsersApiContainer extends React.PureComponent<UsersApiContainerPropsType> {
 
     componentDidMount(): void {
         const {currentPage, pageSize, getUsers} = this.props
@@ -21,14 +29,9 @@ class UsersApiContainer extends React.Component<UsersApiContainerPropsType> {
 
     }
 
-    //optimization of unnecessary rendering. Alternative of React.memo
-    shouldComponentUpdate(nextProps: Readonly<UsersApiContainerPropsType>, nextState: Readonly<{}>): boolean {
-        return nextProps !== this.props || nextState !== this.state
-    }
-
     // action for pressing on page number
     onChangePage = (pageNumber: number) => {
-        const {pageSize,repeatGetUsers,} = this.props
+        const {pageSize, repeatGetUsers,} = this.props
         repeatGetUsers(pageSize, pageNumber)
     }
 
@@ -56,19 +59,19 @@ type MapDispatchToPropsType = {
     stopBeingFollower: (userID: number) => void
     toggleFollowingInProcess: (userId: number, followingInProcess: boolean) => void
     getUsers: (pageSize: number, currentPage: number) => void
-    repeatGetUsers: (pageSize:number, pageNumber:number) => void
+    repeatGetUsers: (pageSize: number, pageNumber: number) => void
 }
 
 export type UsersApiContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        usersTotalCount: state.usersPage.usersTotalCount,
-        pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProcessUsersId: state.usersPage.followingInProcessUsersId,
+        users: getUsersSelector(state),
+        usersTotalCount: getUsersTotalCountSelector(state),
+        pageSize: getPageSizeSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        isFetching: getIsFetchingSelector(state),
+        followingInProcessUsersId: getFollowingInProcessUsersIdSelector(state),
     }
 }
 

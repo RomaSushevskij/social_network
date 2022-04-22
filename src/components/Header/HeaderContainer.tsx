@@ -4,6 +4,7 @@ import {Header} from "./Header";
 import {AppStateType} from "../../redux/redux-store";
 import {InitialStateAuthType, logout} from "../../redux/redusers/auth/authReducer";
 import {HEADER_STYLE} from "../../App";
+import {getAvatarSelector, getFullNameSelector} from '../../redux/selectors/authSelectors';
 
 export type DataType = {
     id: number,
@@ -45,8 +46,8 @@ type MapDispatchToPropsType = {
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         auth: state.auth,
-        fullName: state.auth.fullName,
-        avatar: state.auth.avatar,
+        fullName: getFullNameSelector(state),
+        avatar: getAvatarSelector(state),
     }
 };
 

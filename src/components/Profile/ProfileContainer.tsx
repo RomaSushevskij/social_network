@@ -7,6 +7,8 @@ import {Preloader} from "../generic/Preloader/Preloader";
 import {withRouter} from "../../hoc/withRouter";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {PATH} from '../../App';
+import {getProfileSelector, getStatusSelector} from '../../redux/selectors/profileSelectors';
+import {getAuthUserIDSelector, getIsAuthSelector} from '../../redux/selectors/authSelectors';
 
 
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
@@ -67,10 +69,10 @@ type MapDispatchToPropsType = {
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-    profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth,
-    status: state.profilePage.status,
-    userId: state.auth.id
+    profile: getProfileSelector(state),
+    isAuth: getIsAuthSelector(state),
+    status: getStatusSelector(state),
+    userId: getAuthUserIDSelector(state)
 })
 
 
