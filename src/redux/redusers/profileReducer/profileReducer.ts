@@ -1,5 +1,6 @@
-import {profileAPI, RESPONSE_RESULT_CODES} from "../../../api/api";
+import {profileAPI, RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
 import {AppThunk} from "../../redux-store";
+import {UserType} from '../usersReducer/usersReducer';
 
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
@@ -7,6 +8,7 @@ export enum PROFILE_ACTIONS_TYPES {
     LIKE_POST = 'social/profile/LIKE_POST',
     SET_PROFILE = 'social/profile/SET_PROFILE',
     SET_STATUS = 'social/profile/SET_STATUS',
+    SET_FOLLOWERS = 'social/profile/SET_FOLLOWERS',
 }
 
 export type PostType = {
@@ -88,6 +90,7 @@ const initialState = {
     ] as Array<PostType>,
     profile: null as ProfileType | null,
     status: "",
+    followers: 0
 };
 
 export const profileReducer = (state: InitialStateProfileType = initialState, action: ProfileActionType): InitialStateProfileType => {
@@ -122,6 +125,11 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
                         } : p)
                 }
             )
+        case PROFILE_ACTIONS_TYPES.SET_FOLLOWERS:
+            const followers = action.payload.followers.filter(user=>user.followed)
+            return {
+                ...state, followers: followers.length
+            }
         default:
             return state
     }
@@ -132,7 +140,8 @@ export type ProfileActionType =
     ReturnType<typeof removePost> |
     ReturnType<typeof likePost> |
     ReturnType<typeof setProfile> |
-    ReturnType<typeof setStatus>
+    ReturnType<typeof setStatus> |
+    ReturnType<typeof setFollowers>
 
 //A C T I O N S   C R E A T O R S
 export const addPost = (newPostText: string) => ({
@@ -149,12 +158,22 @@ export const setStatus = (status: string) => ({
     type: PROFILE_ACTIONS_TYPES.SET_STATUS,
     payload: {status}
 } as const);
+export const setFollowers = (followers: UserType[]) => ({
+    type: PROFILE_ACTIONS_TYPES.SET_FOLLOWERS, payload: {followers}
+} as const);
 
 //T H U N K S
 export const getProfile = (userId: number): AppThunk => dispatch => {
     profileAPI.getProfile(userId)
         .then(data => {
+            debugger
             dispatch(setProfile(data))
+        })
+        .then(() => {
+            usersAPI.getUsers(100, 1)
+                .then(data => {
+                    dispatch(setFollowers(data.items))
+                })
         })
 }
 export const getStatus = (userId: number): AppThunk => dispatch => {

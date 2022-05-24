@@ -16,6 +16,8 @@ export type DialogType = {
      * Optional color text of component
      */
     color?: string
+    isOnline: boolean
+    userId:number
 };
 export type MessageType = {
     id: number
@@ -32,16 +34,31 @@ const initialState = {
         {
             id: 1,
             name: 'Ruslan',
-            image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album'
+            userId: 1,
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
+            isOnline: true,
         },
-        {id: 2, name: 'Dmitry', image: null},
+        {
+            id: 2,
+            name: 'Dmitry',
+            userId: 2,
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-3.jpg',
+            isOnline: true,
+        },
         {
             id: 3,
             name: 'Aleksey',
-            image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
+            userId: 4,
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
+            isOnline: true,
         },
-        {id: 4, name: 'Ivan', image: null},
-        {id: 5, name: 'Mother', image: null}
+        {
+            id: 4,
+            name: 'Ivan',
+            userId: 3,
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
+            isOnline: true,
+        },
     ] as Array<DialogType>,
     messagesData: [
         {
@@ -49,18 +66,25 @@ const initialState = {
             userId: 1,
             name: 'Ruslan',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, rem!',
-            image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album',
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
             time: '12:03'
         },
 
         {id: 2, userId: 20392, name: 'Me', message: 'Lorem ipsum dolor !', image: null, time: '12:10'},
-        {id: 3, name: 'Dmitry', userId: 2, message: 'Lorem ipsum dolor sit amet', image: null, time: '13:01'},
+        {
+            id: 3,
+            name: 'Dmitry',
+            userId: 2,
+            message: 'Lorem ipsum dolor sit amet',
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-3.jpg',
+            time: '13:01'
+        },
         {
             id: 4,
             name: 'Ivan',
             userId: 3,
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
             time: '13:08'
         },
         {
@@ -71,8 +95,15 @@ const initialState = {
             image: null,
             time: '13:49'
         },
-        {id: 6, name: 'Mother', userId: 4, message: 'Lorem ipsum dolor !', image: null, time: '14:05'},
-        {id: 7, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
+        {
+            id: 6,
+            name: 'Ivan',
+            userId: 3,
+            message: 'Lorem ipsum dolor !',
+            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
+            time: '14:05'
+        },
+        {id: 7, userId: 20392, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
         {
             id: 8,
             name: 'Me',
@@ -81,14 +112,7 @@ const initialState = {
             image: null,
             time: '14:10'
         },
-        {
-            id: 9,
-            name: 'Mother',
-            userId: 5,
-            message: 'Lorem  consectetur adipisicin ipsum dolor !',
-            image: null,
-            time: '14:23'
-        },
+
     ] as Array<MessageType>,
 };
 

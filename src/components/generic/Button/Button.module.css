@@ -1,46 +1,22 @@
 .button {
-    overflow: hidden;
-    z-index: 1;
-    padding: 8px 20px;
-    border: 4px solid #000000;
+    padding: 11px 15px;
     font-weight: bold;
     font-size: 1em;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 5px;
     transition: all 0.4s ease;
-    letter-spacing: 2px;
-    position: relative;
-
+    border: none;
 }
 
-.button:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    transform: translate(-100%);
-    transition-duration: 0.3s;
-    animation-timing-function: ease;
-}
 
 .button:hover {
     transition: all 0.3s ease;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
 }
 
-.button:hover:before {
-    transform: translate(0%);
-    transition-duration: 0.3s;
-    animation-timing-function: ease;
-}
 
 .button:disabled {
     cursor: not-allowed;
     background-color: lightgrey;
-    border-color: darkgrey;
     color: lightgrey;
     box-shadow: none;
 }
@@ -49,28 +25,3 @@
     color: lightgrey;
 }
 
-.button:disabled:before {
-    transform: translate(-100%);
-}
-
-@keyframes rotate-center {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.button:disabled:after {
-    content: "";
-    position: absolute;
-    top: calc(50% - 11px);
-    left: calc(50% - 10px);
-    width: 18px;
-    height: 18px;
-    border: 2px dotted darkgrey;
-    border-radius: 50%;
-    background-color: lightgrey;
-    animation: rotate-center 3s linear infinite;
-}

@@ -5,11 +5,13 @@ import {Dialogs} from "./Dialogs";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {getIsAuthSelector} from '../../redux/selectors/authSelectors';
+import {getAuthUserIDSelector, getAvatarSelector, getIsAuthSelector} from '../../redux/selectors/authSelectors';
 
 export type MapStateToPropsType = {
     dialogsPage: InitialStateDialogsType
     isAuth: boolean
+    myUserId: number | null
+    avatar: string | null
 }
 
 export type MapDispatchToPropsType = {
@@ -21,7 +23,9 @@ export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: getIsAuthSelector(state)
+        isAuth: getIsAuthSelector(state),
+        myUserId: getAuthUserIDSelector(state),
+        avatar: getAvatarSelector(state),
     }
 }
 

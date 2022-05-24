@@ -1,40 +1,38 @@
 .postWrapper {
+    width: 60%;
     color: white;
     padding: 15px;
-    max-width: 50%;
     word-break: break-word;
-    box-shadow: 0px 7px 15px -8px #000000;
-    margin: 5px 0;
+    margin: 20px 0;
     border-radius: 8px;
+    --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .postWrapper .avaBlock {
     display: flex;
     position: relative;
-}
-
-.postWrapper .avaBlock img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 1px solid white;
+    align-items: center;
 }
 
 .postWrapper .avaBlock span {
-    margin-left: 10px;
-    align-self: start;
+    margin-left: 20px;
+    font-size: 14px;
     font-weight: bold;
-    padding-top: 5px;
+
 }
 
 .postWrapper .messageBlock {
     margin: 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E5E7EB;
     hyphens: auto;
 }
 
 .likesBlock {
-    font-size: 18px;
+    font-size: 15px;
     cursor: pointer;
+    font-weight: 500;
 }
 
 .removePost {
@@ -46,7 +44,7 @@
 }
 
 .removePost:hover {
-    color: #ffbf47;
+    color: #F15B5B;
     cursor: pointer;
     transition: .4s ease;
 }

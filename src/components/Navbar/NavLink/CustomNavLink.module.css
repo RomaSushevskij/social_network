@@ -1,0 +1,39 @@
+.item {
+    display: flex;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.item .icon {
+    margin-right: 10px;
+}
+
+.item a {
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 10px;
+    color: #808080;
+    font-weight: 500;
+}
+
+.item a:hover {
+    transition: all 0.3s ease;
+    color: #BE185D;
+}
+
+.item a.active {
+    color: #BE185D;
+    transition: all 0.3s ease;
+}
+
+.item a.active:hover {
+    box-shadow: none;
+    margin-left: 0;
+}
+
+.users {
+    margin-bottom: 15px;
+}

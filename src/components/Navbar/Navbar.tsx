@@ -10,10 +10,11 @@ import {
     faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import {AppStateType} from "../../redux/redux-store";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {CustomNavLink} from "./NavLink/CustomNavLink";
 import {Button} from "../generic/Button/Button";
-import {Navigate,useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {Avatar} from '../generic/Avatar/Avatar';
 
 
 export type NavLinkItem = {
@@ -41,23 +42,42 @@ export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
     if (!props.isAuth) {
         resultNavLinks = navLinks.filter(nav => !nav.withAuthRedirect)
     }
+    const avatar = useSelector((state: AppStateType) => state.auth.avatar);
+    const name = useSelector((state: AppStateType) => state.auth.fullName);
+    const postsCount = useSelector((state: AppStateType) => state.profilePage.postsData.length);
+    const followers = useSelector((state: AppStateType) => state.profilePage.followers);
 
     const customNavLinks = resultNavLinks.map(navLink => {
-            return (
-                <CustomNavLink key={navLink.title} {...navLink}/>
-            )
+        return (
+            <CustomNavLink key={navLink.title} {...navLink}/>
+        )
 
     })
     return (
-        <>
-            <nav className={styleModule.nav}>
+        <nav className={styleModule.nav}>
+            <div className={styleModule.meInfoBlock}>
+                <div className={styleModule.avatar}>
+                    <Avatar photo={avatar}/>
+                </div>
+                <h3>{name}</h3>
+                <div className={styleModule.statistic}>
+                    <div className={styleModule.postsCount}>
+                        <h4>Post</h4>
+                        {postsCount}
+                    </div>
+                    <div className={styleModule.followersCount}>
+                        <h4>Followers</h4>
+                        {followers}
+                    </div>
+                </div>
+            </div>
+            <div className={styleModule.links}>
                 {customNavLinks}
-                {!props.isAuth && <div className={styleModule.buttonBlock}>
-                    <Button name={'Login'} onClick={()=>navigate('/login')}/>
-                </div>}
-            </nav>
-
-        </>
+            </div>
+            {!props.isAuth && <div className={styleModule.buttonBlock}>
+                <Button name={'Login'} onClick={() => navigate('/login')}/>
+            </div>}
+        </nav>
     )
 })
 

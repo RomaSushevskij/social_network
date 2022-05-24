@@ -13,6 +13,7 @@
     color: #ffffff;
 
 }
+
 .avatar {
     justify-self: center;
 }
@@ -45,6 +46,7 @@
 
 .status, .fullName {
 }
+
 .followed {
     justify-self: center;
 }

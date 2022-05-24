@@ -5,6 +5,7 @@ import {PostType} from "../../../../redux/redusers/profileReducer/profileReducer
 import styled from "styled-components";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Avatar} from '../../../generic/Avatar/Avatar';
 
 
 type PostPropsType = PostType &
@@ -28,12 +29,12 @@ export const Post = React.memo(({
                                 }: PostPropsType) => {
     const PostWrapper = styled.div`
      & {
-        background: ${background ? background : '#FF6347'};
-        color:  ${color ? color : '#ffffff'};
+        background: ${background ? background : '#ffffff'};
+        color:  ${color ? color : '#0F0F0F'};
     }
     `;
     const LikesDiv = styled.div`
-    color: ${isLike ? '#FFCC03' : '#ffffff'};
+    color: ${isLike ? '#BE185D' : '#666666'};
     fontWeight:${isLike ? 'bold' : 'normal'};
     `
 
@@ -47,7 +48,8 @@ export const Post = React.memo(({
     return (
         <PostWrapper className={styleModule.postWrapper}>
             <div className={styleModule.avaBlock}>
-                <img src={image ? image : ava_post} alt="ava_post"/>
+                <Avatar style={{width:'50px', height:'50px'}} photo={image}/>
+
                 <span>{name}</span>
                 <FontAwesomeIcon icon={faTimes} className={styleModule.removePost} onClick={() => onCrossClick(id)}/>
             </div>

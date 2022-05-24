@@ -5,9 +5,11 @@ import {
     PostType,
     profileReducer,
     ProfileType,
-    removePost, setProfile, setStatus
+    removePost,
+    setFollowers,
+    setProfile,
+    setStatus
 } from "./profileReducer";
-import {setUsersTotalCount, usersReducer} from "../usersReducer/usersReducer";
 
 let startState: InitialStateProfileType
 beforeEach(() => {
@@ -49,6 +51,7 @@ beforeEach(() => {
         ] as Array<PostType>,
         profile: null as ProfileType | null,
         status: "",
+        followers: 0,
     }
 })
 
@@ -114,4 +117,34 @@ test('new status should be set to state', () => {
 
     expect(startState.status).toBe("")
     expect(endState.status).toBe(status)
+})
+test('new followers count should be set to state', () => {
+    const followers = [{
+        name: 'Roman',
+        id: 131616,
+        uniqueUrlName: 'Roman',
+        photos: {large: 'asdfa', small: 'asdfas'},
+        status: 'ok',
+        followed: true
+    },
+        {
+            name: 'Lena',
+            id: 23456,
+            uniqueUrlName: 'Roman',
+            photos: {large: 'asdfa', small: 'asdfas'},
+            status: 'ok',
+            followed: false
+        },
+        {
+            name: 'Ameliya',
+            id: 49849,
+            uniqueUrlName: 'Roman',
+            photos: {large: 'asdfa', small: 'asdfas'},
+            status: 'ok',
+            followed: true
+        }];
+    const endState = profileReducer(startState, setFollowers(followers))
+
+    expect(startState.followers).toBe(0)
+    expect(endState.followers).toBe(2)
 })

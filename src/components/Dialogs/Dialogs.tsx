@@ -1,44 +1,61 @@
-import React from "react";
+import React, {useState} from "react";
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Mesage/Message";
 import styleModule from './Dialogs.module.css';
 import {DialogsPropsType} from "./DialogsContainer";
 import {AddMessageForm} from '../forms/AddMessageForm/AddMessageForm';
+import {useParams} from 'react-router-dom';
 
 
 const MESSAGE_STYLE = {
-    background: '#e8e8e8',
-    color: '#757575',
-    meBackground: '#FFE1A9',
-    meColor: '#757575',
+    background: '#F3F4F6',
+    color: '#374151',
+    meBackground: '#2563EB',
+    meColor: '#FFF5FA',
 };
 const DIALOG_STYLE = {
     background: 'inherit',
-    color: '#ffffff'
+    color: '#000000'
 };
 
 export const Dialogs = React.memo((props: DialogsPropsType) => {
+    const [activeDialogId, setActiveDialogId] = useState(0);
+    const activeDialog = props.dialogsPage.dialogsData.filter(d => d.userId === activeDialogId)[0]
+    const messagesByUser = props.dialogsPage.messagesData.filter(m => {
+        return m.userId === activeDialogId || m.userId === props.myUserId
+    });
+    const params = useParams<'*'>()
     return (
         <div className={styleModule.dialogs}>
-            <div className={styleModule.heading}>
-                DIALOGS
-            </div>
-            <div className={styleModule.dialogs_items}>
-                {props.dialogsPage.dialogsData.map(dialog => <Dialog key={dialog.id}
-                                                                     background={DIALOG_STYLE.background}
-                                                                     color={DIALOG_STYLE.color}
-                                                                     {...dialog}/>)}
-            </div>
-            <div className={styleModule.messagesBlock}>
-                <div className={styleModule.messages}>
-                    {props.dialogsPage.messagesData.map(message => <Message key={message.id}
-                                                                            background={MESSAGE_STYLE.background}
-                                                                            color={MESSAGE_STYLE.color}
-                                                                            meBackground={MESSAGE_STYLE.meBackground}
-                                                                            meColor={MESSAGE_STYLE.meColor}
-                                                                            {...message}/>)}
+            <div className={styleModule.dialogsContainer}>
+                <div className={styleModule.dialogs_items}>
+                    {props.dialogsPage.dialogsData.map(dialog => <Dialog key={dialog.id}
+                                                                         background={DIALOG_STYLE.background}
+                                                                         color={DIALOG_STYLE.color}
+                                                                         setActiveDialogId={setActiveDialogId}
+
+                                                                         {...dialog}/>)}
                 </div>
-                <AddMessageForm addMessage={props.addMessage}/>
+                <div className={styleModule.messagesBlock}>
+                    {params['*'] &&
+                    <>
+                        <div className={styleModule.messagesHeader}>
+                            <Dialog {...activeDialog}/>
+                        </div>
+                        <div className={styleModule.messages}>
+                            {messagesByUser.map(message => <Message key={message.id}
+                                                                    background={MESSAGE_STYLE.background}
+                                                                    color={MESSAGE_STYLE.color}
+                                                                    meBackground={MESSAGE_STYLE.meBackground}
+                                                                    meColor={MESSAGE_STYLE.meColor}
+                                                                    myUserId={props.myUserId}
+                                                                    myAvatar={props.avatar}
+                                                                    {...message}/>)}
+                        </div>
+                        <AddMessageForm addMessage={props.addMessage}/>
+                    </>
+                    }
+                </div>
             </div>
         </div>
     );

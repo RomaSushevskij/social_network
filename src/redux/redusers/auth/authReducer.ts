@@ -54,15 +54,15 @@ export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStat
                 dispatch(setAuthUserData(data.data, true))
             }
         }).then(() => {
-            const id = getState().auth.id
-            id && profileAPI.getProfile(id)
-                .then(data => {
-                    const fullName = data.fullName
-                    const avatar = data.photos.small
-                    dispatch(setFullNameAndAvatar(fullName, avatar))
-                })
-        }
-    )
+                const id = getState().auth.id
+                id && profileAPI.getProfile(id)
+                    .then(data => {
+                        const fullName = data.fullName
+                        const avatar = data.photos.small
+                        dispatch(setFullNameAndAvatar(fullName, avatar))
+                    })
+            }
+        )
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void): AppThunk => dispatch => {

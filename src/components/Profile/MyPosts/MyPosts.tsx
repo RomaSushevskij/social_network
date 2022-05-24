@@ -11,8 +11,8 @@ export const BUTTON_STYLE = {
     COLOR_HOVER: '#ffffff'
 };
 export const POST_STYLE = {
-    background: '#FF6347',
-    color: '#ffffff'
+    background: '#ffffff',
+    color: '#666666'
 };
 
 

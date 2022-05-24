@@ -19,17 +19,13 @@ export const Button = React.memo(({
                                       disabled,
                                       type, ...props
                                   }: ButtonPropsType) => {
-    const ButtonWithBefore = styled.button`
+    const ButtonSetting = styled.button`
 & {
-border-color: ${props.backgroundHover ? props.backgroundHover : '#ffbf47'};
-color: ${props.backgroundHover ? props.backgroundHover : '#ffbf47'};
-background-color:${props.background ? props.background : '#ffe1a9'}
-}
-&:before {
-background: ${props.backgroundHover ? props.backgroundHover : '#ffbf47'};
+color: ${props.colorHover ? props.colorHover : '#ffffff'};
+background-color:${props.background ? props.background : '#EC4899'}
 }
 &:hover {
-color: ${props.colorHover ? props.colorHover : '#ffffff'}
+background-color: ${props.backgroundHover ? props.backgroundHover : '#DB2777'}
 }
 `;
 
@@ -38,11 +34,11 @@ color: ${props.colorHover ? props.colorHover : '#ffffff'}
     };
 
     return (
-        <ButtonWithBefore onClick={onClickButton}
-                          className={style.button}
-                          disabled={disabled}
-                          type={type}>
+        <ButtonSetting onClick={onClickButton}
+                       className={style.button}
+                       disabled={disabled}
+                       type={type}>
             {name}
-        </ButtonWithBefore>
+        </ButtonSetting>
     )
 })

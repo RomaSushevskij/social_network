@@ -16,6 +16,8 @@ import {AppStateType} from './redux/redux-store';
 import {initializeApp} from './redux/redusers/app/appReducer';
 import {Preloader} from './components/generic/Preloader/Preloader';
 import {getInitializedSelector} from './redux/selectors/appSelectors';
+import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 
 export type PATHType = {
@@ -38,9 +40,9 @@ export const PATH: PATHType = {
 };
 
 export const HEADER_STYLE = {
-    background: '#87BBD0',
-    color: '#ffffff',
-    logo: logo
+    background: '#ffffff',
+    color: '#3B3E43',
+    logo: <FontAwesomeIcon icon={faGlobe}/>
 };
 
 class App extends React.Component<AppAPIContainerPropsType> {

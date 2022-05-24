@@ -46,7 +46,9 @@ export function AddMessageForm({addMessage}: AddMessageFormPropsType) {
                     <div className={styleModule.sendMessage}>
                         <Button name={'Send'}
                                 type={'submit'}
-                                disabled={isSubmitting}/>
+                                disabled={isSubmitting}
+                                background={'#2563EB'}
+                                backgroundHover={'#1F4DAA'}/>
                     </div>
                 </Form>
 

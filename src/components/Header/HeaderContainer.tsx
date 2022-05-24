@@ -22,7 +22,7 @@ export type GetAuthUserDataType = {
 class HeaderAPIContainer extends React.Component<HeaderAPIContainerPropsType> {
     render = () => {
         return (
-            <Header title={'Cloudpaper'}
+            <Header title={'Linkspace'}
                     description={'Connecting Network'}
                     background={HEADER_STYLE.background}
                     color={HEADER_STYLE.color}

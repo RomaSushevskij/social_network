@@ -1,40 +1,53 @@
 import React from "react";
 import styleModule from './Dialog.module.css';
 import {NavLink} from "react-router-dom";
-import userLogo from '../../../usersAvatars/user.png'
 import {DialogType} from "../../../redux/redusers/dialogsReducer/dialogsReducer";
 import styled from "styled-components";
+import {UserLogo} from '../../generic/Avatar/Avatar';
 
-export type DialogPropsType = DialogType
+export type DialogPropsType = DialogType & { setActiveDialogId?: (dialogId: number) => void }
 
 export const Dialog = React.memo(({
-                           id,
-                           name,
-                           image,
-                           background,
-                           color, ...props
-                       }: DialogPropsType) => {
+                                      id,
+                                      name,
+                                      image,
+                                      background,
+                                      color,
+    userId,
+                                      setActiveDialogId, ...props
+                                  }: DialogPropsType) => {
     const DialogWrapper = styled.div`
     & {
-    background: ${background ? background : '#FF6347'};
+    background: ${background ? background : '#FFFFFF'};
     }
     & a {
-    color: ${color ? color : '#ffffff'};
+    color: ${color ? color : '#333333'};
     }
     
     `;
-    const ContactAvatar = styled.div`
-    & img {
-    border: 1px solid ${color ? color : '#ffffff'};
+    const onActiveDialogHandler = (dialog: any) => {
+        if (dialog.isActive) {
+            setActiveDialogId && setActiveDialogId(userId)
+            return styleModule.dialogActive
+        } else {
+            return ''
+        }
+
     }
-    `
+    const finalAvatarClass = props.isOnline ?
+        `${styleModule.contactAvatar} ${styleModule.online}` :
+        styleModule.contactAvatar
     return (
-        <DialogWrapper className={styleModule.dialog}>
-            <ContactAvatar className={styleModule.contactAvatar}>
-                <img src={image ? image : userLogo} alt={'message avatar'}/>
-            </ContactAvatar>
-            <NavLink className={dialog => dialog.isActive ? styleModule.dialogActive : ''} to={`/dialogs/${id}`}>{name}</NavLink>
-        </DialogWrapper>
+        <NavLink className={onActiveDialogHandler}
+                 to={`/dialogs/${id}`}>
+            <DialogWrapper className={styleModule.dialog}>
+                <div className={finalAvatarClass}>
+                    {image ? <img src={image} alt={'message avatar'}/> :
+                        <UserLogo/>}
+                </div>
+                <span>{name}</span>
+            </DialogWrapper>
+        </NavLink>
     )
 })
 

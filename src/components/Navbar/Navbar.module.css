@@ -1,52 +1,68 @@
 .nav {
     grid-area: nav;
-    padding: 20px 10px 20px 20px;
-    background: linear-gradient(315deg, rgb(132, 189, 211), rgb(255, 99, 71), rgb(132, 189, 211));
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
     min-width: 150px;
-    border-radius: 10px;
     position: fixed;
-    top: 95px;
-    min-height:calc(100vh - 150px);
+    top: 70px;
+    min-height: calc(100vh - 70px);
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.item {
+.nav::-webkit-scrollbar {
+    width: 7px;
+}
+
+.nav::-webkit-scrollbar-thumb {
+    background-color: #dbdde0;
+    border-radius: 50px;
+}
+
+.nav::-webkit-scrollbar-track {
+    background-color: inherit;
+}
+
+.meInfoBlock {
+    box-sizing: border-box;
+    width: 100%;
     display: flex;
-    padding: 5px;
-}
-.item .icon {
-    color: #ffffff;
-    margin-right: 10px;
-}
-.item a {
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #E5E7EB;
 }
 
-.item a:hover {
-    transition: all 0.3s ease;
-    margin-left: 5px;
+.meInfoBlock h3 {
+    font-weight: 500;
+    color: #666666;
 }
 
-.item a.active {
-    font-size: 1.5em;
-    display: block;
-    padding: 5px 0;
-    transition: all 0.3s ease;
-}
-.item a.active:hover {
-    box-shadow: none;
-    margin-left: 0;
+.statistic {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
-.users {
-    margin-bottom: 30px;
+.statistic .postsCount, .statistic .followersCount {
+    text-align: center;
 }
+
+.statistic h4 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.links {
+    padding: 20px;
+    padding-top: 10px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+
 .buttonBlock {
     width: 95%;
     display: flex;

@@ -4,20 +4,35 @@ let startState: InitialStateDialogsType
 
 beforeEach(() => {
     startState = {
-        dialogsData: [
+        dialogsData:[
             {
                 id: 1,
                 name: 'Ruslan',
-                image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album'
+                userId: 1,
+                image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
+                isOnline: true,
             },
-            {id: 2, name: 'Dmitry', image: null},
+            {
+                id: 2,
+                name: 'Dmitry',
+                userId: 2,
+                image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-3.jpg',
+                isOnline: true,
+            },
             {
                 id: 3,
                 name: 'Aleksey',
-                image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
+                userId: 4,
+                image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
+                isOnline: true,
             },
-            {id: 4, name: 'Ivan', image: null},
-            {id: 5, name: 'Mother', image: null}
+            {
+                id: 4,
+                name: 'Ivan',
+                userId: 3,
+                image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
+                isOnline: true,
+            },
         ] as Array<DialogType>,
         messagesData: [
             {

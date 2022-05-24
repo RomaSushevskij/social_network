@@ -1,0 +1,33 @@
+.wrapperBgc {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, rgb(217, 106, 23), rgb(219, 56, 106));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.innerBgc {
+    background-color: #ffffff;
+    width: 94%;
+    height: 94%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.borderImg {
+    width: 96%;
+    height: 96%;
+    background: linear-gradient(45deg, rgb(217, 106, 23), rgb(219, 56, 106));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.borderImg  img {
+    width: 99%;
+    height: 99%;
+    border-radius: 50%;
+}
