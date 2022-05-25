@@ -166,7 +166,6 @@ export const setFollowers = (followers: UserType[]) => ({
 export const getProfile = (userId: number): AppThunk => dispatch => {
     profileAPI.getProfile(userId)
         .then(data => {
-            debugger
             dispatch(setProfile(data))
         })
         .then(() => {

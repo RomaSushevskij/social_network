@@ -67,7 +67,6 @@ export const Message = React.memo(({
         ?
         `${styleModule.messageBlock} ${styleModule.meMessageBlock}` :
         styleModule.messageBlock
-    debugger
     return (
         <div className={messageWrapperStyle}>
             <div className={styleModule.avatar}>

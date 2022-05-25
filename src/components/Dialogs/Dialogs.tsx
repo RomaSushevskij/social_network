@@ -28,7 +28,9 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
     return (
         <div className={styleModule.dialogs}>
             <div className={styleModule.dialogsContainer}>
-                <div className={styleModule.dialogs_items}>
+                <div className={params['*'] ?
+                    styleModule.dialogs_items :
+                    `${styleModule.dialogs_items} ${styleModule.full}`}>
                     {props.dialogsPage.dialogsData.map(dialog => <Dialog key={dialog.id}
                                                                          background={DIALOG_STYLE.background}
                                                                          color={DIALOG_STYLE.color}
@@ -36,9 +38,11 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
 
                                                                          {...dialog}/>)}
                 </div>
-                <div className={styleModule.messagesBlock}>
-                    {params['*'] &&
-                    <>
+                {params['*'] &&
+                <>
+                    <div className={styleModule.messagesBlock}>
+
+
                         <div className={styleModule.messagesHeader}>
                             <Dialog {...activeDialog}/>
                         </div>
@@ -53,9 +57,10 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
                                                                     {...message}/>)}
                         </div>
                         <AddMessageForm addMessage={props.addMessage}/>
-                    </>
-                    }
-                </div>
+
+                    </div>
+                </>
+                }
             </div>
         </div>
     );

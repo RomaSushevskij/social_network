@@ -12,6 +12,10 @@
 
 .dialogs_items {
     align-self: start;
+    width: 300px;
+}
+.dialogs_items.full {
+    width: 100%;
 }
 
 .messagesBlock {

@@ -1,9 +1,8 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {Dialog} from './Dialog';
-import {action} from "@storybook/addon-actions";
-import {BrowserRouter, HashRouter} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 
 const getCategoryObj = (categoryName: 'Colors' | 'Events' | 'Main') => {
     return ({
@@ -20,12 +19,12 @@ export default {
         background: {
             ...getCategoryObj('Colors'),
             control: 'color',
-            defaultValue: '#FF6347'
+            defaultValue: '#FFFFFF'
         },
         color: {
             ...getCategoryObj('Colors'),
             control: 'color',
-            defaultValue: '#ffffff'
+            defaultValue: '#333333'
         },
         image: {
             ...getCategoryObj('Main'),
@@ -49,7 +48,7 @@ export const DialogSomeone = Template.bind({});
 DialogSomeone.args = {
     id: 13,
     name: 'Someone',
-    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
+    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png',
 };
 
 

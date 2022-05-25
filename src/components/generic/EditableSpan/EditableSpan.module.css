@@ -11,6 +11,9 @@
     width: 100%;
     min-height: 100%;
 }
+.inputWrapper input {
+    font-weight: bold;
+}
 
 
 .spanWrapper {
@@ -38,6 +41,8 @@
     align-items: center;
     justify-content: space-between;
     word-break: break-word;
+    color:#BE185D;
+    font-weight: bold;
 }
 .buttonsBlock {
     display: flex;
@@ -48,6 +53,8 @@
 .spanWrapper .editSpan .editPen {
     color: #333333;
     margin-left: 10px;
+    color:#BE185D;
+    font-weight: bold;
 }
 
 .enter {
