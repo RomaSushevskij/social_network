@@ -1,11 +1,10 @@
 import React from "react";
 import styleModule from "./User.module.css";
-import userPhotoDefault from "./../../../usersAvatars/user.png";
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../../redux/redusers/usersReducer/usersReducer";
 import {Button} from "../../generic/Button/Button";
 import {BUTTON_STYLE} from "../../Profile/MyPosts/MyPosts";
-import styled from "styled-components";
+import {Avatar} from '../../generic/Avatar/Avatar';
 
 
 type UserPropsType = {
@@ -24,38 +23,24 @@ type UserPropsType = {
 } & UserType
 
 export const User = React.memo((props: UserPropsType) => {
-    const UserWrapper = styled.div`
-    & {
-    background: ${props.background ? props.background : 'tomato'};
-    color: ${props.color ? props.color : 'white'}
-    }
-    `
-    const Img = styled.img`
-    & {
-    border-color: ${props.color ? props.color : 'white'}
-    }
-    `
 
     //is follow button disabled?
     const isFollowingButtonDisabled = props.followingInProcessUsersId.includes(props.id)
 
     return (
-        <UserWrapper className={styleModule.userWrapper}>
+        <div className={styleModule.userWrapper}>
             <div className={styleModule.avatar}>
                 <NavLink to={`/profile/${props.id}`}>
-                    <Img src={props.photos.small !== null ? props.photos.small : userPhotoDefault} alt=""/>
+                    <Avatar style={{width:'90px', height:'90px'}} photo={props.photos.small}/>
                 </NavLink>
             </div>
             <div className={styleModule.fullName}>
                 {props.name}
             </div>
-            <div className={styleModule.status}>
-                <span>{props.status}</span>
-            </div>
             <div className={styleModule.followed}>
                 {props.followed ?
                     <Button name={'Unfollow'}
-                            onClick={()=> props.stopBeingFollower(props.id)}
+                            onClick={() => props.stopBeingFollower(props.id)}
                             backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
                             background={BUTTON_STYLE.BACKGROUND}
                             colorHover={BUTTON_STYLE.COLOR_HOVER}
@@ -68,6 +53,6 @@ export const User = React.memo((props: UserPropsType) => {
                             disabled={isFollowingButtonDisabled}/>
                 }
             </div>
-        </UserWrapper>
+        </div>
     )
 })

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Navbar.module.css';
 import styleModule from './Navbar.module.css';
 import {
@@ -10,11 +10,12 @@ import {
     faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import {AppStateType} from "../../redux/redux-store";
-import {connect, useSelector} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {CustomNavLink} from "./NavLink/CustomNavLink";
 import {Button} from "../generic/Button/Button";
 import {useNavigate} from 'react-router-dom';
 import {Avatar} from '../generic/Avatar/Avatar';
+import {getFollowers} from '../../redux/redusers/profileReducer/profileReducer';
 
 
 export type NavLinkItem = {
@@ -26,9 +27,8 @@ export type NavLinkItem = {
 
 
 export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
-    const navigate = useNavigate()
-
-    const navLinksArr: NavLinkItem[] = [
+    const navigate = useNavigate();
+       const navLinksArr: NavLinkItem[] = [
         {title: 'Profile', path: '/profile', iconTitle: JSON.stringify(faUserAlt), withAuthRedirect: true,},
         {title: 'Messages', path: '/dialogs', iconTitle: JSON.stringify(faCommentDots), withAuthRedirect: true,},
         {title: 'News', path: '/news', iconTitle: JSON.stringify(faNewspaper), withAuthRedirect: false,},

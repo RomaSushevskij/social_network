@@ -126,7 +126,7 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
                 }
             )
         case PROFILE_ACTIONS_TYPES.SET_FOLLOWERS:
-            const followers = action.payload.followers.filter(user=>user.followed)
+            const followers = action.payload.followers.filter(user => user.followed)
             return {
                 ...state, followers: followers.length
             }
@@ -163,16 +163,10 @@ export const setFollowers = (followers: UserType[]) => ({
 } as const);
 
 //T H U N K S
-export const getProfile = (userId: number): AppThunk => dispatch => {
+export const getProfile = (userId: number): AppThunk => (dispatch, getState) => {
     profileAPI.getProfile(userId)
         .then(data => {
             dispatch(setProfile(data))
-        })
-        .then(() => {
-            usersAPI.getUsers(100, 1)
-                .then(data => {
-                    dispatch(setFollowers(data.items))
-                })
         })
 }
 export const getStatus = (userId: number): AppThunk => dispatch => {
@@ -188,4 +182,15 @@ export const updateStatus = (status: string): AppThunk => dispatch => {
                 dispatch(setStatus(status))
             }
         })
+}
+export const getFollowers = (): AppThunk => dispatch => {
+    usersAPI.getUsers(100, 1)
+        .then(data => {
+            const currentPage = Math.ceil(data.totalCount / 100)
+            return usersAPI.getUsers(100, currentPage)
+        })
+        .then(data => {
+            dispatch(setFollowers(data.items))
+        })
+
 }

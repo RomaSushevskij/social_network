@@ -1,5 +1,6 @@
 import {AppThunk} from '../../redux-store';
 import {getAuthorizationInfo} from '../auth/authReducer';
+import {getFollowers} from '../profileReducer/profileReducer';
 
 export enum APP_ACTIONS_TYPES {
     SET_APP_INITIALIZE_VALUE = 'social/app/SET_APP_INITIALIZE_VALUE'
@@ -32,10 +33,11 @@ export const setAppInitializeValue = (initialized: boolean) => ({
 } as const)
 
 //T H U N K S
-export const initializeApp = ():AppThunk => dispatch => {
+export const initializeApp = (): AppThunk => dispatch => {
     const promise_1 = dispatch(getAuthorizationInfo())
-    Promise.all([promise_1])
-        .then(()=>{
+    const promise_2 = dispatch(getFollowers())
+    Promise.all([promise_1, promise_2])
+        .then(() => {
             dispatch(setAppInitializeValue(true))
         })
 }
