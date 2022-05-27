@@ -50,7 +50,7 @@ const initialState = {
             name: 'Aleksey',
             userId: 4,
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
-            isOnline: true,
+            isOnline: false,
         },
         {
             id: 4,

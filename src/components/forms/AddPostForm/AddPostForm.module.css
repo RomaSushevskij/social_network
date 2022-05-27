@@ -1,5 +1,8 @@
+.formWrapper {
+    width: 100%;
+}
 .writePost textarea{
-    width: 80%;
+    width: 100%;
 }
 
 .addPostButton {

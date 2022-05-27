@@ -38,7 +38,6 @@ export function LoginForm({login}: LoginFormPropsType) {
         }
     };
     useEffect(()=>{
-        debugger
         const formErrorBlock = document.querySelector('.formErrorBlock');
         const timeoutID = setTimeout(()=>{
             formErrorBlock && formErrorBlock.remove()

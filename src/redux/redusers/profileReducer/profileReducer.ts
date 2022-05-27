@@ -90,7 +90,7 @@ const initialState = {
     ] as Array<PostType>,
     profile: null as ProfileType | null,
     status: "",
-    followers: 0
+    followers: [] as UserType[]
 };
 
 export const profileReducer = (state: InitialStateProfileType = initialState, action: ProfileActionType): InitialStateProfileType => {
@@ -128,7 +128,7 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
         case PROFILE_ACTIONS_TYPES.SET_FOLLOWERS:
             const followers = action.payload.followers.filter(user => user.followed)
             return {
-                ...state, followers: followers.length
+                ...state, followers: followers
             }
         default:
             return state
@@ -183,7 +183,7 @@ export const updateStatus = (status: string): AppThunk => dispatch => {
             }
         })
 }
-export const getFollowers = (): AppThunk => dispatch => {
+export const getFollowers = (): AppThunk => (dispatch, getState) => {
     usersAPI.getUsers(100, 1)
         .then(data => {
             const currentPage = Math.ceil(data.totalCount / 100)

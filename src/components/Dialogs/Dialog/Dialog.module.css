@@ -11,7 +11,7 @@
     border-radius: 50%;
     position: relative;
 }
-.dialog .contactAvatar.online::after {
+.dialog .contactAvatar::after {
     content: '';
     position: absolute;
     width: 10px;
@@ -20,6 +20,10 @@
     border:2px solid #fff;
     bottom:0;
     right: 0;
+    background-color: #D1D5DB;
+
+}
+.dialog .contactAvatar.online::after {
     background-color: #10B981;
 }
 

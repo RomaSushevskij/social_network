@@ -45,7 +45,7 @@ export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
     const avatar = useSelector((state: AppStateType) => state.auth.avatar);
     const name = useSelector((state: AppStateType) => state.auth.fullName);
     const postsCount = useSelector((state: AppStateType) => state.profilePage.postsData.length);
-    const followers = useSelector((state: AppStateType) => state.profilePage.followers);
+    const followers = useSelector((state: AppStateType) => state.profilePage.followers.length);
 
     const customNavLinks = resultNavLinks.map(navLink => {
         return (
