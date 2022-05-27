@@ -1,22 +1,19 @@
+.usersWrapper {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .usersBlock {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 20px;
 }
-.usersWrapper {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-}
-.buttonBlock {
-    margin-top: 20px;
+.paginatorBlock {
+    margin-bottom: 30px;
 }
 
-.selectedPage {
-    font-weight: bold;
-}
 
 
 

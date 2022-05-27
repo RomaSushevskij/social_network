@@ -32,17 +32,17 @@ export const Users = React.memo((props: UsersPropsType) => {
                                                toggleFollowingInProcess={toggleFollowingInProcess}/>);
     return (
         <div className={styleModule.usersWrapper}>
-            <div>
+            {isFetching ? <Preloader size={'60px'} color={'#ffffff'}/> :
+                <div className={styleModule.usersBlock}>
+                    {userElements}
+                </div>}
+            <div className={styleModule.paginatorBlock}>
                 <Paginator portionSize={5}
                            currentPage={currentPage}
                            pageSize={pageSize}
                            totalItemsCount={usersTotalCount}
                            onChangePage={onChangePage}/>
             </div>
-            {isFetching ? <Preloader size={'60px'} color={'#ffffff'}/> :
-                <div className={styleModule.usersBlock}>
-                    {userElements}
-                </div>}
         </div>
     )
 })

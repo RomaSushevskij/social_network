@@ -7,6 +7,6 @@
 
 .app_wrapper_content {
     grid-area: content;
-    min-height: calc(100vh - 110px);
+    min-height: calc(100vh - 70px);
     background-color: #F0F2F5;
 }

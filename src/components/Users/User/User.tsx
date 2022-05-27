@@ -2,9 +2,10 @@ import React from "react";
 import styleModule from "./User.module.css";
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../../redux/redusers/usersReducer/usersReducer";
-import {Button} from "../../generic/Button/Button";
-import {BUTTON_STYLE} from "../../Profile/MyPosts/MyPosts";
 import {Avatar} from '../../generic/Avatar/Avatar';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUserMinus} from '@fortawesome/free-solid-svg-icons/faUserMinus';
+import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 
 
 type UserPropsType = {
@@ -31,28 +32,24 @@ export const User = React.memo((props: UserPropsType) => {
         <div className={styleModule.userWrapper}>
             <div className={styleModule.avatar}>
                 <NavLink to={`/profile/${props.id}`}>
-                    <Avatar style={{width:'90px', height:'90px'}} photo={props.photos.small}/>
+                    <Avatar style={{width: '90px', height: '90px'}} photo={props.photos.small}/>
                 </NavLink>
+                <div className={styleModule.followed}>
+                    {props.followed ?
+                        <button disabled={isFollowingButtonDisabled}
+                                onClick={() => props.stopBeingFollower(props.id)}>
+                            <FontAwesomeIcon icon={faUserMinus}/>
+                        </button> :
+                        <button disabled={isFollowingButtonDisabled}
+                                onClick={() => props.becomeFollower(props.id)}>
+                            <FontAwesomeIcon icon={faUserPlus}/>
+                        </button>
+                    }
+                </div>
             </div>
-            <div className={styleModule.fullName}>
+            <p className={styleModule.fullName}>
                 {props.name}
-            </div>
-            <div className={styleModule.followed}>
-                {props.followed ?
-                    <Button name={'Unfollow'}
-                            onClick={() => props.stopBeingFollower(props.id)}
-                            backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
-                            background={BUTTON_STYLE.BACKGROUND}
-                            colorHover={BUTTON_STYLE.COLOR_HOVER}
-                            disabled={isFollowingButtonDisabled}/> :
-                    <Button name={'Follow'}
-                            onClick={() => props.becomeFollower(props.id)}
-                            backgroundHover={BUTTON_STYLE.BACKGROUND_HOVER}
-                            background={BUTTON_STYLE.BACKGROUND}
-                            colorHover={BUTTON_STYLE.COLOR_HOVER}
-                            disabled={isFollowingButtonDisabled}/>
-                }
-            </div>
+            </p>
         </div>
     )
 })
