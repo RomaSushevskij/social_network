@@ -1,0 +1,126 @@
+.inputWrapper {
+    position: relative;
+    color: #1c1e21;
+    width: 100%;
+}
+
+.superInput, .errorInput {
+    background-color: #E5E7EB;
+    border-radius: 4px;
+    color: #808080;;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 20px;
+    outline: none;
+    border: 1px solid #D3D5D8;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+.superInput, .errorInput:-webkit-autofill,
+.superInput, .errorInput:-webkit-autofill:hover,
+.superInput, .errorInput:-webkit-autofill:focus {
+     -webkit-text-fill-color: #808080;
+     -webkit-box-shadow: 0 0 0px 1000px #E5E7EB inset;
+     transition: background-color .4s ease-in-out 0s;
+ }
+
+.superInput.forStatus, .errorInput.forStatus {
+    background-color: transparent;
+    color: #333333;
+    border: none
+}
+
+.superInput:focus {
+
+}
+
+
+.superInput:focus, .errorInput:focus {
+    transition: all .3s ease;
+}
+
+.error {
+    max-width: 200px;
+    min-width: 100px;
+    min-height: 40px;
+    background-color: #BE4B49;
+    border-color: #9C3735;
+    display: inline-block;
+    vertical-align: top;
+    top: 3px;
+    left: 103%;
+    padding: 5px 10px;
+    color: #ffffff;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(200, 53, 53, .2);
+    word-wrap: break-word;
+    font-size: 14px;
+    transition: all .4s ease-out;
+}
+
+.error:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #BE4B49;
+    position: absolute;
+    top: 10px;
+    left: -5px;
+    transform-origin: 50% 50%;
+    transform: rotate(45deg);
+    box-shadow: 0 0 5px rgba(200, 53, 53, .2);
+    transition: all .4s ease-out;
+}
+
+.error:after {
+    content: "!";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10px;
+    height: 10px;
+    background-color: #BE4B49;
+    position: absolute;
+    top: 12px;
+    left: -40px;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(200, 53, 53, .2);
+    transition: all .4s ease-out;
+}
+
+.superInput.errorInput {
+    border: 1px solid #C83535;
+    transition: all .4s ease-out;
+}
+
+.superInput:focus.errorInput:focus {
+    box-shadow: 0 0 12px rgba(200, 53, 53, .1);
+    transition: all .4s ease-out;
+}
+
+.enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.enterActive {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.exit {
+    opacity: 1;
+}
+
+.exitActive {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 100ms, transform 100ms;
+}
+
+

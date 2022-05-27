@@ -44,7 +44,6 @@ export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorProp
     }, [portionSize, portionNumber]);
 
     useEffect(() => {
-        debugger
         if (props.currentPage > portionSize * portionNumber) {
             const currentPortionNumber = Math.floor(props.currentPage / portionSize +1)
             setPortionNumber(currentPortionNumber)

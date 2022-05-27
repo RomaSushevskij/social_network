@@ -1,14 +1,13 @@
-import React, {FormEvent, KeyboardEvent} from "react";
+import React, {FormEvent, KeyboardEvent, useEffect} from "react";
 import styleModule from './LoginForm.module.css';
-import InputText from "../../generic/InputText/InputText";
 import {Button} from "../../generic/Button/Button";
-import Checkbox from "../../generic/Checkbox/Checkbox";
-import {Field, Form, Formik} from "formik";
+import {Checkbox} from "../../generic/Checkbox/Checkbox";
+import {Field, Form, Formik, useFormik} from "formik";
 import {composeValidators, maxLength, requiredField} from '../../../utils/validators';
 import {LoginWithApiPropsType} from '../../Login/Login';
 import s from '../../generic/InputText/InputText.module.css';
 import {CSSTransition} from 'react-transition-group';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import InputTextSecondary from '../../generic/InputTextSecondary/InputTextSecondary';
 
 type LoginFormValuesType = {
     email: string
@@ -38,9 +37,19 @@ export function LoginForm({login}: LoginFormPropsType) {
             handleSubmit()
         }
     };
+    useEffect(()=>{
+        debugger
+        const formErrorBlock = document.querySelector('.formErrorBlock');
+        const timeoutID = setTimeout(()=>{
+            formErrorBlock && formErrorBlock.remove()
+        },3000)
+        return () => {
+            clearTimeout(timeoutID)
+        }
+    },[])
     return (
         <div className={styleModule.wrapperLoginForm}>
-            <div className={styleModule.title}>login</div>
+
             <Formik
                 initialValues={{email: '', password: '', rememberMe: true}}
                 onSubmit={onSubmitGHandler}>
@@ -55,10 +64,11 @@ export function LoginForm({login}: LoginFormPropsType) {
                                        mountOnEnter>
                             <div className={styleModule.formErrorBlock}>{status}</div>
                         </CSSTransition>
+                        <div className={styleModule.title}>Log in</div>
                         <div className={styleModule.formElement}>
                             <Field type="email"
                                    name="email"
-                                   component={InputText}
+                                   component={InputTextSecondary}
                                    placeholder={'Login'}
                                    validate={composeValidators(requiredField, maxLength30)}/>
 
@@ -66,7 +76,7 @@ export function LoginForm({login}: LoginFormPropsType) {
                         <div className={styleModule.formElement}>
                             <Field type="password"
                                    name="password"
-                                   component={InputText}
+                                   component={InputTextSecondary}
                                    placeholder={'Password'}
                                    validate={composeValidators(requiredField, maxLength30)}/>
                         </div>
@@ -75,13 +85,14 @@ export function LoginForm({login}: LoginFormPropsType) {
                                    name="rememberMe"
                                    component={CheckBoxField}/>
                         </div>
-                        <div className={styleModule.formElement}>
+                        <div className={`${styleModule.formElement} ${styleModule.submitButton}`}>
                             <Button name={'Login'}
                                     disabled={isSubmitting}/>
                         </div>
                     </Form>
                 )}
             </Formik>
+            <span>© Copyright 2022 By Linkspace</span>
         </div>
     );
 }
@@ -90,7 +101,7 @@ const CheckBoxField = (props: any) => {
     return (
         <Checkbox {...props} id={"remember_me"}
                   bgColor={'#68ACBA'}>
-            {'Remember me'}
+            {'Remember Me'}
         </Checkbox>
     )
 }

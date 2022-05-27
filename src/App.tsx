@@ -5,7 +5,6 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {SettingsContainer} from "./components/Settings/Settings";
-import logo from './main-logo.png';
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
@@ -18,6 +17,7 @@ import {Preloader} from './components/generic/Preloader/Preloader';
 import {getInitializedSelector} from './redux/selectors/appSelectors';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {getIsAuthSelector} from './redux/selectors/authSelectors';
 
 
 export type PATHType = {
@@ -52,27 +52,36 @@ class App extends React.Component<AppAPIContainerPropsType> {
     }
 
     render() {
-        if(!this.props.initialized) {
-            return <Preloader size={'60px'} color={'#ffffff'}/>
+        if (!this.props.initialized) {
+            return (
+                <div style={{height: '100vh'}}>
+                    <Preloader size={'30px'} color={'#EC4899'}/>
+                </div>
+            )
         }
         return (
-            <div className="app_wrapper">
-                <HeaderContainer/>
-                <Navbar/>
-                <div className="app_wrapper_content">
-                    <Routes>
-                        <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
-                        <Route path={PATH.PROFILE} element={<ProfileContainer/>}/>
-                        <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
-                        <Route path={PATH.MUSIC} element={<Music/>}/>
-                        <Route path={PATH.NEWS} element={<News/>}/>
-                        <Route path={PATH.USERS} element={<UsersContainer/>}/>
-                        <Route path={PATH.SETTINGS} element={<SettingsContainer/>}/>
-                        <Route path={PATH.LOGIN} element={<Login/>}/>
-                    </Routes>
-                </div>
-            </div>
-        );
+            <>
+                {this.props.isAuth ?
+                    <div className="app_wrapper">
+                        <HeaderContainer/>
+                        <Navbar/>
+                        <div className="app_wrapper_content">
+                            <Routes>
+                                <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
+                                <Route path={PATH.PROFILE} element={<ProfileContainer/>}/>
+                                <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
+                                <Route path={PATH.MUSIC} element={<Music/>}/>
+                                <Route path={PATH.NEWS} element={<News/>}/>
+                                <Route path={PATH.USERS} element={<UsersContainer/>}/>
+                                <Route path={PATH.SETTINGS} element={<SettingsContainer/>}/>
+                                <Route path={PATH.LOGIN} element={<Login/>}/>
+                            </Routes>
+                        </div>
+                    </div> : <Login/>
+                }
+
+            </>
+        )
     }
 }
 
@@ -80,6 +89,7 @@ export type AppAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsT
 
 type MapStateToPropsType = {
     initialized: boolean
+    isAuth: boolean
 }
 type MapDispatchToPropsType = {
     initializeApp: () => void
@@ -87,7 +97,8 @@ type MapDispatchToPropsType = {
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        initialized: getInitializedSelector(state)
+        initialized: getInitializedSelector(state),
+        isAuth: getIsAuthSelector(state)
     }
 };
 

@@ -32,7 +32,7 @@ export const Users = React.memo((props: UsersPropsType) => {
                                                toggleFollowingInProcess={toggleFollowingInProcess}/>);
     return (
         <div className={styleModule.usersWrapper}>
-            {isFetching ? <Preloader size={'60px'} color={'#ffffff'}/> :
+            {isFetching ? <Preloader size={'30px'} color={'#5B48E3'}/> :
                 <div className={styleModule.usersBlock}>
                     {userElements}
                 </div>}

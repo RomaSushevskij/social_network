@@ -53,7 +53,8 @@ export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStat
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(setAuthUserData(data.data, true))
             }
-        }).then(() => {
+        })
+        .then(() => {
                 const id = getState().auth.id
                 id && profileAPI.getProfile(id)
                     .then(data => {

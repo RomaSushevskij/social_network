@@ -41,7 +41,7 @@ class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> 
     render() {
         return this.props.profile ? (
                 <Profile {...this.props}/>) :
-            (<Preloader size={'60px'} color={'#ffffff'}/>
+            (<Preloader size={'30px'} color={'#EC4899'}/>
             )
     }
 }
