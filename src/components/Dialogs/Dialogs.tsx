@@ -41,10 +41,8 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
                 {params['*'] &&
                 <>
                     <div className={styleModule.messagesBlock}>
-
-
                         <div className={styleModule.messagesHeader}>
-                            <Dialog {...activeDialog}/>
+                            <Dialog forDialogTitle={true} {...activeDialog}/>
                         </div>
                         <div className={styleModule.messages}>
                             {messagesByUser.map(message => <Message key={message.id}

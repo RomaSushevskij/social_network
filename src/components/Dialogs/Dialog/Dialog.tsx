@@ -5,7 +5,11 @@ import {DialogType} from "../../../redux/redusers/dialogsReducer/dialogsReducer"
 import styled from "styled-components";
 import {UserLogo} from '../../generic/Avatar/Avatar';
 
-export type DialogPropsType = DialogType & { setActiveDialogId?: (dialogId: number) => void }
+export type DialogPropsType = DialogType &
+    {
+        setActiveDialogId?: (dialogId: number) => void
+        forDialogTitle?: boolean
+    }
 
 export const Dialog = React.memo(({
                                       id,
@@ -13,8 +17,9 @@ export const Dialog = React.memo(({
                                       image,
                                       background,
                                       color,
-    userId,
-                                      setActiveDialogId, ...props
+                                      userId,
+                                      setActiveDialogId,
+                                      forDialogTitle, ...props
                                   }: DialogPropsType) => {
     const DialogWrapper = styled.div`
     & {
@@ -37,6 +42,7 @@ export const Dialog = React.memo(({
     const finalAvatarClass = props.isOnline ?
         `${styleModule.contactAvatar} ${styleModule.online}` :
         styleModule.contactAvatar
+    const validName = name?.length > 12 && !forDialogTitle ? `${name.slice(0, 12)}...` : name;
     return (
         <NavLink className={onActiveDialogHandler}
                  to={`/dialogs/${id}`}>
@@ -45,7 +51,7 @@ export const Dialog = React.memo(({
                     {image ? <img src={image} alt={'message avatar'}/> :
                         <UserLogo/>}
                 </div>
-                <span>{name}</span>
+                <span>{validName}</span>
             </DialogWrapper>
         </NavLink>
     )
