@@ -7,8 +7,8 @@ type TextareaPropsType = {
     onAddWithEnter?: (e: KeyboardEvent<HTMLTextAreaElement>) => void
     reference?: LegacyRef<HTMLTextAreaElement>
     placeholder?: string
-    background: string
-    color: string
+    background?: string
+    color?: string
     field?: any
     form?: any
     meta?: any

@@ -90,7 +90,7 @@ const CheckBoxField = (props: any) => {
     return (
         <Checkbox {...props} id={"remember_me"}
                   bgColor={'#68ACBA'}>
-            {'Remember Me'}
+            Remember Me
         </Checkbox>
     )
 }

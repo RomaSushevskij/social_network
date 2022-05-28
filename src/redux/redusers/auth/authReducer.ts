@@ -1,6 +1,6 @@
 import {authMeAPI, AuthUserDataType, profileAPI, RESPONSE_RESULT_CODES} from "../../../api/api";
 import {AppThunk, GetStateType} from "../../redux-store";
-import {getFollowers} from '../profileReducer/profileReducer';
+import {getFollowers, ProfileType, setProfile} from '../profileReducer/profileReducer';
 
 
 export enum AUTH_ACTIONS_TYPES {
@@ -49,6 +49,7 @@ export const setFullNameAndAvatar = (fullName: string, avatar: string | null) =>
 // T H U N K S
 
 export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStateType) => {
+    let id;
     return authMeAPI.getAuthorizationInfo()
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
@@ -56,16 +57,18 @@ export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStat
             }
         })
         .then(() => {
-                const id = getState().auth.id
-                id && profileAPI.getProfile(id)
-                    .then(data => {
-                        const fullName = data.fullName
-                        const avatar = data.photos.small
-                        dispatch(setFullNameAndAvatar(fullName, avatar))
-                    })
+            id = getState().auth.id
+            if (id) {
+                return profileAPI.getProfile(id)
             }
-        )
-        .then(()=> {
+        })
+        .then(data => {
+            const fullName = data?.fullName
+            const avatar = data?.photos.small
+            dispatch(setFullNameAndAvatar(fullName as string, avatar as string))
+            dispatch(setProfile(data as ProfileType))
+        })
+        .then(() => {
             dispatch(getFollowers())
         })
 }

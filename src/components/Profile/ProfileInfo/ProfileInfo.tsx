@@ -3,14 +3,14 @@ import styleModule from './ProfileInfo.module.css';
 import {ProfileAPIContainerPropsType} from "../ProfileContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
-import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 import {Avatar} from '../../generic/Avatar/Avatar';
 import userAvatar from '../../../assets/user-solid.svg'
 import {Button} from '../../generic/Button/Button';
-import {useParams,useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
 import {createDialog} from '../../../redux/redusers/dialogsReducer/dialogsReducer';
+import {ProfileStatusHooks} from '../ProfileStatusHooks/ProfileStatusHooks';
 
 type ProfileInfoPropsType = ProfileAPIContainerPropsType
 
@@ -40,7 +40,7 @@ export const ProfileInfo = React.memo(({
                 <div className={styleModule.status}>
                     <span className={styleModule.title}>Status:</span>
                     <div className={styleModule.statusContent}>
-                        {isMyProfile ? <ProfileStatus status={status} updateStatus={updateStatus}/> :
+                        {isMyProfile ? <ProfileStatusHooks status={status} updateStatus={updateStatus}/> :
                             <span className={styleModule.withoutEdit}>{status}</span>
                         }
                     </div>

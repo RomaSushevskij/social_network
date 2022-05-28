@@ -4,7 +4,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
-import {SettingsContainer} from "./components/Settings/Settings";
+import {ContactsSettingsForm, ProfileSettingsForm, Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
@@ -35,7 +35,7 @@ export const PATH: PATHType = {
     MUSIC: '/music',
     NEWS: '/news',
     USERS: '/users',
-    SETTINGS: '/settings',
+    SETTINGS: '/settings/*',
     LOGIN: '/login',
 };
 
@@ -73,7 +73,7 @@ class App extends React.Component<AppAPIContainerPropsType> {
                                 <Route path={PATH.MUSIC} element={<Music/>}/>
                                 <Route path={PATH.NEWS} element={<News/>}/>
                                 <Route path={PATH.USERS} element={<UsersContainer/>}/>
-                                <Route path={PATH.SETTINGS} element={<SettingsContainer/>}/>
+                                <Route path={PATH.SETTINGS} element={<Settings/>}/>
                                 <Route path={PATH.LOGIN} element={<Login/>}/>
                             </Routes>
                         </div>

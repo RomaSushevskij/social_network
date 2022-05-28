@@ -130,7 +130,6 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
             return {...state, messagesData: [...state.messagesData, newMessage]}
         case 'social/dialogs/CREATE-DIALOG':
             const isDialog = state.dialogsData.find(d => d.userId === action.payload.userId)
-            debugger
             if (!isDialog) {
                 const newDialog: DialogType = {
                     id: state.dialogsData.length + 1,

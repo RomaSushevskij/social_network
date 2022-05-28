@@ -18,13 +18,14 @@
     font-weight: 400;
     box-sizing: border-box;
 }
-.superInput, .errorInput:-webkit-autofill,
-.superInput, .errorInput:-webkit-autofill:hover,
-.superInput, .errorInput:-webkit-autofill:focus {
-     -webkit-text-fill-color: #808080;
-     -webkit-box-shadow: 0 0 0px 1000px #E5E7EB inset;
-     transition: background-color .4s ease-in-out 0s;
- }
+
+.superInput:-webkit-autofill, .errorInput:-webkit-autofill,
+.superInput:-webkit-autofill:hover, .errorInput:-webkit-autofill:hover,
+.superInput:-webkit-autofill:focus, .errorInput:-webkit-autofill:focus {
+    -webkit-text-fill-color: #808080;
+    -webkit-box-shadow: 0 0 0px 1000px #E5E7EB inset;
+    transition: background-color .4s ease-in-out 0s;
+}
 
 .superInput.forStatus, .errorInput.forStatus {
     background-color: transparent;
