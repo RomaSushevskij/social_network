@@ -35,8 +35,7 @@ export const setAppInitializeValue = (initialized: boolean) => ({
 //T H U N K S
 export const initializeApp = (): AppThunk => dispatch => {
     const promise_1 = dispatch(getAuthorizationInfo())
-    const promise_2 = dispatch(getFollowers())
-    Promise.all([promise_1, promise_2])
+    Promise.all([promise_1])
         .then(() => {
             dispatch(setAppInitializeValue(true))
         })

@@ -2,7 +2,7 @@ import React, {FormEvent, KeyboardEvent, useEffect} from "react";
 import styleModule from './LoginForm.module.css';
 import {Button} from "../../generic/Button/Button";
 import {Checkbox} from "../../generic/Checkbox/Checkbox";
-import {Field, Form, Formik, useFormik} from "formik";
+import {Field, Form, Formik} from "formik";
 import {composeValidators, maxLength, requiredField} from '../../../utils/validators';
 import {LoginWithApiPropsType} from '../../Login/Login';
 import s from '../../generic/InputText/InputText.module.css';
@@ -37,18 +37,8 @@ export function LoginForm({login}: LoginFormPropsType) {
             handleSubmit()
         }
     };
-    useEffect(()=>{
-        const formErrorBlock = document.querySelector('.formErrorBlock');
-        const timeoutID = setTimeout(()=>{
-            formErrorBlock && formErrorBlock.remove()
-        },3000)
-        return () => {
-            clearTimeout(timeoutID)
-        }
-    },[])
     return (
         <div className={styleModule.wrapperLoginForm}>
-
             <Formik
                 initialValues={{email: '', password: '', rememberMe: true}}
                 onSubmit={onSubmitGHandler}>

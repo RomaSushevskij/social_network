@@ -75,6 +75,12 @@
 .notifications svg {
     width: 20px;
     fill:#787878;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+.notifications svg:hover {
+    fill:#BE185D;
+    transition: all .3s ease;
 }
 
 .notifications, .logoutButton {

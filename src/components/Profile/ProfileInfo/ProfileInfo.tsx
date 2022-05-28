@@ -7,6 +7,10 @@ import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 import {Avatar} from '../../generic/Avatar/Avatar';
 import userAvatar from '../../../assets/user-solid.svg'
 import {Button} from '../../generic/Button/Button';
+import {useParams,useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppStateType} from '../../../redux/redux-store';
+import {createDialog} from '../../../redux/redusers/dialogsReducer/dialogsReducer';
 
 type ProfileInfoPropsType = ProfileAPIContainerPropsType
 
@@ -15,7 +19,16 @@ export const ProfileInfo = React.memo(({
                                            status,
                                            updateStatus,
                                        }: ProfileInfoPropsType) => {
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const myUserId = useSelector((state: AppStateType) => state.auth.id);
+    const newDialogId = useSelector((state: AppStateType) => state.dialogsPage.dialogsData.length + 1);
+    const params = useParams();
+    const isMyProfile = params['*'] === myUserId?.toString() || params['*'] === '*' || !params['*'];
+    const onSendMessageHandler = () => {
+        dispatch(createDialog(profile?.fullName as string, profile?.userId as number, profile?.photos.small as string))
+        navigate(`/dialogs/${newDialogId}`)
+    }
     return (
         <div className={styleModule.profileInfo}>
             <div className={styleModule.avatar}>
@@ -27,7 +40,9 @@ export const ProfileInfo = React.memo(({
                 <div className={styleModule.status}>
                     <span className={styleModule.title}>Status:</span>
                     <div className={styleModule.statusContent}>
-                        <ProfileStatus status={status} updateStatus={updateStatus}/>
+                        {isMyProfile ? <ProfileStatus status={status} updateStatus={updateStatus}/> :
+                            <span className={styleModule.withoutEdit}>{status}</span>
+                        }
                     </div>
                 </div>
 
@@ -47,10 +62,10 @@ export const ProfileInfo = React.memo(({
                                 className={styleModule.title}>Job description:</span> {profile?.lookingForAJobDescription}
                     </div>
                 </div>
-                <div className={styleModule.buttonsBlock}>
-                    <Button name={'Follow'}/>
-                    <Button name={'Send message'}/>
-                </div>
+                {!isMyProfile && <div className={styleModule.buttonsBlock}>
+                    <Button name={'Send message'}
+                            onClick={onSendMessageHandler}/>
+                </div>}
             </div>
         </div>
     )

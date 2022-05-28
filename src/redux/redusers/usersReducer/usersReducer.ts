@@ -1,5 +1,6 @@
 import {AppThunk} from "../../redux-store";
 import {RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
+import {deleteFollower, setFollowers} from '../profileReducer/profileReducer';
 
 export enum USERS_ACTIONS_TYPES {
     FOLLOW = 'social/users/FOLLOW',
@@ -144,6 +145,7 @@ export const stopBeingFollower = (id: number): AppThunk => dispatch => {
     usersAPI.stopBeingFollower(id).then(data => {
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             dispatch(unfollow(id))
+            dispatch(deleteFollower(id))
         }
         dispatch(toggleFollowingInProcess(id, false))
     })

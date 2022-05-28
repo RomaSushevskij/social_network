@@ -17,7 +17,7 @@ export type DialogType = {
      */
     color?: string
     isOnline: boolean
-    userId:number
+    userId: number
 };
 export type MessageType = {
     id: number
@@ -34,28 +34,28 @@ const initialState = {
         {
             id: 1,
             name: 'Ruslan',
-            userId: 1,
+            userId: 184,
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
             isOnline: true,
         },
         {
             id: 2,
             name: 'Dmitry',
-            userId: 2,
+            userId: 185,
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-3.jpg',
             isOnline: true,
         },
         {
             id: 3,
             name: 'Aleksey',
-            userId: 4,
+            userId: 186,
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
             isOnline: false,
         },
         {
             id: 4,
             name: 'Ivan',
-            userId: 3,
+            userId: 187,
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
             isOnline: true,
         },
@@ -63,7 +63,7 @@ const initialState = {
     messagesData: [
         {
             id: 1,
-            userId: 1,
+            userId: 184,
             name: 'Ruslan',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, rem!',
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
@@ -74,7 +74,7 @@ const initialState = {
         {
             id: 3,
             name: 'Dmitry',
-            userId: 2,
+            userId: 185,
             message: 'Lorem ipsum dolor sit amet',
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-3.jpg',
             time: '13:01'
@@ -82,7 +82,7 @@ const initialState = {
         {
             id: 4,
             name: 'Ivan',
-            userId: 3,
+            userId: 187,
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
             time: '13:08'
@@ -98,7 +98,7 @@ const initialState = {
         {
             id: 6,
             name: 'Ivan',
-            userId: 3,
+            userId: 187,
             message: 'Lorem ipsum dolor !',
             image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
             time: '14:05'
@@ -128,15 +128,34 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
                 time: new Date().toLocaleTimeString().slice(0, 5)
             };
             return {...state, messagesData: [...state.messagesData, newMessage]}
+        case 'social/dialogs/CREATE-DIALOG':
+            const isDialog = state.dialogsData.find(d => d.userId === action.payload.userId)
+            debugger
+            if (!isDialog) {
+                const newDialog: DialogType = {
+                    id: state.dialogsData.length + 1,
+                    userId: action.payload.userId,
+                    isOnline: true,
+                    image: action.payload.image,
+                    name: action.payload.name,
+                }
+                return {
+                    ...state, dialogsData: [...state.dialogsData, newDialog]
+                }
+            } else return state
         default:
             return state
     }
 };
 
 export type DialogsActionType =
-    ReturnType<typeof addMessage>
-
+    ReturnType<typeof addMessage> |
+    ReturnType<typeof createDialog>
 export const addMessage = (newMessageText: string) => ({
     type: 'social/dialogs/ADD-MESSAGE',
     payload: {newMessageText}
+} as const);
+export const createDialog = (name: string, userId: number, image: string) => ({
+    type: 'social/dialogs/CREATE-DIALOG',
+    payload: {name, userId, image}
 } as const);

@@ -28,6 +28,14 @@
 .profileInfo .description .status .statusContent {
     width: 100%;
 }
+.profileInfo .description .status .statusContent .withoutEdit {
+    color: #BE185D;
+    padding: 11px;
+    font-size: 15px;
+    line-height: 16px;
+    font-weight: bold;
+    display: block;
+}
 
 .aboutMe {
     margin-bottom: 10px;
@@ -62,9 +70,6 @@
 
 .buttonsBlock {
     margin-top: 15px;
-}
-.buttonsBlock button:first-child {
-    margin-right: 10px;
 }
 
 

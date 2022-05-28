@@ -1,5 +1,6 @@
 import {authMeAPI, AuthUserDataType, profileAPI, RESPONSE_RESULT_CODES} from "../../../api/api";
 import {AppThunk, GetStateType} from "../../redux-store";
+import {getFollowers} from '../profileReducer/profileReducer';
 
 
 export enum AUTH_ACTIONS_TYPES {
@@ -64,6 +65,9 @@ export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStat
                     })
             }
         )
+        .then(()=> {
+            dispatch(getFollowers())
+        })
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void): AppThunk => dispatch => {

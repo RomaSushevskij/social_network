@@ -22,7 +22,7 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
     const [activeDialogId, setActiveDialogId] = useState(0);
     const activeDialog = props.dialogsPage.dialogsData.filter(d => d.userId === activeDialogId)[0]
     const messagesByUser = props.dialogsPage.messagesData.filter(m => {
-        return m.userId === activeDialogId || m.userId === props.myUserId
+        return m.userId === activeDialogId ||  m.userId === props.myUserId
     });
     const params = useParams<'*'>()
     return (

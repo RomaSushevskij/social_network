@@ -3,6 +3,9 @@ import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
 import {AddPostForm} from '../../forms/AddPostForm/AddPostForm';
+import {useSelector} from 'react-redux';
+import {AppStateType} from '../../../redux/redux-store';
+import {useParams} from 'react-router-dom';
 
 
 export const BUTTON_STYLE = {
@@ -17,12 +20,15 @@ export const POST_STYLE = {
 
 
 export const MyPosts = React.memo((props: MyPostsPropsType) => {
+    const myUserId = useSelector((state: AppStateType) => state.auth.id)
+    const params = useParams();
+    const isMyProfile = params['*'] === myUserId?.toString() || params['*'] === '*' || !params['*'];
 
     return (
         <div className={styleModule.myPosts}>
             <p>My posts</p>
             <AddPostForm addPost={props.addPost}/>
-            <div className={styleModule.posts}>
+            {isMyProfile && <div className={styleModule.posts}>
                 {props.postsData.map(post =>
                     <Post
                         key={post.id}
@@ -33,6 +39,7 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
                         {...post}/>
                 )}
             </div>
+            }
         </div>
     );
 })

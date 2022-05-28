@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import './Navbar.module.css';
 import styleModule from './Navbar.module.css';
 import {
@@ -10,12 +10,11 @@ import {
     faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import {AppStateType} from "../../redux/redux-store";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {CustomNavLink} from "./NavLink/CustomNavLink";
 import {Button} from "../generic/Button/Button";
-import {useNavigate} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {Avatar} from '../generic/Avatar/Avatar';
-import {getFollowers} from '../../redux/redusers/profileReducer/profileReducer';
 
 
 export type NavLinkItem = {
@@ -28,8 +27,8 @@ export type NavLinkItem = {
 
 export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
     const navigate = useNavigate();
-       const navLinksArr: NavLinkItem[] = [
-        {title: 'Profile', path: '/profile', iconTitle: JSON.stringify(faUserAlt), withAuthRedirect: true,},
+    const navLinksArr: NavLinkItem[] = [
+        {title: 'Profile', path: '/profile/*', iconTitle: JSON.stringify(faUserAlt), withAuthRedirect: true,},
         {title: 'Messages', path: '/dialogs', iconTitle: JSON.stringify(faCommentDots), withAuthRedirect: true,},
         {title: 'News', path: '/news', iconTitle: JSON.stringify(faNewspaper), withAuthRedirect: false,},
         {title: 'Music', path: '/music', iconTitle: JSON.stringify(faHeadphonesAlt), withAuthRedirect: false,},
@@ -57,7 +56,9 @@ export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
         <nav className={styleModule.nav}>
             <div className={styleModule.meInfoBlock}>
                 <div className={styleModule.avatar}>
-                    <Avatar photo={avatar}/>
+                    <NavLink to={'/profile/'}>
+                        <Avatar photo={avatar}/>
+                    </NavLink>
                 </div>
                 <h3>{name}</h3>
                 <div className={styleModule.statistic}>

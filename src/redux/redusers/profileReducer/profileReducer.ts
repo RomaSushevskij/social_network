@@ -9,6 +9,7 @@ export enum PROFILE_ACTIONS_TYPES {
     SET_PROFILE = 'social/profile/SET_PROFILE',
     SET_STATUS = 'social/profile/SET_STATUS',
     SET_FOLLOWERS = 'social/profile/SET_FOLLOWERS',
+    DELETE_FOLLOWER = 'social/profile/DELETE_FOLLOWER',
 }
 
 export type PostType = {
@@ -130,6 +131,10 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
             return {
                 ...state, followers: followers
             }
+        case PROFILE_ACTIONS_TYPES.DELETE_FOLLOWER:
+            return {
+                ...state, followers: state.followers.filter(f => f.id !== action.payload.followerId)
+            }
         default:
             return state
     }
@@ -141,7 +146,8 @@ export type ProfileActionType =
     ReturnType<typeof likePost> |
     ReturnType<typeof setProfile> |
     ReturnType<typeof setStatus> |
-    ReturnType<typeof setFollowers>
+    ReturnType<typeof setFollowers> |
+    ReturnType<typeof deleteFollower>
 
 //A C T I O N S   C R E A T O R S
 export const addPost = (newPostText: string) => ({
@@ -160,6 +166,9 @@ export const setStatus = (status: string) => ({
 } as const);
 export const setFollowers = (followers: UserType[]) => ({
     type: PROFILE_ACTIONS_TYPES.SET_FOLLOWERS, payload: {followers}
+} as const);
+export const deleteFollower = (followerId: number) => ({
+    type: PROFILE_ACTIONS_TYPES.DELETE_FOLLOWER, payload: {followerId}
 } as const);
 
 //T H U N K S
@@ -192,5 +201,6 @@ export const getFollowers = (): AppThunk => (dispatch, getState) => {
         .then(data => {
             dispatch(setFollowers(data.items))
         })
-
 }
+
+
