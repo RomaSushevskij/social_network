@@ -2,11 +2,11 @@ import style from './Sidebar.module.scss'
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {UserLogo} from '../generic/Avatar/Avatar';
-import {useState} from 'react';
+import {memo, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {stopBeingFollower} from '../../redux/redusers/usersReducer/usersReducer';
 
-export const SideBar = () => {
+export const SideBar = memo(() => {
     const [random, setRandom] = useState(Math.random())
     const followers = useSelector((state: AppStateType) => state.profilePage.followers);
     const randomFollowers = Math.floor(random * (followers.length - 4 + 1));
@@ -26,7 +26,7 @@ export const SideBar = () => {
             </div>
         </div>
     )
-}
+})
 
 type FollowerItemType = {
     name: string
@@ -34,7 +34,7 @@ type FollowerItemType = {
     status: string | null
     id: number
 }
-const FollowerItem = ({
+const FollowerItem = memo(({
                           name,
                           avatar,
                           status,
@@ -60,4 +60,4 @@ const FollowerItem = ({
             </div>
         </div>
     )
-}
+})

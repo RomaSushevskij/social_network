@@ -5,6 +5,10 @@
     padding: 0 60px 40px 60px;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     position: relative;
+}
+@media (max-width:1200px) {
+    .postsAndSidebar {
+        display: block;
+    }
 }

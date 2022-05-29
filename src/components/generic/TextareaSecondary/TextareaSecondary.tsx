@@ -1,4 +1,11 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, TextareaHTMLAttributes} from 'react'
+import React, {
+    ChangeEvent,
+    DetailedHTMLProps,
+    InputHTMLAttributes,
+    KeyboardEvent,
+    memo,
+    TextareaHTMLAttributes
+} from 'react'
 import s from './TextareaSecondary.module.scss'
 
 type DefaultTextAreaPropsType = DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>
@@ -12,7 +19,7 @@ type SuperInputTextPropsType = DefaultTextAreaPropsType & {
     customStyle?: string
 }
 
-export const TextareaSecondary: React.FC<SuperInputTextPropsType> = (
+export const TextareaSecondary: React.FC<SuperInputTextPropsType> = memo((
     {
         onChange, onChangeText,
         onKeyPress, onEnter,
@@ -48,5 +55,5 @@ export const TextareaSecondary: React.FC<SuperInputTextPropsType> = (
             {error && <div className={finalSpanClassName}>{error}</div>}
         </div>
     )
-};
+});
 

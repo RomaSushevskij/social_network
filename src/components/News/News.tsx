@@ -1,13 +1,13 @@
-import React from "react";
+import React, {memo} from "react";
 import styleModule from './News.module.css';
 import {UnderConstruction} from "../generic/UnderConstruction/UnderConstruction";
 
 
-export function News(props:any) {
+export const News = memo((props: any) => {
     return (
-        <div>
+        <div className={styleModule.newsWrapper}>
             <UnderConstruction/>
         </div>
     );
-}
+})
 

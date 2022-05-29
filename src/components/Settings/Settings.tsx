@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {memo, useEffect} from "react";
 import styleModule from './Settings.module.scss';
 import {NavLink, Route, Routes, useNavigate} from 'react-router-dom';
 import InputTextSecondary from '../generic/InputTextSecondary/InputTextSecondary';
@@ -9,7 +9,7 @@ import {Button} from '../generic/Button/Button';
 import {useSelector} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 
-export const Settings = (props: any) => {
+export const Settings = memo((props: any) => {
     const navigate = useNavigate();
     useEffect(() => {
         navigate('/settings/profile')
@@ -36,9 +36,9 @@ export const Settings = (props: any) => {
             </Routes>
         </div>
     );
-}
+})
 
-export const ProfileSettingsForm = () => {
+export const ProfileSettingsForm = memo(() => {
     const fullName = useSelector((state: AppStateType) => state.profilePage.profile?.fullName)
     const aboutMe = useSelector((state: AppStateType) => state.profilePage.profile?.aboutMe)
     const lookingForAJob = useSelector((state: AppStateType) => state.profilePage.profile?.lookingForAJob)
@@ -87,16 +87,17 @@ export const ProfileSettingsForm = () => {
                     </p>
                     <TextareaSecondary placeholder={'Description of the job you are looking for...'}
                                        {...formik.getFieldProps('lookingForAJobDescription')}
-                                       disabled={!formik.values.lookingForAJob}/>
+                                       disabled={!formik.values.lookingForAJob}
+                                       className={styleModule.optionalField}/>
                 </div>
                 <Button type={'submit'} name={'Save'}/>
             </form>
         </div>
     )
-}
+})
 
 
-export const ContactsSettingsForm = () => {
+export const ContactsSettingsForm = memo(() => {
     const contacts = useSelector((state: AppStateType) => state.profilePage.profile?.contacts)
     const contactsTitles = contacts && Object.keys(contacts);
     const formik = useFormik({
@@ -129,6 +130,6 @@ export const ContactsSettingsForm = () => {
         </div>
 
     )
-}
+})
 
 

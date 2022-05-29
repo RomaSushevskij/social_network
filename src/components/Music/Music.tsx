@@ -1,15 +1,15 @@
-import React from "react";
+import React, {memo} from "react";
 import styleModule from './Music.module.css';
 import {UnderConstruction} from "../generic/UnderConstruction/UnderConstruction";
 
 
-export function Music(props:any) {
+export const Music = memo((props: any) => {
     return (
-        <div>
-           <UnderConstruction/>
+        <div className={styleModule.musicWrapper}>
+            <UnderConstruction/>
         </div>
     );
-}
+})
 
 
 

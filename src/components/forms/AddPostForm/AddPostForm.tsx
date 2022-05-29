@@ -1,4 +1,4 @@
-import React, {FormEvent, KeyboardEvent} from "react";
+import React, {FormEvent, KeyboardEvent, memo} from "react";
 import styleModule from './AddPostForm.module.css';
 import {Button} from "../../generic/Button/Button";
 import {Field, Form, Formik, FormikState} from "formik";
@@ -17,7 +17,7 @@ type OnSubmitParamsType = {
     resetForm: (nextState?: Partial<FormikState<{ newPostText: string; }>> | undefined) => void
 }
 
-export function AddPostForm({addPost}: AddPostFormPropsType) {
+export const AddPostForm = memo(({addPost}: AddPostFormPropsType) => {
 
     const onSubmitHandler = (values: AddPostFormValuesType, {setSubmitting, resetForm}: OnSubmitParamsType) => {
         values.newPostText.trim() && addPost(values.newPostText);
@@ -53,17 +53,17 @@ export function AddPostForm({addPost}: AddPostFormPropsType) {
             )}
         </Formik>
     );
-}
+})
 
 
-const TextAreaField = (props: any) => {
+const TextAreaField = memo((props: any) => {
     return (
         <Textarea {...props}
                   placeholder={'Here you can leave your post'}
                   background={'#ffffff'}
                   color={'#60575A'}/>
     )
-}
+})
 
 
 

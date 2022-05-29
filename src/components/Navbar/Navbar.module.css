@@ -1,6 +1,6 @@
 .nav {
     grid-area: nav;
-    width: 300px;
+    width: 250px;
     min-width: 150px;
     position: fixed;
     top: 70px;

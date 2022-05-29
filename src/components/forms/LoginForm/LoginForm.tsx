@@ -1,4 +1,4 @@
-import React, {FormEvent, KeyboardEvent, useEffect} from "react";
+import React, {FormEvent, KeyboardEvent, memo, useEffect} from "react";
 import styleModule from './LoginForm.module.css';
 import {Button} from "../../generic/Button/Button";
 import {Checkbox} from "../../generic/Checkbox/Checkbox";
@@ -23,7 +23,7 @@ type LoginFormPropsType = LoginWithApiPropsType
 
 const maxLength30 = maxLength(30)
 
-export function LoginForm({login}: LoginFormPropsType) {
+export const  LoginForm = memo(({login}: LoginFormPropsType) => {
 
     const onSubmitGHandler = (values: LoginFormValuesType, {setSubmitting, setStatus}: OnSubmitParamsType) => {
         const {email, password, rememberMe} = values;
@@ -84,16 +84,16 @@ export function LoginForm({login}: LoginFormPropsType) {
             <span>© Copyright 2022 By Linkspace</span>
         </div>
     );
-}
+})
 
-const CheckBoxField = (props: any) => {
+const CheckBoxField = memo((props: any) => {
     return (
         <Checkbox {...props} id={"remember_me"}
                   bgColor={'#68ACBA'}>
             Remember Me
         </Checkbox>
     )
-}
+})
 
 
 

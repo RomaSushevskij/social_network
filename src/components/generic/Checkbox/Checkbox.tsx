@@ -1,4 +1,4 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, memo} from 'react'
 import s from './Checkbox.module.scss'
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -8,7 +8,7 @@ type SuperCheckboxPropsType = DefaultInputPropsType & {
     spanClassName?: string
 }
 
-export const Checkbox: React.FC<SuperCheckboxPropsType> = (
+export const Checkbox: React.FC<SuperCheckboxPropsType> = memo((
     {
         type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
         onChange, onChangeChecked,
@@ -39,4 +39,4 @@ export const Checkbox: React.FC<SuperCheckboxPropsType> = (
             </div>
         </>
     )
-};
+});

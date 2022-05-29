@@ -1,4 +1,4 @@
-import React, {FormEvent, KeyboardEvent} from "react";
+import React, {FormEvent, KeyboardEvent, memo} from "react";
 import styleModule from './AddMessageForm.module.css';
 import {Button} from "../../generic/Button/Button";
 import {Field, Form, Formik, FormikState} from "formik";
@@ -17,7 +17,7 @@ type OnSubmitParamsType = {
     resetForm: (nextState?: Partial<FormikState<{ newMessageText: string; }>> | undefined) => void
 }
 
-export function AddMessageForm({addMessage}: AddMessageFormPropsType) {
+export const AddMessageForm = memo(({addMessage}: AddMessageFormPropsType) => {
 
     const onSubmitHandler = (values: AddPostFormValuesType, {setSubmitting, resetForm}: OnSubmitParamsType) => {
         values.newMessageText.trim() && addMessage(values.newMessageText);
@@ -56,17 +56,17 @@ export function AddMessageForm({addMessage}: AddMessageFormPropsType) {
             )}
         </Formik>
     );
-}
+})
 
 
-const TextAreaField = (props: any) => {
+const TextAreaField = memo((props: any) => {
     return (
         <Textarea {...props}
                   placeholder={'Enter your message'}
                   background={'#ffffff'}
                   color={'#60575A'}/>
     )
-}
+})
 
 
 

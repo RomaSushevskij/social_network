@@ -1,4 +1,4 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, memo} from 'react'
 import s from './InputTextSecondary.module.css'
 import {CSSTransition} from 'react-transition-group';
 import style from '../EditableSpan/EditableSpan.module.css';
@@ -18,7 +18,7 @@ type InputTextPropsType = DefaultInputPropsType & {
     name?: string
 }
 
-const InputTextSecondary: React.FC<InputTextPropsType> = (
+const InputTextSecondary: React.FC<InputTextPropsType> = memo((
     {
         type,
         onChange, onChangeText,
@@ -60,6 +60,6 @@ const InputTextSecondary: React.FC<InputTextPropsType> = (
             </CSSTransition>
         </div>
     )
-};
+});
 
 export default InputTextSecondary

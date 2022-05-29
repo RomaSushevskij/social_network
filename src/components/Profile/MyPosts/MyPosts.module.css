@@ -1,5 +1,5 @@
 .myPosts {
-    width: 500px;
+    width: calc(100vw - 810px);
     margin: 20px;
 }
 
@@ -9,3 +9,8 @@
     font-size: 20px;
 }
 
+@media (max-width:1200px) {
+    .myPosts {
+        width: 100%;
+    }
+}

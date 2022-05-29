@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {memo, useEffect, useState} from "react";
 import styleModule from './ProfileStatusHooks.module.css';
 import EditableSpan from "../../generic/EditableSpan/EditableSpan";
 
@@ -7,7 +7,7 @@ type ProfileStatusPropsType = {
     updateStatus: (status: string) => void
 }
 
-export const ProfileStatusHooks = ({status, updateStatus}: ProfileStatusPropsType) => {
+export const ProfileStatusHooks = memo(({status, updateStatus}: ProfileStatusPropsType) => {
     const [localStatus, setLocalStatus] = useState(status);
     const onBlurEnterCallback = () => {
         updateStatus(localStatus)
@@ -25,7 +25,5 @@ export const ProfileStatusHooks = ({status, updateStatus}: ProfileStatusPropsTyp
                 onEnter={onBlurEnterCallback}/>
         </div>
     )
-
-
-};
+});
 
