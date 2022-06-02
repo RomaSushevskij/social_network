@@ -3,8 +3,6 @@ import styleModule from './MyPosts.module.css'
 import {Post} from "./Posts/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
 import {AddPostForm} from '../../forms/AddPostForm/AddPostForm';
-import {useSelector} from 'react-redux';
-import {AppStateType} from '../../../redux/redux-store';
 import {useParams} from 'react-router-dom';
 
 
@@ -20,14 +18,17 @@ export const POST_STYLE = {
 
 
 export const MyPosts = React.memo((props: MyPostsPropsType) => {
-    const myUserId = useSelector((state: AppStateType) => state.auth.id)
     const params = useParams();
-    const isMyProfile = params['*'] === myUserId?.toString() || params['*'] === '*' || !params['*'];
+    const isMyProfile = params['*'] === props.myUserId?.toString() || params['*'] === '*' || !params['*'];
 
     return (
         <div className={styleModule.myPosts}>
             <p>My posts</p>
-            <AddPostForm addPost={props.addPost}/>
+            <AddPostForm addPost={props.addPost}
+                         fullName={props.fullName}
+                         avatar={props.avatar}
+                         myUserId={props.myUserId}
+            />
             {isMyProfile && <div className={styleModule.posts}>
                 {props.postsData.map(post =>
                     <Post

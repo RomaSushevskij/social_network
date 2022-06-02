@@ -51,7 +51,6 @@ export const ProfileSettingsForm = memo(() => {
             lookingForAJobDescription: lookingForAJobDescription,
         },
         onSubmit: values => {
-            debugger
             alert(JSON.stringify(values, null, 2));
         },
     });

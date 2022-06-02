@@ -1,3 +1,9 @@
+export enum DIALOGS_ACTIONS_TYPES {
+    ADD_MESSAGE = 'social/dialogs/ADD-ADD_MESSAGE',
+    ADD_DIALOG = 'social/dialogs/ADD-ADD_DIALOG',
+
+}
+
 export type DialogType = {
     id: number
     /**
@@ -118,7 +124,7 @@ const initialState = {
 
 export const dialogsReducer = (state: InitialStateDialogsType = initialState, action: DialogsActionType): InitialStateDialogsType => {
     switch (action.type) {
-        case "social/dialogs/ADD-MESSAGE":
+        case DIALOGS_ACTIONS_TYPES.ADD_MESSAGE:
             const newMessage: MessageType = {
                 id: state.messagesData.length + 1,
                 userId: 20392,
@@ -128,7 +134,7 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
                 time: new Date().toLocaleTimeString().slice(0, 5)
             };
             return {...state, messagesData: [...state.messagesData, newMessage]}
-        case 'social/dialogs/CREATE-DIALOG':
+        case DIALOGS_ACTIONS_TYPES.ADD_DIALOG:
             const isDialog = state.dialogsData.find(d => d.userId === action.payload.userId)
             if (!isDialog) {
                 const newDialog: DialogType = {
@@ -149,12 +155,12 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
 
 export type DialogsActionType =
     ReturnType<typeof addMessage> |
-    ReturnType<typeof createDialog>
+    ReturnType<typeof addDialog>
 export const addMessage = (newMessageText: string) => ({
-    type: 'social/dialogs/ADD-MESSAGE',
+    type: DIALOGS_ACTIONS_TYPES.ADD_MESSAGE,
     payload: {newMessageText}
 } as const);
-export const createDialog = (name: string, userId: number, image: string) => ({
-    type: 'social/dialogs/CREATE-DIALOG',
+export const addDialog = (name: string, userId: number, image: string) => ({
+    type: DIALOGS_ACTIONS_TYPES.ADD_DIALOG,
     payload: {name, userId, image}
 } as const);

@@ -4,14 +4,18 @@ import {addPost, likePost, PostType, removePost} from "../../../redux/redusers/p
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {getPostsDataSelector} from '../../../redux/selectors/profileSelectors';
+import {getAuthUserIDSelector, getAvatarSelector, getFullNameSelector} from '../../../redux/selectors/authSelectors';
 
 
 export type MapStateToPropsType = {
     postsData: PostType[]
+    myUserId:number | null
+    avatar:string | null
+    fullName: string | null
 }
 
 export type MapDispatchToPropsType = {
-    addPost: (newPostText: string) => void
+    addPost: (newPostText: string, fullName: string | null, avatar: string | null) => void
     removePost: (id: number) => void
     likePost: (id: number) => void
 }
@@ -23,7 +27,10 @@ export type MyPostsPropsType =
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        postsData: getPostsDataSelector(state)
+        postsData: getPostsDataSelector(state),
+        myUserId: getAuthUserIDSelector(state),
+        fullName: getFullNameSelector(state),
+        avatar: getAvatarSelector(state)
     }
 }
 export const MyPostsContainer = connect(mapStateToProps, {

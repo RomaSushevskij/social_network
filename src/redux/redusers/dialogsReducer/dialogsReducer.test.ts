@@ -1,6 +1,6 @@
 import {
     addMessage,
-    createDialog,
+    addDialog,
     dialogsReducer,
     DialogType,
     InitialStateDialogsType,
@@ -75,7 +75,7 @@ test('new dialog should be added to the end of dialogsData', () => {
     const name = 'Roman';
     const userId = 12345;
     const image = imageLogo
-    const endState = dialogsReducer(startState, createDialog(name, userId, image))
+    const endState = dialogsReducer(startState, addDialog(name, userId, image))
 
     expect(endState.dialogsData.length).toBe(5)
     expect(endState.messagesData.length).toBe(4)

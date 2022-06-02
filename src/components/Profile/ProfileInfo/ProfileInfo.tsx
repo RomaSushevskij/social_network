@@ -9,7 +9,7 @@ import {Button} from '../../generic/Button/Button';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
-import {createDialog} from '../../../redux/redusers/dialogsReducer/dialogsReducer';
+import {addDialog} from '../../../redux/redusers/dialogsReducer/dialogsReducer';
 import {ProfileStatusHooks} from '../ProfileStatusHooks/ProfileStatusHooks';
 
 type ProfileInfoPropsType = ProfileAPIContainerPropsType
@@ -26,7 +26,7 @@ export const ProfileInfo = React.memo(({
     const params = useParams();
     const isMyProfile = params['*'] === myUserId?.toString() || params['*'] === '*' || !params['*'];
     const onSendMessageHandler = () => {
-        dispatch(createDialog(profile?.fullName as string, profile?.userId as number, profile?.photos.small as string))
+        dispatch(addDialog(profile?.fullName as string, profile?.userId as number, profile?.photos.small as string))
         navigate(`/dialogs/${newDialogId}`)
     }
     return (

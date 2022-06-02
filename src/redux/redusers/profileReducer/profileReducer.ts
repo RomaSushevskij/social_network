@@ -14,7 +14,7 @@ export enum PROFILE_ACTIONS_TYPES {
 
 export type PostType = {
     id: number
-    name: string
+    name: string | null
     message: string
     likes: {
         icon: string
@@ -99,14 +99,14 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
         case PROFILE_ACTIONS_TYPES.ADD_POST:
             const newPost = {
                 id: state.postsData.length + 1,
-                name: 'Someone',
+                name: action.payload.fullName,
                 message: action.payload.newPostText,
                 likes: {
                     icon: '❤',
                     likeCount: 0,
                 },
                 isLike: false,
-                image: null
+                image: action.payload.avatar
             };
             return {...state, postsData: [newPost, ...state.postsData]}
         case PROFILE_ACTIONS_TYPES.SET_PROFILE:
@@ -150,9 +150,9 @@ export type ProfileActionType =
     ReturnType<typeof deleteFollower>
 
 //A C T I O N S   C R E A T O R S
-export const addPost = (newPostText: string) => ({
+export const addPost = (newPostText: string, fullName: string | null, avatar: string | null) => ({
     type: PROFILE_ACTIONS_TYPES.ADD_POST,
-    payload: {newPostText}
+    payload: {newPostText, fullName, avatar}
 } as const);
 export const removePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.REMOVE_POST, payload: {id}} as const);
 export const likePost = (id: number) => ({type: PROFILE_ACTIONS_TYPES.LIKE_POST, payload: {id}} as const);

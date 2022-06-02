@@ -9,7 +9,10 @@ type AddPostFormValuesType = {
 }
 
 type AddPostFormPropsType = {
-    addPost: (newPostText: string) => void
+    addPost: (newPostText: string, fullName: string | null, avatar: string | null) => void
+    myUserId: number | null
+    avatar: string | null
+    fullName: string | null
 }
 
 type OnSubmitParamsType = {
@@ -17,10 +20,10 @@ type OnSubmitParamsType = {
     resetForm: (nextState?: Partial<FormikState<{ newPostText: string; }>> | undefined) => void
 }
 
-export const AddPostForm = memo(({addPost}: AddPostFormPropsType) => {
+export const AddPostForm = memo(({addPost, avatar, fullName, myUserId}: AddPostFormPropsType) => {
 
     const onSubmitHandler = (values: AddPostFormValuesType, {setSubmitting, resetForm}: OnSubmitParamsType) => {
-        values.newPostText.trim() && addPost(values.newPostText);
+        values.newPostText.trim() && addPost(values.newPostText, fullName, avatar);
         setSubmitting(false)
         resetForm()
     }

@@ -124,6 +124,14 @@ export const getUsers = (pageSize: number, currentPage: number): AppThunk => dis
             dispatch(setUsersTotalCount(data.totalCount))
         })
 }
+export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => dispatch => {
+    dispatch(setCurrentPage(pageNumber))
+    dispatch(setIsFetchingValue(true))
+    usersAPI.getUsers(pageSize, pageNumber).then(data => {
+        dispatch(setIsFetchingValue(false))
+        dispatch(setUsers(data.items))
+    })
+}
 export const becomeFollower = (id: number): AppThunk => dispatch => {
     dispatch(toggleFollowingInProcess(id, true))
     usersAPI.becomeFollower(id).then(data => {
@@ -131,14 +139,6 @@ export const becomeFollower = (id: number): AppThunk => dispatch => {
             dispatch(follow(id))
         }
         dispatch(toggleFollowingInProcess(id, false))
-    })
-}
-export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => dispatch => {
-    dispatch(setCurrentPage(pageNumber))
-    dispatch(setIsFetchingValue(true))
-    usersAPI.getUsers(pageSize, pageNumber).then(data => {
-        dispatch(setIsFetchingValue(false))
-        dispatch(setUsers(data.items))
     })
 }
 
@@ -151,6 +151,5 @@ export const stopBeingFollower = (id: number): AppThunk => dispatch => {
         }
         dispatch(toggleFollowingInProcess(id, false))
     })
-
 }
 
