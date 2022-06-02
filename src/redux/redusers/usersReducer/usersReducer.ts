@@ -1,6 +1,6 @@
 import {AppThunk} from "../../redux-store";
 import {RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
-import {deleteFollower, setFollowers} from '../profileReducer/profileReducer';
+import {deleteFollower} from '../profileReducer/profileReducer';
 
 export enum USERS_ACTIONS_TYPES {
     FOLLOW = 'social/users/FOLLOW',
@@ -93,7 +93,7 @@ export type UsersActionType =
     ReturnType<typeof setIsFetchingValue> |
     ReturnType<typeof toggleFollowingInProcess>
 
-
+//A C T I O N S  C R E A T O R S
 export const follow = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
 export const unfollow = (userID: number) => ({type: USERS_ACTIONS_TYPES.UNFOLLOW, payload: {userID}} as const)
 export const setUsers = (users: UserType[]) => ({type: USERS_ACTIONS_TYPES.SET_USERS, payload: {users}} as const)
@@ -112,6 +112,8 @@ export const toggleFollowingInProcess = (userId: number, followingInProcess: boo
     type: USERS_ACTIONS_TYPES.TOGGLE_FOLLOWING_IN_PROCESS,
     payload: {userId, followingInProcess}
 } as const)
+
+//T H U N K S
 
 export const getUsers = (pageSize: number, currentPage: number): AppThunk => dispatch => {
     dispatch(setIsFetchingValue(true))

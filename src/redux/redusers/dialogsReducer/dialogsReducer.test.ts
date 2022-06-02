@@ -1,10 +1,18 @@
-import {addMessage, dialogsReducer, DialogType, InitialStateDialogsType, MessageType} from "./dialogsReducer";
+import {
+    addMessage,
+    createDialog,
+    dialogsReducer,
+    DialogType,
+    InitialStateDialogsType,
+    MessageType
+} from "./dialogsReducer";
+import imageLogo from '../../../assets/user-solid.svg'
 
 let startState: InitialStateDialogsType
 
 beforeEach(() => {
     startState = {
-        dialogsData:[
+        dialogsData: [
             {
                 id: 1,
                 name: 'Ruslan',
@@ -59,7 +67,17 @@ test('new message should be added to the end of messaagesData', () => {
     const newMessageText = 'It is your latest message'
     const endState = dialogsReducer(startState, addMessage(newMessageText))
 
-    expect(endState.dialogsData.length).toBe(5)
+    expect(endState.dialogsData.length).toBe(4)
     expect(endState.messagesData.length).toBe(5)
     expect(endState.messagesData[4].message).toBe(newMessageText)
+})
+test('new dialog should be added to the end of dialogsData', () => {
+    const name = 'Roman';
+    const userId = 12345;
+    const image = imageLogo
+    const endState = dialogsReducer(startState, createDialog(name, userId, image))
+
+    expect(endState.dialogsData.length).toBe(5)
+    expect(endState.messagesData.length).toBe(4)
+    expect(endState.dialogsData[4].name).toBe(name)
 })

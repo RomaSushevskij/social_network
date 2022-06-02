@@ -1,5 +1,6 @@
 import {
     addPost,
+    deleteFollower,
     InitialStateProfileType,
     likePost,
     PostType,
@@ -146,6 +147,40 @@ test('new followers should be set to state', () => {
         }];
     const endState = profileReducer(startState, setFollowers(followers))
 
-    expect(startState.followers).toBe(0)
-    expect(endState.followers).toBe(2)
+    expect(startState.followers.length).toBe(0)
+    expect(endState.followers.length).toBe(2)
+})
+test('correct follower should be deleted from state', () => {
+    const followers = [{
+        name: 'Roman',
+        id: 131616,
+        uniqueUrlName: 'Roman',
+        photos: {large: 'asdfa', small: 'asdfas'},
+        status: 'ok',
+        followed: true
+    },
+        {
+            name: 'Lena',
+            id: 23456,
+            uniqueUrlName: 'Roman',
+            photos: {large: 'asdfa', small: 'asdfas'},
+            status: 'ok',
+            followed: false
+        },
+        {
+            name: 'Ameliya',
+            id: 49849,
+            uniqueUrlName: 'Roman',
+            photos: {large: 'asdfa', small: 'asdfas'},
+            status: 'ok',
+            followed: true
+        }];
+    const followerId = 49849;
+    const endState1 = profileReducer(startState, setFollowers(followers))
+    const endState2 = profileReducer(endState1, deleteFollower(followerId))
+
+    expect(startState.followers.length).toBe(0);
+    expect(endState1.followers.length).toBe(2);
+    expect(endState2.followers.length).toBe(1);
+    expect(endState2.followers[0].id).toBe(131616);
 })
