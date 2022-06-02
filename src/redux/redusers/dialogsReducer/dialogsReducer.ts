@@ -77,7 +77,7 @@ const initialState = {
             userId: 184,
             name: 'Ruslan',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, rem!',
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
+            image: RuslanLogo,
             time: '12:03'
         },
 
@@ -87,7 +87,7 @@ const initialState = {
             name: 'Dmitry',
             userId: 185,
             message: 'Lorem ipsum dolor sit amet',
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-3.jpg',
+            image: DmitryLogo,
             time: '13:01'
         },
         {
@@ -95,7 +95,7 @@ const initialState = {
             name: 'Ivan',
             userId: 187,
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
+            image: IvanLogo,
             time: '13:08'
         },
         {
@@ -111,7 +111,7 @@ const initialState = {
             name: 'Ivan',
             userId: 187,
             message: 'Lorem ipsum dolor !',
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
+            image: IvanLogo,
             time: '14:05'
         },
         {id: 7, userId: 20392, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
