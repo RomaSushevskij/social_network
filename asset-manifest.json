@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/social_network/static/css/main.8ca0e3e8.chunk.css",
-    "main.js": "/social_network/static/js/main.11395fcf.chunk.js",
-    "main.js.map": "/social_network/static/js/main.11395fcf.chunk.js.map",
+    "main.js": "/social_network/static/js/main.b5147dc5.chunk.js",
+    "main.js.map": "/social_network/static/js/main.b5147dc5.chunk.js.map",
     "runtime-main.js": "/social_network/static/js/runtime-main.467d8797.js",
     "runtime-main.js.map": "/social_network/static/js/runtime-main.467d8797.js.map",
     "static/js/2.8b3f5ed8.chunk.js": "/social_network/static/js/2.8b3f5ed8.chunk.js",
@@ -10,6 +10,9 @@
     "index.html": "/social_network/index.html",
     "static/css/main.8ca0e3e8.chunk.css.map": "/social_network/static/css/main.8ca0e3e8.chunk.css.map",
     "static/js/2.8b3f5ed8.chunk.js.LICENSE.txt": "/social_network/static/js/2.8b3f5ed8.chunk.js.LICENSE.txt",
+    "static/media/Aleksey.450a6065.jpg": "/social_network/static/media/Aleksey.450a6065.jpg",
+    "static/media/Dmitry.4673b963.jpg": "/social_network/static/media/Dmitry.4673b963.jpg",
+    "static/media/Ivan.2cad2741.jpg": "/social_network/static/media/Ivan.2cad2741.jpg",
     "static/media/Header.module.css": "/social_network/static/media/globe-solid.c7d6dc42.svg",
     "static/media/user-solid.fc0f33b2.svg": "/social_network/static/media/user-solid.fc0f33b2.svg",
     "static/media/user.cb380ae4.png": "/social_network/static/media/user.cb380ae4.png"
@@ -18,6 +21,6 @@
     "static/js/runtime-main.467d8797.js",
     "static/js/2.8b3f5ed8.chunk.js",
     "static/css/main.8ca0e3e8.chunk.css",
-    "static/js/main.11395fcf.chunk.js"
+    "static/js/main.b5147dc5.chunk.js"
   ]
 }
