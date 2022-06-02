@@ -1,3 +1,8 @@
+import RuslanLogo from '../../../assets/users-logo/Ruslan.jpg'
+import DmitryLogo from '../../../assets/users-logo/Dmitry.jpg'
+import AlekseyLogo from '../../../assets/users-logo/Aleksey.jpg'
+import IvanLogo from '../../../assets/users-logo/Ivan.jpg'
+
 export enum DIALOGS_ACTIONS_TYPES {
     ADD_MESSAGE = 'social/dialogs/ADD-ADD_MESSAGE',
     ADD_DIALOG = 'social/dialogs/ADD-ADD_DIALOG',
@@ -41,28 +46,28 @@ const initialState = {
             id: 1,
             name: 'Ruslan',
             userId: 184,
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
+            image: RuslanLogo,
             isOnline: true,
         },
         {
             id: 2,
             name: 'Dmitry',
             userId: 185,
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-3.jpg',
+            image: DmitryLogo,
             isOnline: true,
         },
         {
             id: 3,
             name: 'Aleksey',
             userId: 186,
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-2.jpg',
+            image: AlekseyLogo,
             isOnline: false,
         },
         {
             id: 4,
             name: 'Ivan',
             userId: 187,
-            image: 'http://demo.foxthemes.net/instellohtml/assets/images/avatars/avatar-7.jpg',
+            image: IvanLogo,
             isOnline: true,
         },
     ] as Array<DialogType>,
