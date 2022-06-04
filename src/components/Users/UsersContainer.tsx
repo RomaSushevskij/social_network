@@ -3,8 +3,7 @@ import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
     becomeFollower,
-    getUsers,
-    repeatGetUsers,
+    getUsers, repeatGetUsers,
     stopBeingFollower,
     toggleFollowingInProcess,
     UserType
@@ -21,11 +20,14 @@ import {
 
 
 class UsersApiContainer extends React.PureComponent<UsersApiContainerPropsType> {
+    state = {
+        pageSize: 10
+    }
 
     componentDidMount(): void {
         const {currentPage, pageSize, getUsers} = this.props
         //get request for getting users (with thunk)
-        getUsers(pageSize, currentPage)
+        getUsers(this.state.pageSize, currentPage)
 
     }
 
@@ -34,11 +36,20 @@ class UsersApiContainer extends React.PureComponent<UsersApiContainerPropsType> 
         const {pageSize, repeatGetUsers,} = this.props
         repeatGetUsers(pageSize, pageNumber)
     }
+    onChangePageSize = (pageSize:number) => {
+        const {repeatGetUsers} = this.props
+        this.setState({
+            pageSize:Number(pageSize)
+        })
+        repeatGetUsers(Number(pageSize), this.props.currentPage)
+    }
 
     render() {
         return (
             <Users {...this.props}
                    onChangePage={this.onChangePage}
+                   setPageSize={this.onChangePageSize}
+                   pageSize={this.state.pageSize}
             />
         )
     }

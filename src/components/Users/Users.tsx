@@ -8,6 +8,8 @@ import {UsersApiContainerPropsType} from "./UsersContainer";
 
 type UsersPropsType = UsersApiContainerPropsType & {
     onChangePage: (pageNumber: number) => void
+    setPageSize: (pageSize: number) => void
+    pageSize:number
 }
 
 export const Users = React.memo((props: UsersPropsType) => {
@@ -16,12 +18,13 @@ export const Users = React.memo((props: UsersPropsType) => {
         becomeFollower,
         stopBeingFollower,
         usersTotalCount,
-        pageSize,
         currentPage,
         onChangePage,
         isFetching,
         followingInProcessUsersId,
         toggleFollowingInProcess,
+        setPageSize,
+        pageSize
     } = props
 
     let userElements = users.map(user => <User key={user.id}
@@ -41,7 +44,8 @@ export const Users = React.memo((props: UsersPropsType) => {
                            currentPage={currentPage}
                            pageSize={pageSize}
                            totalItemsCount={usersTotalCount}
-                           onChangePage={onChangePage}/>
+                           onChangePage={onChangePage}
+                           onChangePageSize={setPageSize}/>
             </div>
         </div>
     )

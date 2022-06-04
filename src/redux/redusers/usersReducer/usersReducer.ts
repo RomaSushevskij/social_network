@@ -10,6 +10,7 @@ export enum USERS_ACTIONS_TYPES {
     SET_USERS_TOTAL_COUNT = 'social/users/SET_USERS_TOTAL_COUNT',
     SET_IS_FETCHING_VALUE = 'social/users/SET_IS_FETCHING_VALUE',
     TOGGLE_FOLLOWING_IN_PROCESS = 'social/users/TOGGLE_FOLLOWING_IN_PROCESS',
+    SET_PAGE_SIZE = 'social/users/SET_PAGE_SIZE',
 
 }
 
@@ -44,7 +45,7 @@ export type InitialStateUsersType = typeof initialState
 const initialState = {
     users: [] as UserType[],
     usersTotalCount: 0,
-    pageSize: 24,
+    pageSize: 10,
     currentPage: 1,
     isFetching: false,
     followingInProcessUsersId: [] as Array<number>
@@ -70,6 +71,7 @@ export const usersReducer = (state: InitialStateUsersType = initialState, action
         case USERS_ACTIONS_TYPES.SET_CURRENT_PAGE:
         case USERS_ACTIONS_TYPES.SET_USERS_TOTAL_COUNT:
         case USERS_ACTIONS_TYPES.SET_IS_FETCHING_VALUE:
+        case USERS_ACTIONS_TYPES.SET_PAGE_SIZE:
             return {
                 ...state, ...action.payload
             }
@@ -91,7 +93,8 @@ export type UsersActionType =
     ReturnType<typeof setCurrentPage> |
     ReturnType<typeof setUsersTotalCount> |
     ReturnType<typeof setIsFetchingValue> |
-    ReturnType<typeof toggleFollowingInProcess>
+    ReturnType<typeof toggleFollowingInProcess> |
+    ReturnType<typeof setPageSize>
 
 //A C T I O N S  C R E A T O R S
 export const follow = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
@@ -112,10 +115,14 @@ export const toggleFollowingInProcess = (userId: number, followingInProcess: boo
     type: USERS_ACTIONS_TYPES.TOGGLE_FOLLOWING_IN_PROCESS,
     payload: {userId, followingInProcess}
 } as const)
+export const setPageSize = (pageSize: number) => ({
+    type: USERS_ACTIONS_TYPES.SET_PAGE_SIZE,
+    payload: {pageSize}
+} as const)
 
 //T H U N K S
 
-export const getUsers = (pageSize: number, currentPage: number): AppThunk => dispatch => {
+export const getUsers = (pageSize: number = 10, currentPage: number): AppThunk => dispatch => {
     dispatch(setIsFetchingValue(true))
     usersAPI.getUsers(pageSize, currentPage)
         .then(data => {
@@ -124,10 +131,11 @@ export const getUsers = (pageSize: number, currentPage: number): AppThunk => dis
             dispatch(setUsersTotalCount(data.totalCount))
         })
 }
-export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => dispatch => {
+export const repeatGetUsers = (pageSize: number = 10, pageNumber: number): AppThunk => dispatch => {
+    debugger
     dispatch(setCurrentPage(pageNumber))
     dispatch(setIsFetchingValue(true))
-    usersAPI.getUsers(pageSize, pageNumber).then(data => {
+    usersAPI.getUsers(Number(pageSize), pageNumber).then(data => {
         dispatch(setIsFetchingValue(false))
         dispatch(setUsers(data.items))
     })
