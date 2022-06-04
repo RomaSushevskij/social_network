@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent, useRef, useState} from "react";
 import styleModule from './ProfileInfo.module.css';
 import {ProfileAPIContainerPropsType} from "../ProfileContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
 import {addDialog} from '../../../redux/redusers/dialogsReducer/dialogsReducer';
 import {ProfileStatusHooks} from '../ProfileStatusHooks/ProfileStatusHooks';
+import {faCamera} from '@fortawesome/free-solid-svg-icons/faCamera';
 
 type ProfileInfoPropsType = ProfileAPIContainerPropsType
 
@@ -29,11 +30,31 @@ export const ProfileInfo = React.memo(({
         dispatch(addDialog(profile?.fullName as string, profile?.userId as number, profile?.photos.small as string))
         navigate(`/dialogs/${newDialogId}`)
     }
+    const inputRef = useRef<HTMLInputElement>(null)
+    const [hover, setHover] = useState(false);
+    const onChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+
+    }
     return (
         <div className={styleModule.profileInfo}>
             <div className={styleModule.avatar}>
-                <Avatar photo={profile?.photos.large || userAvatar}
-                        style={{width: '200px', height: '200px'}}/>
+                {isMyProfile ?
+                    <div onMouseOver={() => setHover(true)}
+                         onMouseOut={() => setHover(false)}
+                         className={styleModule.avatarWrapper}>
+                        <Avatar photo={profile?.photos.large || userAvatar}
+                                style={{width: '200px', height: '200px'}}/>
+                        <div className={hover ?
+                            `${styleModule.uploadAvatar} ${styleModule.hover}`
+                            : styleModule.uploadAvatar}>
+                            <FontAwesomeIcon icon={faCamera}
+                                             className={styleModule.uploadAvatarIcon}
+                                             onClick={() => inputRef.current?.click()}/>
+                            <input ref={inputRef} type="file" onChange={onChangePhoto}/>
+                        </div>
+                    </div> : <Avatar photo={profile?.photos.large || userAvatar}
+                                     style={{width: '200px', height: '200px'}}/>
+                }
             </div>
             <div className={styleModule.description}>
                 <div className={styleModule.fullName}>{profile?.fullName}</div>
