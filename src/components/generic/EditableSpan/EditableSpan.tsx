@@ -84,7 +84,8 @@ class EditableSpan extends React.Component<EditableSpanType> {
                     <div className={style.spanWrapper}>
                     <span onDoubleClick={this.onDoubleClickCallBack}
                           className={spanClassName}
-                          {...restSpanProps}>
+                          {...restSpanProps}
+                          role={'profileStatusSpan'}>
                         {children || restProps.value}
                         <FontAwesomeIcon className={style.editPen} icon={faPencilAlt}/>
                     </span>

@@ -47,6 +47,7 @@ const InputText: React.FC<InputTextPropsType> = memo((
                    onChange={onChangeCallback}
                    onKeyPress={onKeyPressCallback}
                    className={finalInputClassName}
+                   role={'profileStatusInput'}
                    {...field}
                    {...restProps}
             />
