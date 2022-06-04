@@ -9,7 +9,7 @@ import {Button} from '../generic/Button/Button';
 import {useSelector} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 
-export const Settings = memo((props: any) => {
+const Settings = memo((props: any) => {
     const navigate = useNavigate();
     useEffect(() => {
         navigate('/settings/profile')
@@ -104,7 +104,6 @@ export const ContactsSettingsForm = memo(() => {
             ...contacts
         },
         onSubmit: values => {
-            debugger
             alert(JSON.stringify(values, null, 2));
         },
     });
@@ -131,4 +130,4 @@ export const ContactsSettingsForm = memo(() => {
     )
 })
 
-
+export default Settings;

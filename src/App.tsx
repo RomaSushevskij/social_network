@@ -4,9 +4,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
-import {ContactsSettingsForm, ProfileSettingsForm, Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
@@ -18,6 +16,13 @@ import {getInitializedSelector} from './redux/selectors/appSelectors';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {getIsAuthSelector} from './redux/selectors/authSelectors';
+import {withSuspense} from './hoc/withSuspense';
+
+
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer').then(({default: UsersContainer}) => ({default: UsersContainer})));
+const Settings = React.lazy(() => import('./components/Settings/Settings').then(({default: Settings}) => ({default: Settings})));
+const UsersContainerLazy = withSuspense(UsersContainer);
+const SettingsLazy = withSuspense(Settings);
 
 
 export type PATHType = {
@@ -55,10 +60,11 @@ class App extends React.Component<AppAPIContainerPropsType> {
         if (!this.props.initialized) {
             return (
                 <div style={{height: '100vh'}}>
-                    <Preloader size={'30px'} color={'#EC4899'}/>
+                    <Preloader size={'30px'} color={'#5B48E3'}/>
                 </div>
             )
         }
+
         return (
             <>
                 {this.props.isAuth ?
@@ -72,8 +78,8 @@ class App extends React.Component<AppAPIContainerPropsType> {
                                 <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
                                 <Route path={PATH.MUSIC} element={<Music/>}/>
                                 <Route path={PATH.NEWS} element={<News/>}/>
-                                <Route path={PATH.USERS} element={<UsersContainer/>}/>
-                                <Route path={PATH.SETTINGS} element={<Settings/>}/>
+                                <Route path={PATH.USERS} element={<UsersContainerLazy/>}/>
+                                <Route path={PATH.SETTINGS} element={<SettingsLazy/>}/>
                                 <Route path={PATH.LOGIN} element={<Login/>}/>
                             </Routes>
                         </div>

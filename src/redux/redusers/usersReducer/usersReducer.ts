@@ -132,7 +132,6 @@ export const getUsers = (pageSize: number = 10, currentPage: number): AppThunk =
         })
 }
 export const repeatGetUsers = (pageSize: number = 10, pageNumber: number): AppThunk => dispatch => {
-    debugger
     dispatch(setCurrentPage(pageNumber))
     dispatch(setIsFetchingValue(true))
     usersAPI.getUsers(Number(pageSize), pageNumber).then(data => {

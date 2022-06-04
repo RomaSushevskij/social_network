@@ -25,7 +25,7 @@ class UsersApiContainer extends React.PureComponent<UsersApiContainerPropsType> 
     }
 
     componentDidMount(): void {
-        const {currentPage, pageSize, getUsers} = this.props
+        const {currentPage,getUsers} = this.props
         //get request for getting users (with thunk)
         getUsers(this.state.pageSize, currentPage)
 
@@ -86,10 +86,12 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, {
+const UsersContainer = connect(mapStateToProps, {
     becomeFollower,
     stopBeingFollower,
     toggleFollowingInProcess,
     getUsers,
     repeatGetUsers,
 } as MapDispatchToPropsType)(UsersApiContainer)
+
+export default UsersContainer
