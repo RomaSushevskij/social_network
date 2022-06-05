@@ -1,7 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {getProfile, getStatus, ProfileType, updateStatus} from "../../redux/redusers/profileReducer/profileReducer";
+import {
+    getProfile,
+    getStatus,
+    ProfileType,
+    updatePhoto,
+    updateStatus
+} from "../../redux/redusers/profileReducer/profileReducer";
 import {Profile} from "./Profile";
 import {Preloader} from "../generic/Preloader/Preloader";
 import {withRouter} from "../../hoc/withRouter";
@@ -9,6 +15,7 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {PATH} from '../../App';
 import {getProfileSelector, getStatusSelector} from '../../redux/selectors/profileSelectors';
 import {getAuthUserIDSelector, getIsAuthSelector} from '../../redux/selectors/authSelectors';
+import {getIsFetchingSelector} from '../../redux/selectors/usersSelectors';
 
 
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
@@ -61,25 +68,29 @@ type MapStateToPropsType = {
     isAuth: boolean
     status: string
     userId: number | null
+    isFetching:boolean
 }
 type MapDispatchToPropsType = {
     getProfile: (userId: number) => void
     getStatus: (userId: number) => void
     updateStatus: (status: string) => void
+    updatePhoto: (photoFile:any) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: getProfileSelector(state),
     isAuth: getIsAuthSelector(state),
     status: getStatusSelector(state),
-    userId: getAuthUserIDSelector(state)
+    userId: getAuthUserIDSelector(state),
+    isFetching:getIsFetchingSelector(state)
 })
 
 
 export const ProfileContainer = withAuthRedirect(connect(mapStateToProps, {
     getProfile,
     getStatus,
-    updateStatus
+    updateStatus,
+    updatePhoto
 } as MapDispatchToPropsType)(withRouter(ProfileAPIContainer)))
 
 

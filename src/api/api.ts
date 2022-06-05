@@ -26,6 +26,17 @@ type UpdateStatusDataType = {
     messages: string[]
     resultCode: RESPONSE_RESULT_CODES
 }
+type UpdatePhotoDataType = {
+    data: {
+        photos: {
+            large: string
+            small: string
+        }
+    }
+    fieldsErrors: any[]
+    messages: string[]
+    resultCode: RESPONSE_RESULT_CODES
+}
 
 //AUTH---
 export type AuthUserDataType = {
@@ -111,6 +122,19 @@ export const profileAPI = {
         return instance_1.put<UpdateStatusDataType>(`/profile/status`, {status})
             .then(response => {
                 return response
+            })
+    },
+    updatePhoto(photoFile: any) {
+        const formData = new FormData()
+        formData.append('image', photoFile)
+
+        return instance_1.put<UpdatePhotoDataType>('profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => {
+                return response.data
             })
     }
 }

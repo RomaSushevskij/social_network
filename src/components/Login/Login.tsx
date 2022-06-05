@@ -5,6 +5,9 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {login} from '../../redux/redusers/auth/authReducer';
 import {Navigate} from 'react-router-dom';
+import {getIsFetchingSelector} from '../../redux/selectors/usersSelectors';
+import {getIsAuthSelector} from '../../redux/selectors/authSelectors';
+import {Preloader} from '../generic/Preloader/Preloader';
 
 export type LoginWithApiPropsType =
     MapStateToPropsType &
@@ -12,25 +15,26 @@ export type LoginWithApiPropsType =
 
 export function LoginWithApi(props: LoginWithApiPropsType) {
     if (props.isAuth) {
-
         return <Navigate to={'/profile'}/>
     }
     return (
         <div className={styleModule.wrapperLogin}>
-            <LoginForm {...props}/>
+            {props.isFetching ? <Preloader size={'30px'} color={'#EC4899'}/> : <LoginForm {...props}/>}
         </div>
     );
 }
 
 type MapStateToPropsType = {
     isAuth: boolean
+    isFetching: boolean
 }
 type MapDispatchToProps = {
     login: (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-    isAuth: state.auth.isAuth
+    isAuth: getIsAuthSelector(state),
+    isFetching:getIsFetchingSelector(state)
 })
 
 export const Login = connect(mapStateToProps, {login} as MapDispatchToProps)(LoginWithApi)

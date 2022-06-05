@@ -12,6 +12,7 @@ import {AppStateType} from '../../../redux/redux-store';
 import {addDialog} from '../../../redux/redusers/dialogsReducer/dialogsReducer';
 import {ProfileStatusHooks} from '../ProfileStatusHooks/ProfileStatusHooks';
 import {faCamera} from '@fortawesome/free-solid-svg-icons/faCamera';
+import {Preloader} from '../../generic/Preloader/Preloader';
 
 type ProfileInfoPropsType = ProfileAPIContainerPropsType
 
@@ -19,6 +20,8 @@ export const ProfileInfo = React.memo(({
                                            profile,
                                            status,
                                            updateStatus,
+                                           updatePhoto,
+                                           isFetching
                                        }: ProfileInfoPropsType) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -33,7 +36,12 @@ export const ProfileInfo = React.memo(({
     const inputRef = useRef<HTMLInputElement>(null)
     const [hover, setHover] = useState(false);
     const onChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-
+        updatePhoto(e.currentTarget.files && e.currentTarget.files[0])
+        setHover(false);
+    }
+    const onChangePhotoClick = () => {
+        inputRef.current?.click();
+        setHover(false);
     }
     return (
         <div className={styleModule.profileInfo}>
@@ -42,16 +50,19 @@ export const ProfileInfo = React.memo(({
                     <div onMouseOver={() => setHover(true)}
                          onMouseOut={() => setHover(false)}
                          className={styleModule.avatarWrapper}>
-                        <Avatar photo={profile?.photos.large || userAvatar}
-                                style={{width: '200px', height: '200px'}}/>
-                        <div className={hover ?
-                            `${styleModule.uploadAvatar} ${styleModule.hover}`
-                            : styleModule.uploadAvatar}>
-                            <FontAwesomeIcon icon={faCamera}
-                                             className={styleModule.uploadAvatarIcon}
-                                             onClick={() => inputRef.current?.click()}/>
-                            <input ref={inputRef} type="file" onChange={onChangePhoto}/>
-                        </div>
+                        {isFetching ? <Preloader size={'20px'} color={'#EC4899'}/> :
+                            <>
+                                <Avatar photo={profile?.photos.large || userAvatar}
+                                        style={{width: '200px', height: '200px'}}/>
+                                <div className={hover ?
+                                    `${styleModule.uploadAvatar} ${styleModule.hover}`
+                                    : styleModule.uploadAvatar}>
+                                    <FontAwesomeIcon icon={faCamera}
+                                                     className={styleModule.uploadAvatarIcon}
+                                                     onClick={onChangePhotoClick}/>
+                                    <input ref={inputRef} type="file" onChange={onChangePhoto}/>
+                                </div>
+                            </>}
                     </div> : <Avatar photo={profile?.photos.large || userAvatar}
                                      style={{width: '200px', height: '200px'}}/>
                 }

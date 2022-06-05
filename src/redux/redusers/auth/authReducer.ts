@@ -1,6 +1,7 @@
 import {authMeAPI, AuthUserDataType, profileAPI, RESPONSE_RESULT_CODES} from "../../../api/api";
 import {AppThunk, GetStateType} from "../../redux-store";
 import {getFollowers, ProfileType, setProfile} from '../profileReducer/profileReducer';
+import {setIsFetchingValue} from '../usersReducer/usersReducer';
 
 
 export enum AUTH_ACTIONS_TYPES {
@@ -74,6 +75,8 @@ export const getAuthorizationInfo = (): AppThunk => (dispatch, getState: GetStat
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void): AppThunk => dispatch => {
+    debugger
+    dispatch(setIsFetchingValue(true))
     authMeAPI.login(email, password, rememberMe)
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
@@ -82,7 +85,9 @@ export const login = (email: string, password: string, rememberMe: boolean, setS
                 const message = data.messages.length > 0 ? data.messages[0] : 'Some error'
                 setStatus(message)
             }
-
+        })
+        .finally(() => {
+            dispatch(setIsFetchingValue(false))
         })
 }
 

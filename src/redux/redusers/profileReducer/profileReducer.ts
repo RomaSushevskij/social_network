@@ -1,6 +1,7 @@
 import {profileAPI, RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
 import {AppThunk} from "../../redux-store";
-import {UserType} from '../usersReducer/usersReducer';
+import {setIsFetchingValue, UserType} from '../usersReducer/usersReducer';
+import {setFullNameAndAvatar} from '../auth/authReducer';
 
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
@@ -10,6 +11,7 @@ export enum PROFILE_ACTIONS_TYPES {
     SET_STATUS = 'social/profile/SET_STATUS',
     SET_FOLLOWERS = 'social/profile/SET_FOLLOWERS',
     DELETE_FOLLOWER = 'social/profile/DELETE_FOLLOWER',
+    UPDATE_PHOTO_SUCCESS = 'social/profile/UPDATE_PHOTO_SUCCESS',
 }
 
 export type PostType = {
@@ -89,7 +91,7 @@ const initialState = {
             image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album'
         }
     ] as Array<PostType>,
-    profile: null as ProfileType | null,
+    profile: {} as ProfileType,
     status: "",
     followers: [] as UserType[]
 };
@@ -135,6 +137,14 @@ export const profileReducer = (state: InitialStateProfileType = initialState, ac
             return {
                 ...state, followers: state.followers.filter(f => f.id !== action.payload.followerId)
             }
+        case PROFILE_ACTIONS_TYPES.UPDATE_PHOTO_SUCCESS:
+            return {
+                ...state, profile: {
+                    ...state.profile, photos: {
+                        ...state.profile.photos, large: action.payload.newPhoto
+                    }
+                }
+            }
         default:
             return state
     }
@@ -147,7 +157,8 @@ export type ProfileActionType =
     ReturnType<typeof setProfile> |
     ReturnType<typeof setStatus> |
     ReturnType<typeof setFollowers> |
-    ReturnType<typeof deleteFollower>
+    ReturnType<typeof deleteFollower> |
+    ReturnType<typeof updatePhotoSuccess>
 
 //A C T I O N S   C R E A T O R S
 export const addPost = (newPostText: string, fullName: string | null, avatar: string | null) => ({
@@ -169,6 +180,9 @@ export const setFollowers = (followers: UserType[]) => ({
 } as const);
 export const deleteFollower = (followerId: number) => ({
     type: PROFILE_ACTIONS_TYPES.DELETE_FOLLOWER, payload: {followerId}
+} as const);
+export const updatePhotoSuccess = (newPhoto: string | null) => ({
+    type: PROFILE_ACTIONS_TYPES.UPDATE_PHOTO_SUCCESS, payload: {newPhoto}
 } as const);
 
 //T H U N K S
@@ -200,6 +214,21 @@ export const getFollowers = (): AppThunk => (dispatch, getState) => {
         })
         .then(data => {
             dispatch(setFollowers(data.items))
+        })
+}
+export const updatePhoto = (photoFile: any): AppThunk => (dispatch, getState) => {
+    const fullName = getState().profilePage.profile.fullName;
+    dispatch(setIsFetchingValue(true));
+    profileAPI.updatePhoto(photoFile)
+        .then(data => {
+            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+                const newAvatar = data.data.photos.large;
+                dispatch(updatePhotoSuccess(data.data.photos.large))
+                dispatch(setFullNameAndAvatar(fullName, newAvatar))
+            }
+        })
+        .finally(() => {
+            dispatch(setIsFetchingValue(false));
         })
 }
 
