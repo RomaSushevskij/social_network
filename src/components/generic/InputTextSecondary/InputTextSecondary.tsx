@@ -12,10 +12,6 @@ type InputTextPropsType = DefaultInputPropsType & {
     error?: string
     spanClassName?: string
     customStyle?: string
-    field?: any
-    form?: any
-    meta?: any
-    name?: string
 }
 
 const InputTextSecondary: React.FC<InputTextPropsType> = memo((
@@ -25,7 +21,7 @@ const InputTextSecondary: React.FC<InputTextPropsType> = memo((
         onKeyPress, onEnter,
         error,
         className, spanClassName, name, title,
-        customStyle, field, form, meta,
+        customStyle,
 
         ...restProps
     }
@@ -40,7 +36,8 @@ const InputTextSecondary: React.FC<InputTextPropsType> = memo((
     };
 
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`;
-    const finalInputClassName = `${error || form?.errors[field.name] ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className ? s[className] : className}`;
+    const finalInputClassName = `${error ? `${s.errorInput} ${s.superInput}` : s.superInput} ${className}`;
+
     return (
         <div className={customStyle ? `${customStyle} ${s.inputWrapper}` : s.inputWrapper}>
             <input name={name}
@@ -48,15 +45,14 @@ const InputTextSecondary: React.FC<InputTextPropsType> = memo((
                    onChange={onChangeCallback}
                    onKeyPress={onKeyPressCallback}
                    className={finalInputClassName}
-                   {...field}
                    {...restProps}
             />
-            <CSSTransition in={error || form?.errors[field.name] && form?.touched[field.name]}
+            <CSSTransition in={!!error}
                            timeout={300}
                            classNames={s}
                            unmountOnExit
                            mountOnEnter>
-                <div className={finalSpanClassName}>{form?.errors[field.name]}</div>
+            <div className={finalSpanClassName}>{error}</div>
             </CSSTransition>
         </div>
     )

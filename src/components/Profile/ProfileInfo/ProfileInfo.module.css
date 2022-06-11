@@ -105,6 +105,25 @@
 .buttonsBlock {
     margin-top: 15px;
 }
+.contacts {
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+}
+.contacts span {
+    margin-right: 7px;
+}
+.contacts svg{
+    fill: #BE185D;
+    width: 22px;
+    height: 22px;
+    padding-right: 7px;
+    transition: all .3s ease-out;
+}
+.contacts svg:hover {
+    transition: all .3s ease-in;
+    fill: #710f39;
+}
 
 
 

@@ -1,4 +1,11 @@
-import {authReducer, InitialStateAuthType, setAuthUserData, setFullNameAndAvatar} from "./authReducer";
+import {
+    authReducer,
+    InitialStateAuthType,
+    setAuthUserData,
+    setCaptchaURL,
+    setErrorMessage,
+    setFullNameAndAvatar
+} from "./authReducer";
 import {AuthUserDataType} from "../../../api/api";
 
 let startState: InitialStateAuthType
@@ -9,7 +16,9 @@ beforeEach(()=>{
         login: null as null | string,
         isAuth: false,
         fullName: null as null | string,
-        avatar: null as null | string
+        avatar: null as null | string,
+        captchaURL: '',
+        errorMessage: ''
     }
 })
 
@@ -29,4 +38,16 @@ test('fullName and avatar should be set', () => {
 
     expect(endState.fullName).toBe('Roman')
     expect(endState.avatar).toBe('1235555asdfasd')
+})
+test('captchaURL should be set', () => {
+    const captchaURL = 'https://social-network.samuraijs.com/HelpApp/HelpApp/Captcha?w=200&h=100&c=idhDy2cF1XGCx6ud1pGDUg%3D%3D'
+    const endState = authReducer(startState, setCaptchaURL(captchaURL));
+    expect(endState.fullName).toBe(null)
+    expect(endState.captchaURL).toBe(captchaURL)
+})
+test('errorMessage should be set', () => {
+    const errorMessage = 'Some error'
+    const endState = authReducer(startState, setErrorMessage(errorMessage));
+    expect(endState.fullName).toBe(null)
+    expect(endState.errorMessage).toBe(errorMessage)
 })

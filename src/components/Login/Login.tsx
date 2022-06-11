@@ -6,7 +6,7 @@ import {AppStateType} from '../../redux/redux-store';
 import {login} from '../../redux/redusers/auth/authReducer';
 import {Navigate} from 'react-router-dom';
 import {getIsFetchingSelector} from '../../redux/selectors/usersSelectors';
-import {getIsAuthSelector} from '../../redux/selectors/authSelectors';
+import {getCaptchaURL, getErrorMessage, getIsAuthSelector} from '../../redux/selectors/authSelectors';
 import {Preloader} from '../generic/Preloader/Preloader';
 
 export type LoginWithApiPropsType =
@@ -27,14 +27,18 @@ export function LoginWithApi(props: LoginWithApiPropsType) {
 type MapStateToPropsType = {
     isAuth: boolean
     isFetching: boolean
+    errorMessage:string
+    captchaURL:string
 }
 type MapDispatchToProps = {
-    login: (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void) => void
+    login: (email: string, password: string, rememberMe: boolean, captcha:string) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     isAuth: getIsAuthSelector(state),
-    isFetching:getIsFetchingSelector(state)
+    isFetching:getIsFetchingSelector(state),
+    errorMessage:getErrorMessage(state),
+    captchaURL:getCaptchaURL(state),
 })
 
 export const Login = connect(mapStateToProps, {login} as MapDispatchToProps)(LoginWithApi)

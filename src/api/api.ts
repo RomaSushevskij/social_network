@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {UserType} from "../redux/redusers/usersReducer/usersReducer";
-import {ProfileType} from "../redux/redusers/profileReducer/profileReducer";
+import {ContactsType, ProfileType} from "../redux/redusers/profileReducer/profileReducer";
 
 //types------------------------------------------types
 //↓
@@ -37,6 +37,17 @@ type UpdatePhotoDataType = {
     messages: string[]
     resultCode: RESPONSE_RESULT_CODES
 }
+export type UploadProfileCommonModelType = {
+    userId: number | null
+    lookingForAJob: boolean | null
+    lookingForAJobDescription: string | null
+    fullName: string | null
+    aboutMe: string | null
+    contacts: ContactsType
+}
+export type UploadProfileModelType = Omit<UploadProfileCommonModelType, 'contacts'>
+export type UploadContactsModelType = ContactsType
+type UpdateProfileDataType = UpdateStatusDataType
 
 //AUTH---
 export type AuthUserDataType = {
@@ -136,6 +147,12 @@ export const profileAPI = {
             .then(response => {
                 return response.data
             })
+    },
+    uploadProfile(profileModel: UploadProfileCommonModelType) {
+        return instance_1.put<UpdateProfileDataType>('/profile', profileModel)
+            .then(response => {
+                return response.data
+            })
     }
 }
 
@@ -146,11 +163,12 @@ export let authMeAPI = {
                 return response.data
             })
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean }>(`auth/login`, {
+    login(email: string, password: string, rememberMe: boolean, captcha?:string) {
+        return instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean,captcha?:string}>(`auth/login`, {
             email,
             password,
-            rememberMe
+            rememberMe,
+            captcha
         })
             .then(response => {
                 return response.data
@@ -159,6 +177,14 @@ export let authMeAPI = {
     logout() {
         return instance_1.delete<any, AxiosResponse<LogoutResponseType>>(`auth/login`)
             .then(response => {
+                return response.data
+            })
+    }
+}
+export let securityAPI = {
+    getCaptchaURL() {
+        return instance_1.get<{url:string}>('security/get-captcha-url')
+            .then(response=> {
                 return response.data
             })
     }

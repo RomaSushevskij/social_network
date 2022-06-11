@@ -1,7 +1,14 @@
-import {profileAPI, RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
+import {
+    profileAPI,
+    RESPONSE_RESULT_CODES,
+    UploadContactsModelType,
+    UploadProfileModelType,
+    usersAPI
+} from "../../../api/api";
 import {AppThunk} from "../../redux-store";
 import {setIsFetchingValue, UserType} from '../usersReducer/usersReducer';
 import {setFullNameAndAvatar} from '../auth/authReducer';
+import {PATH} from '../../../App';
 
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
@@ -231,5 +238,53 @@ export const updatePhoto = (photoFile: any): AppThunk => (dispatch, getState) =>
             dispatch(setIsFetchingValue(false));
         })
 }
+
+export const updateProfile = (profileModel: UploadProfileModelType, navigate: Function): AppThunk => (dispatch, getState) => {
+    const userId = getState().profilePage.profile.userId;
+    const contacts = getState().profilePage.profile.contacts;
+    const profileCommonModelType = {...profileModel, contacts: contacts}
+    dispatch(setIsFetchingValue(true));
+    profileAPI.uploadProfile(profileCommonModelType)
+        .then(data => {
+            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+                dispatch(getProfile(userId))
+            }
+        })
+        .then(() => {
+            navigate(PATH.PROFILE)
+        })
+        .catch(error=>{
+            debugger
+        })
+        .finally(() => {
+            dispatch(setIsFetchingValue(false));
+        })
+}
+export const updateContacts = (contactsModel: UploadContactsModelType, navigate: Function): AppThunk => (dispatch, getState) => {
+    const {fullName, userId, aboutMe, lookingForAJob, lookingForAJobDescription} = getState().profilePage.profile;
+    const profileCommonModelType = {
+        fullName,
+        userId,
+        aboutMe,
+        lookingForAJob,
+        lookingForAJobDescription,
+        contacts: contactsModel
+    }
+    dispatch(setIsFetchingValue(true));
+    debugger
+    profileAPI.uploadProfile(profileCommonModelType)
+        .then(data => {
+            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+                dispatch(getProfile(userId))
+            }
+        })
+        .then(() => {
+            navigate(PATH.PROFILE)
+        })
+        .finally(() => {
+            dispatch(setIsFetchingValue(false));
+        })
+}
+
 
 

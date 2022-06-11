@@ -1,4 +1,4 @@
-import React, {FormEvent, KeyboardEvent, memo, useEffect} from "react";
+import React, {FormEvent, KeyboardEvent, memo} from "react";
 import styleModule from './LoginForm.module.css';
 import {Button} from "../../generic/Button/Button";
 import {Checkbox} from "../../generic/Checkbox/Checkbox";
@@ -13,21 +13,20 @@ type LoginFormValuesType = {
     email: string
     password: string
     rememberMe: boolean
+    captcha:string
 }
 type OnSubmitParamsType = {
     setSubmitting: (isSubmitting: boolean) => void
-    setStatus: (status?: any) => void
 }
 
 type LoginFormPropsType = LoginWithApiPropsType
 
 const maxLength30 = maxLength(30)
 
-export const  LoginForm = memo(({login}: LoginFormPropsType) => {
-
-    const onSubmitGHandler = (values: LoginFormValuesType, {setSubmitting, setStatus}: OnSubmitParamsType) => {
-        const {email, password, rememberMe} = values;
-        login(email, password, rememberMe, setStatus)
+export const LoginForm = memo(({login, errorMessage, captchaURL}: LoginFormPropsType) => {
+    const onSubmitGHandler = (values: LoginFormValuesType, {setSubmitting}: OnSubmitParamsType) => {
+        const {email, password, rememberMe,captcha} = values;
+        login(email, password, rememberMe, captcha)
         setSubmitting(false)
     }
     const onAddMessageWithEnter = (e: KeyboardEvent<HTMLFormElement>,
@@ -40,46 +39,63 @@ export const  LoginForm = memo(({login}: LoginFormPropsType) => {
     return (
         <div className={styleModule.wrapperLoginForm}>
             <Formik
-                initialValues={{email: '', password: '', rememberMe: true}}
+                initialValues={{email: '', password: '', rememberMe: true, captcha: ''}}
                 onSubmit={onSubmitGHandler}>
-                {({isSubmitting, handleSubmit, status}) => (
-                    <Form className={styleModule.formWrapper}
-                          onSubmit={handleSubmit}
-                          onKeyPress={(e) => onAddMessageWithEnter(e, handleSubmit)}>
-                        <CSSTransition in={status}
-                                       timeout={300}
-                                       classNames={s}
-                                       unmountOnExit
-                                       mountOnEnter>
-                            <div className={styleModule.formErrorBlock}>{status}</div>
-                        </CSSTransition>
-                        <div className={styleModule.title}>Log in</div>
-                        <div className={styleModule.formElement}>
-                            <Field type="email"
-                                   name="email"
-                                   component={InputTextSecondary}
-                                   placeholder={'Login'}
-                                   validate={composeValidators(requiredField, maxLength30)}/>
+                {({isSubmitting, handleSubmit}) => {
+                    return (
+                        <Form className={styleModule.formWrapper}
+                              onSubmit={handleSubmit}
+                              onKeyPress={(e) => onAddMessageWithEnter(e, handleSubmit)}>
+                            <CSSTransition in={!!errorMessage}
+                                           timeout={300}
+                                           classNames={s}
+                                           unmountOnExit
+                                           mountOnEnter>
+                                <div className={styleModule.formErrorBlock}>{errorMessage}</div>
+                            </CSSTransition>
+                            <div className={styleModule.title}>Log in</div>
+                            <div className={styleModule.formElement}>
+                                <Field type="email"
+                                       name="email"
+                                       component={InputTextSecondary}
+                                       placeholder={'Login'}
+                                       validate={composeValidators(requiredField, maxLength30)}/>
 
-                        </div>
-                        <div className={styleModule.formElement}>
-                            <Field type="password"
-                                   name="password"
-                                   component={InputTextSecondary}
-                                   placeholder={'Password'}
-                                   validate={composeValidators(requiredField, maxLength30)}/>
-                        </div>
-                        <div className={`${styleModule.formElement} ${styleModule.checkMark}`}>
-                            <Field type="checkbox"
-                                   name="rememberMe"
-                                   component={CheckBoxField}/>
-                        </div>
-                        <div className={`${styleModule.formElement} ${styleModule.submitButton}`}>
-                            <Button name={'Login'}
-                                    disabled={isSubmitting}/>
-                        </div>
-                    </Form>
-                )}
+                            </div>
+                            <div className={styleModule.formElement}>
+                                <Field type="password"
+                                       name="password"
+                                       component={InputTextSecondary}
+                                       placeholder={'Password'}
+                                       validate={composeValidators(requiredField, maxLength30)}/>
+                            </div>
+                            <div className={`${styleModule.formElement} ${styleModule.checkMark}`}>
+                                <Field type="checkbox"
+                                       name="rememberMe"
+                                       component={CheckBoxField}/>
+                            </div>
+                            {!!captchaURL &&
+                            <>
+                                <div className={styleModule.captchaBlock}>
+                                    <img src={captchaURL} alt="Captcha"/>
+                                </div>
+                                <div className={styleModule.formElement}>
+                                    <Field type="text"
+                                           name="captcha"
+                                           component={InputTextSecondary}
+                                           placeholder={'Type the code from the image'}
+                                           validate={composeValidators(requiredField)}/>
+                                </div>
+                            </>
+                            }
+
+                            <div className={`${styleModule.formElement} ${styleModule.submitButton}`}>
+                                <Button name={'Login'}
+                                        disabled={isSubmitting}/>
+                            </div>
+                        </Form>
+                    )
+                }}
             </Formik>
             <span>© Copyright 2022 By Linkspace</span>
         </div>

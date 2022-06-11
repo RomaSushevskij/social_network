@@ -68,4 +68,11 @@
     margin-right: auto;
 
 }
+.captchaBlock {
+    width: 200px;
+    margin:auto;
+}
+.captchaBlock img {
+    border: 1px solid #D3D5D8;
+}
 
