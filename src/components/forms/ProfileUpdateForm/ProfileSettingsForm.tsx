@@ -43,9 +43,13 @@ export const ProfileSettingsForm = memo(() => {
             if (!values.fullName) {
                 errors.fullName = 'Field is required';
             }
+            if (!values.aboutMe) {
+                errors.aboutMe = 'Field is required';
+            }
             return errors;
         }
     });
+    const isSubmitButtonDisabled = formik.errors.fullName || formik.errors.aboutMe;
     return (
         <div className={styleModule.settingsFormWrapper}>
             <div className={styleModule.description}>
@@ -62,14 +66,17 @@ export const ProfileSettingsForm = memo(() => {
                                 </p>
                                 <InputTextSecondary placeholder={'Your name...'}
                                                     {...formik.getFieldProps('fullName')}
-                                                    error={formik.errors.fullName}/>
+                                                    error={formik.errors.fullName}
+                                                    className={!formik.errors.fullName ? styleModule.border : ''}/>
                             </div>
                             <div className={styleModule.field}>
                                 <p className={styleModule.fieldTitle}>
                                     About me
                                 </p>
                                 <TextareaSecondary placeholder={'A few words about myself...'}
-                                                   {...formik.getFieldProps('aboutMe')}/>
+                                                   {...formik.getFieldProps('aboutMe')}
+                                                   error={formik.errors.aboutMe}
+                                                   className={!formik.errors.aboutMe ? styleModule.border : ''}/>
                             </div>
                             <div className={`${styleModule.field} ${styleModule.checkbox}`}>
                                 <p className={styleModule.fieldTitle}>
@@ -85,11 +92,13 @@ export const ProfileSettingsForm = memo(() => {
                                     Job description
                                 </p>
                                 <TextareaSecondary placeholder={'Description of the job you are looking for...'}
-                                                   {...formik.getFieldProps('lookingForAJobDescription')}
+                                    {...formik.getFieldProps('lookingForAJobDescription')}
                                                    disabled={!formik.values.lookingForAJob}
-                                                   className={styleModule.optionalField}/>
+                                                   className={!formik.errors.lookingForAJobDescription ?
+                                                       `${styleModule.optionalField} ${styleModule.border}` :
+                                                       styleModule.optionalField}/>
                             </div>
-                            <Button type={'submit'} name={'Save'}/>
+                            <Button type={'submit'} name={'Save'} disabled={!!isSubmitButtonDisabled}/>
                         </>
                     }
                 </form>

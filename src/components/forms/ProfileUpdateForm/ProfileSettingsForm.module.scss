@@ -19,7 +19,8 @@
   }
 
   .settingsFormContainer {
-    width: calc(100vw - 740px);
+    width: calc(100vw - 840px);
+    margin-right: 100px;
     min-width: 300px;
     position: relative;
     background-color: #fff;
@@ -53,11 +54,12 @@
         }
 
         input, textarea {
-          border: none;
           background-color: #F3F4F6;
-          //transform: scaleY(1);
           opacity: 1;
           transition: all .4s ease;
+          &.border {
+            border: none;
+          }
 
           &::placeholder {
             color: #9CA3AF;

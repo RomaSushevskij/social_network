@@ -1,6 +1,5 @@
 import {AppThunk} from '../../redux-store';
 import {getAuthorizationInfo} from '../auth/authReducer';
-import {getFollowers} from '../profileReducer/profileReducer';
 
 export enum APP_ACTIONS_TYPES {
     SET_APP_INITIALIZE_VALUE = 'social/app/SET_APP_INITIALIZE_VALUE'

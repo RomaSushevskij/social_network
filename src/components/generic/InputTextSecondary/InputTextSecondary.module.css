@@ -39,15 +39,14 @@
 }
 
 .error {
-    max-width: 200px;
-    min-width: 100px;
+    width:120px;
     min-height: 40px;
     background-color: #BE4B49;
     border-color: #9C3735;
     display: inline-block;
     vertical-align: top;
     top: 3px;
-    left: 103%;
+    right: -152px;
     padding: 5px 10px;
     color: #ffffff;
     position: absolute;

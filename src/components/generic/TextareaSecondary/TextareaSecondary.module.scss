@@ -37,20 +37,22 @@
   }
 
   .error {
-    min-width: 150px;
+    width:120px;
+    min-height: 40px;
     background-color: #BE4B49;
     border-color: #9C3735;
     display: inline-block;
     vertical-align: top;
     top: 3px;
-    left: 105%;
+    right: -152px;
     padding: 5px 10px;
     color: #ffffff;
     position: absolute;
     border-radius: 3px;
-    box-shadow: 0 0 5px rgba(200, 53, 53, .5);
+    box-shadow: 0 0 5px rgba(200, 53, 53, .2);
     word-wrap: break-word;
-    font-size: 12px;
+    font-size: 14px;
+    transition: all .4s ease-out;
 
     &::before {
       content: "";
@@ -62,7 +64,8 @@
       left: -5px;
       transform-origin: 50% 50%;
       transform: rotate(45deg);
-      box-shadow: 0 0 5px rgba(200, 53, 53, .5);
+      box-shadow: 0 0 5px rgba(200, 53, 53, .2);
+      transition: all .4s ease-out;
 
     }
 

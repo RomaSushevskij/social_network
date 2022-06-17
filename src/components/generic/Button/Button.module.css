@@ -16,12 +16,8 @@
 
 .button:disabled {
     cursor: not-allowed;
-    background-color: lightgrey;
-    color: lightgrey;
+    background-color: #c1c1c1 !important;
+    color: #eaeaea;
     box-shadow: none;
-}
-
-.button:disabled:hover {
-    color: lightgrey;
 }
 
