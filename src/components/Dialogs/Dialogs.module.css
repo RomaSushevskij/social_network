@@ -40,6 +40,9 @@
 .messagesBlock .messagesHeader {
     border-bottom: 1px solid #E5E7EB;
 }
+.messagesBlock .messagesHeader a div {
+    border-top-right-radius: 7px;
+}
 
 .messages {
     display: flex;

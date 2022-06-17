@@ -54,11 +54,12 @@
         }
 
         input, textarea {
-          border: none;
           background-color: #F3F4F6;
-          //transform: scaleY(1);
           opacity: 1;
           transition: all .4s ease;
+          &.border {
+            border: none;
+          }
 
           &::placeholder {
             color: #9CA3AF;

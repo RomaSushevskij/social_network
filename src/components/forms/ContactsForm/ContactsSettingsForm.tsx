@@ -10,16 +10,6 @@ import InputTextSecondary from '../../generic/InputTextSecondary/InputTextSecond
 import {Button} from '../../generic/Button/Button';
 import {validateURL} from '../../../utils/validators';
 
-type ContactType =
-    "facebook" |
-    "website" |
-    "vk" |
-    "twitter" |
-    "instagram" |
-    "youtube" |
-    "github" |
-    "mainLink"
-
 export const ContactsSettingsForm = memo(() => {
     const contacts = useSelector((state: AppStateType) => state.profilePage.profile?.contacts)
     const isFetching = useSelector((state: AppStateType) => state.usersPage.isFetching);
@@ -61,7 +51,9 @@ export const ContactsSettingsForm = memo(() => {
                                             <InputTextSecondary placeholder={`${key}...`}
                                                                 {...formik.getFieldProps(key)}
                                                 //@ts-ignore
-                                                                error={formik.errors[key]}/>
+                                                                error={formik.errors[key]}
+                                                //@ts-ignore
+                                                                className={!formik.errors[key] ? styleModule.border : ''}/>
                                         </div>
                                     )
                                 }
