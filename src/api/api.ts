@@ -83,6 +83,29 @@ export enum RESPONSE_RESULT_CODES {
 
 }
 
+// NEWS
+export type NewsArticle = {
+    author: string
+    category: string
+    country: string
+    description: string
+    image: string
+    language: string
+    published_at: string
+    source: string
+    title: string
+    url: string
+}
+export type GetNewsDataType = {
+    data: NewsArticle[]
+    pagination: {
+        count: number
+        limit: number
+        offset: number
+        total: number
+    }
+}
+
 //↑
 //types------------------------------------------types
 
@@ -93,6 +116,16 @@ const instance_1 = axios.create({
         "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
     }
 });
+const newsInstance = axios.create({
+    baseURL: "http://api.mediastack.com/v1/",
+    params: {
+        "access_key": "220e463fea4cb21ca2430f7b466755d2",
+        "categories": "technology ",
+        "languages": "en, ru"
+    }
+
+})
+
 
 export const usersAPI = {
     getUsers(pageSize: number, currentPage: number) {
@@ -163,8 +196,8 @@ export let authMeAPI = {
                 return response.data
             })
     },
-    login(email: string, password: string, rememberMe: boolean, captcha?:string) {
-        return instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean,captcha?:string}>(`auth/login`, {
+    login(email: string, password: string, rememberMe: boolean, captcha?: string) {
+        return instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean, captcha?: string }>(`auth/login`, {
             email,
             password,
             rememberMe,
@@ -183,8 +216,17 @@ export let authMeAPI = {
 }
 export let securityAPI = {
     getCaptchaURL() {
-        return instance_1.get<{url:string}>('security/get-captcha-url')
-            .then(response=> {
+        return instance_1.get<{ url: string }>('security/get-captcha-url')
+            .then(response => {
+                return response.data
+            })
+    }
+}
+
+export const newsAPI = {
+    getNews() {
+        return newsInstance.get<GetNewsDataType>('news')
+            .then(response => {
                 return response.data
             })
     }

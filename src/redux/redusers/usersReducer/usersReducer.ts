@@ -46,7 +46,7 @@ export type InitialStateUsersType = typeof initialState
 const initialState = {
     users: [] as UserType[],
     usersTotalCount: 0,
-    pageSize: 10,
+    pageSize: 20,
     currentPage: 1,
     isFetching: false,
     followingInProcessUsersId: [] as Array<number>
@@ -123,7 +123,7 @@ export const setPageSize = (pageSize: number) => ({
 
 //T H U N K S
 
-export const getUsers = (pageSize: number = 10, currentPage: number): AppThunk => dispatch => {
+export const getUsers = (pageSize: number, currentPage: number): AppThunk => dispatch => {
     dispatch(setIsFetchingValue(true))
     usersAPI.getUsers(pageSize, currentPage)
         .then(data => {
@@ -135,7 +135,7 @@ export const getUsers = (pageSize: number = 10, currentPage: number): AppThunk =
             dispatch(setAppError(error.message))
         })
 }
-export const repeatGetUsers = (pageSize: number = 10, pageNumber: number): AppThunk => dispatch => {
+export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => dispatch => {
     dispatch(setCurrentPage(pageNumber))
     dispatch(setIsFetchingValue(true))
     usersAPI.getUsers(Number(pageSize), pageNumber)

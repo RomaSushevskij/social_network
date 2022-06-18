@@ -17,7 +17,6 @@ export type PaginatorPropsType = {
 
 export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorPropsType) => {
 
-
     const {pageCount, pages} = useMemo(() => {
         let pages: Array<number> = [];
         let pageCount: number;
@@ -31,7 +30,7 @@ export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorProp
 
     }, [props.totalItemsCount, props.pageSize]);
 
-    const itemsCounts = [10, 20, 30, 40, 50, 100];
+    const itemsCounts = [20, 30, 40, 50, 100];
 
     let [portionNumber, setPortionNumber] = useState<number>(1);
     const portionCount: number = Math.ceil(pageCount / portionSize);

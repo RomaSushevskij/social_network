@@ -21,7 +21,7 @@ import {
 
 class UsersApiContainer extends React.PureComponent<UsersApiContainerPropsType> {
     state = {
-        pageSize: 10
+        pageSize: 20
     }
 
     componentDidMount(): void {
