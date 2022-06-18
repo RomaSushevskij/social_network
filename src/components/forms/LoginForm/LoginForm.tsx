@@ -17,7 +17,7 @@ type LoginFormValuesType = {
 
 type LoginFormPropsType = LoginWithApiPropsType
 
-export const LoginForm = memo(({login, errorMessage, captchaURL}: LoginFormPropsType) => {
+export const LoginForm = memo(({login, captchaURL}: LoginFormPropsType) => {
 
     const formik = useFormik({
         initialValues: {
@@ -49,13 +49,6 @@ export const LoginForm = memo(({login, errorMessage, captchaURL}: LoginFormProps
         <div className={styleModule.wrapperLoginForm}>
             <form className={styleModule.formWrapper}
                   onSubmit={formik.handleSubmit}>
-                <CSSTransition in={!!errorMessage}
-                               timeout={300}
-                               classNames={s}
-                               unmountOnExit
-                               mountOnEnter>
-                    <div className={styleModule.formErrorBlock}>{errorMessage}</div>
-                </CSSTransition>
                 <div className={styleModule.title}>Log in</div>
                 <div className={styleModule.formElement}>
                     <InputTextSecondary type="email"

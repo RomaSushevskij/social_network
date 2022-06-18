@@ -17,9 +17,6 @@ export const getAvatarSelector = (state: AppStateType):null | string => {
 export const getFullNameSelector = (state: AppStateType):null | string => {
     return state.auth.fullName
 }
-export const getErrorMessage = (state: AppStateType):string => {
-    return state.auth.errorMessage
-}
 export const getCaptchaURL = (state: AppStateType):string => {
     return state.auth.captchaURL
 }

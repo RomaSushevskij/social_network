@@ -1,15 +1,8 @@
-import {
-    authReducer,
-    InitialStateAuthType,
-    setAuthUserData,
-    setCaptchaURL,
-    setErrorMessage,
-    setFullNameAndAvatar
-} from "./authReducer";
+import {authReducer, InitialStateAuthType, setAuthUserData, setCaptchaURL, setFullNameAndAvatar} from "./authReducer";
 import {AuthUserDataType} from "../../../api/api";
 
 let startState: InitialStateAuthType
-beforeEach(()=>{
+beforeEach(() => {
     startState = {
         id: null as null | number,
         email: null as null | string,
@@ -18,12 +11,11 @@ beforeEach(()=>{
         fullName: null as null | string,
         avatar: null as null | string,
         captchaURL: '',
-        errorMessage: ''
     }
 })
 
 test('correct data should be set', () => {
-    const data: AuthUserDataType = {id:13, email: 'roma.sushevskij@yandex.ru', login:'react&redux'}
+    const data: AuthUserDataType = {id: 13, email: 'roma.sushevskij@yandex.ru', login: 'react&redux'}
     const endState = authReducer(startState, setAuthUserData(data, true))
 
     expect(endState.isAuth).toBeTruthy()
@@ -44,10 +36,4 @@ test('captchaURL should be set', () => {
     const endState = authReducer(startState, setCaptchaURL(captchaURL));
     expect(endState.fullName).toBe(null)
     expect(endState.captchaURL).toBe(captchaURL)
-})
-test('errorMessage should be set', () => {
-    const errorMessage = 'Some error'
-    const endState = authReducer(startState, setErrorMessage(errorMessage));
-    expect(endState.fullName).toBe(null)
-    expect(endState.errorMessage).toBe(errorMessage)
 })

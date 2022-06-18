@@ -12,11 +12,12 @@ import {connect} from 'react-redux';
 import {AppStateType} from './redux/redux-store';
 import {initializeApp} from './redux/redusers/app/appReducer';
 import {Preloader} from './components/generic/Preloader/Preloader';
-import {getInitializedSelector} from './redux/selectors/appSelectors';
+import {getAppError, getAppMessage, getInitializedSelector} from './redux/selectors/appSelectors';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {getIsAuthSelector} from './redux/selectors/authSelectors';
 import {withSuspense} from './hoc/withSuspense';
+import {SNACK_BAR_TYPES, SnackBar} from './components/generic/SnackBar/SnackBar';
 
 
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer').then(({default: UsersContainer}) => ({default: UsersContainer})));
@@ -57,6 +58,7 @@ class App extends React.Component<AppAPIContainerPropsType> {
     }
 
     render() {
+        const {appError, appMessage} =this.props
         if (!this.props.initialized) {
             return (
                 <div style={{height: '100vh'}}>
@@ -85,7 +87,8 @@ class App extends React.Component<AppAPIContainerPropsType> {
                         </div>
                     </div> : <Login/>
                 }
-
+                {/*<SnackBar message={appError} type={SNACK_BAR_TYPES.ERROR}/>*/}
+                <SnackBar message={appMessage} type={SNACK_BAR_TYPES.SUCCESS}/>
             </>
         )
     }
@@ -96,6 +99,8 @@ export type AppAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsT
 type MapStateToPropsType = {
     initialized: boolean
     isAuth: boolean
+    appError:string
+    appMessage:string
 }
 type MapDispatchToPropsType = {
     initializeApp: () => void
@@ -104,7 +109,9 @@ type MapDispatchToPropsType = {
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         initialized: getInitializedSelector(state),
-        isAuth: getIsAuthSelector(state)
+        isAuth: getIsAuthSelector(state),
+        appError: getAppError(state),
+        appMessage:getAppMessage(state),
     }
 };
 

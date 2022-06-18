@@ -27,39 +27,7 @@
     background: linear-gradient(90deg, rgb(236, 73, 151), rgb(247, 112, 113));
     height: 48px;
 }
-.formErrorBlock {
-    position: absolute;
-    box-sizing: border-box;
-    text-align: center;
-    background-color: #BE4B49;
-    border-color: #9C3735;
-    display: inline-block;
-    vertical-align: top;
-    bottom: 40px;
-    left: 40px;
-    padding: 10px 10px 10px 35px;
-    color: #ffffff;
-    border-radius: 3px;
-    box-shadow: 0 0 5px rgba(200, 53, 53, .5);
-    word-wrap: break-word;
-    font-size: 14px;
-}
 
-.formErrorBlock::before {
-    content: "!";
-    width: 5px;
-    height: 5px;
-    color: #ffffff;
-    border:1px solid #ffffff;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    border-radius: 50%;
-    text-align: center;
-    padding: 5px;
-    line-height: .3em;
-    transition: all .4s ease-out;
-}
 .wrapperLoginForm > span {
     color: #66666A;
     font-size: 15px;

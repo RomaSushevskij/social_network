@@ -1,6 +1,7 @@
 import {AppThunk} from "../../redux-store";
 import {RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
 import {deleteFollower} from '../profileReducer/profileReducer';
+import {setAppError} from '../app/appReducer';
 
 export enum USERS_ACTIONS_TYPES {
     FOLLOW = 'social/users/FOLLOW',
@@ -130,23 +131,36 @@ export const getUsers = (pageSize: number = 10, currentPage: number): AppThunk =
             dispatch(setUsers(data.items))
             dispatch(setUsersTotalCount(data.totalCount))
         })
+        .catch(error => {
+            dispatch(setAppError(error.message))
+        })
 }
 export const repeatGetUsers = (pageSize: number = 10, pageNumber: number): AppThunk => dispatch => {
     dispatch(setCurrentPage(pageNumber))
     dispatch(setIsFetchingValue(true))
-    usersAPI.getUsers(Number(pageSize), pageNumber).then(data => {
-        dispatch(setIsFetchingValue(false))
-        dispatch(setUsers(data.items))
-    })
+    usersAPI.getUsers(Number(pageSize), pageNumber)
+        .then(data => {
+            dispatch(setIsFetchingValue(false))
+            dispatch(setUsers(data.items))
+        })
+        .catch(error => {
+            dispatch(setAppError(error.message))
+        })
 }
 export const becomeFollower = (id: number): AppThunk => dispatch => {
     dispatch(toggleFollowingInProcess(id, true))
-    usersAPI.becomeFollower(id).then(data => {
-        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-            dispatch(follow(id))
-        }
-        dispatch(toggleFollowingInProcess(id, false))
-    })
+    usersAPI.becomeFollower(id)
+        .then(data => {
+            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+                dispatch(follow(id))
+            } else {
+                data.messages.length && dispatch(setAppError(data.messages[0]))
+            }
+            dispatch(toggleFollowingInProcess(id, false))
+        })
+        .catch(error => {
+            dispatch(setAppError(error.message))
+        })
 }
 
 export const stopBeingFollower = (id: number): AppThunk => dispatch => {
@@ -155,8 +169,13 @@ export const stopBeingFollower = (id: number): AppThunk => dispatch => {
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             dispatch(unfollow(id))
             dispatch(deleteFollower(id))
+        } else {
+            data.messages.length && dispatch(setAppError(data.messages[0]))
         }
         dispatch(toggleFollowingInProcess(id, false))
     })
+        .catch(error => {
+            dispatch(setAppError(error.message))
+        })
 }
 

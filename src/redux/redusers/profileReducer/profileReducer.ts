@@ -9,6 +9,8 @@ import {AppThunk} from "../../redux-store";
 import {setIsFetchingValue, UserType} from '../usersReducer/usersReducer';
 import {setFullNameAndAvatar} from '../auth/authReducer';
 import {PATH} from '../../../App';
+import {setAppError, setAppMessage} from '../app/appReducer';
+import {MESSAGES_FOR_SUCCESS_BAR} from '../../../components/generic/SnackBar/SnackBar';
 
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
@@ -197,6 +199,10 @@ export const getProfile = (userId: number): AppThunk => (dispatch, getState) => 
     profileAPI.getProfile(userId)
         .then(data => {
             dispatch(setProfile(data))
+            dispatch(setFullNameAndAvatar(data.fullName, data.photos.large))
+        })
+        .catch(error => {
+            dispatch(setAppError(error.message))
         })
 }
 export const getStatus = (userId: number): AppThunk => dispatch => {
@@ -204,13 +210,22 @@ export const getStatus = (userId: number): AppThunk => dispatch => {
         .then(data => {
             dispatch(setStatus(data))
         })
+        .catch(error => {
+            dispatch(setAppError(error.message))
+        })
 }
 export const updateStatus = (status: string): AppThunk => dispatch => {
     profileAPI.updateStatus(status)
         .then(response => {
             if (response.data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(setStatus(status))
+                dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.STATUS_CHANGED_SUCCESSFULLY))
+            } else {
+                response.data.messages.length && dispatch(setAppError(response.data.messages[0]))
             }
+        })
+        .catch(error => {
+            dispatch(setAppError(error.message))
         })
 }
 export const getFollowers = (): AppThunk => (dispatch, getState) => {
@@ -222,6 +237,9 @@ export const getFollowers = (): AppThunk => (dispatch, getState) => {
         .then(data => {
             dispatch(setFollowers(data.items))
         })
+        .catch(error => {
+            dispatch(setAppError(error.message))
+        })
 }
 export const updatePhoto = (photoFile: any): AppThunk => (dispatch, getState) => {
     const fullName = getState().profilePage.profile.fullName;
@@ -232,7 +250,13 @@ export const updatePhoto = (photoFile: any): AppThunk => (dispatch, getState) =>
                 const newAvatar = data.data.photos.large;
                 dispatch(updatePhotoSuccess(data.data.photos.large))
                 dispatch(setFullNameAndAvatar(fullName, newAvatar))
+                dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.YOUR_PHOTO_UPDATED_SUCCESSFULLY))
+            } else {
+                data.messages.length && dispatch(setAppError(data.messages[0]))
             }
+        })
+        .catch(error => {
+            dispatch(setAppError(error.message))
         })
         .finally(() => {
             dispatch(setIsFetchingValue(false));
@@ -248,13 +272,16 @@ export const updateProfile = (profileModel: UploadProfileModelType, navigate: Fu
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(getProfile(userId))
+            } else {
+                data.messages.length && dispatch(setAppError(data.messages[0]))
             }
         })
         .then(() => {
             navigate(PATH.PROFILE)
+            dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY))
         })
-        .catch(error=>{
-            debugger
+        .catch(error => {
+            dispatch(setAppError(error.message))
         })
         .finally(() => {
             dispatch(setIsFetchingValue(false));
@@ -271,15 +298,20 @@ export const updateContacts = (contactsModel: UploadContactsModelType, navigate:
         contacts: contactsModel
     }
     dispatch(setIsFetchingValue(true));
-    debugger
     profileAPI.uploadProfile(profileCommonModelType)
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(getProfile(userId))
+            } else {
+                data.messages.length && dispatch(setAppError(data.messages[0]))
             }
         })
         .then(() => {
             navigate(PATH.PROFILE)
+            dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.CONTACTS_UPDATED_SUCCESSFULLY))
+        })
+        .catch(error => {
+            dispatch(setAppError(error.message))
         })
         .finally(() => {
             dispatch(setIsFetchingValue(false));
