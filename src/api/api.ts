@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from 'axios'
 import {UserType} from "../redux/redusers/usersReducer/usersReducer";
 import {ContactsType, ProfileType} from "../redux/redusers/profileReducer/profileReducer";
+import {NullableType} from '../redux/redux-store';
 
 //types------------------------------------------types
 //↓
@@ -84,12 +85,12 @@ export enum RESPONSE_RESULT_CODES {
 }
 
 // NEWS
-export type NewsArticle = {
-    author: string
+export type NewsArticleType = {
+    author: NullableType<string>
     category: string
     country: string
     description: string
-    image: string
+    image: NullableType<string>
     language: string
     published_at: string
     source: string
@@ -97,7 +98,7 @@ export type NewsArticle = {
     url: string
 }
 export type GetNewsDataType = {
-    data: NewsArticle[]
+    data: NewsArticleType[]
     pagination: {
         count: number
         limit: number
@@ -118,12 +119,6 @@ const instance_1 = axios.create({
 });
 const newsInstance = axios.create({
     baseURL: "http://api.mediastack.com/v1/",
-    params: {
-        "access_key": "220e463fea4cb21ca2430f7b466755d2",
-        "categories": "technology ",
-        "languages": "en, ru"
-    }
-
 })
 
 
@@ -225,7 +220,15 @@ export let securityAPI = {
 
 export const newsAPI = {
     getNews() {
-        return newsInstance.get<GetNewsDataType>('news')
+        return newsInstance.get<GetNewsDataType>('news' , {
+            params: {
+                "access_key": "220e463fea4cb21ca2430f7b466755d2",
+                "categories": "technology, science ",
+                "languages": "en, ru",
+                "limit": 6,
+                "offset":2
+            }
+        })
             .then(response => {
                 return response.data
             })

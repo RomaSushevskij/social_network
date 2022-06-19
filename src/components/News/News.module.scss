@@ -1,0 +1,80 @@
+.newsWrapper {
+  padding: 20px;
+  padding-right: 0;
+
+  h1 {
+    color: #111827;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+    margin-left: 20px;
+  }
+
+  .settingsBlock {
+    display: flex;
+    margin: 20px;
+
+    .searchingField {
+      overflow: hidden;
+      width: 400px;
+      position: relative;
+
+      .searchingLogo {
+        position: absolute;
+        bottom: 16px;
+        color: #AEB4BD;
+      }
+
+
+      .searching {
+        border: none;
+        border-bottom: 2px solid #DDDDDD;
+        background-color: transparent;
+        padding-left: 30px;
+        border-radius: 0;
+        transition: all .3s ease;
+
+        &::placeholder {
+          color: #AEB4BD;
+        }
+
+        &:focus {
+          border-bottom-color: #3E416D;
+          transition: all .8s ease;
+        }
+
+      }
+
+    }
+
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+}
+
+.enter {
+  opacity: 0;
+  transform: translateY(-25px);
+}
+
+.enterActive {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.exit {
+  opacity: 1;
+}
+
+.exitActive {
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: opacity 500ms, transform 500ms;
+}

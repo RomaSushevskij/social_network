@@ -7,7 +7,7 @@ import {
 } from "../../../api/api";
 import {AppThunk} from "../../redux-store";
 import {setIsFetchingValue, UserType} from '../usersReducer/usersReducer';
-import {setFullNameAndAvatar} from '../auth/authReducer';
+import {getAuthorizationInfo, setFullNameAndAvatar} from '../auth/authReducer';
 import {PATH} from '../../../App';
 import {setAppError, setAppMessage} from '../app/appReducer';
 import {MESSAGES_FOR_SUCCESS_BAR} from '../../../components/generic/SnackBar/SnackBar';
@@ -199,7 +199,6 @@ export const getProfile = (userId: number): AppThunk => (dispatch, getState) => 
     profileAPI.getProfile(userId)
         .then(data => {
             dispatch(setProfile(data))
-            dispatch(setFullNameAndAvatar(data.fullName, data.photos.large))
         })
         .catch(error => {
             dispatch(setAppError(error.message))
@@ -272,12 +271,14 @@ export const updateProfile = (profileModel: UploadProfileModelType, navigate: Fu
         .then(data => {
             if (data.resultCode === RESPONSE_RESULT_CODES.success) {
                 dispatch(getProfile(userId))
+
             } else {
                 data.messages.length && dispatch(setAppError(data.messages[0]))
             }
         })
         .then(() => {
             navigate(PATH.PROFILE)
+            dispatch(getAuthorizationInfo())
             dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY))
         })
         .catch(error => {

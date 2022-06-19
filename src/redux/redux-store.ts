@@ -5,6 +5,7 @@ import {AuthActionType, authReducer} from "./redusers/auth/authReducer";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {AppActionType, appReducer} from './redusers/app/appReducer';
+import {NewsActionType, newsReducer} from './redusers/news/newsReducer';
 
 declare global {
     interface Window {
@@ -17,7 +18,8 @@ export const rootReducer = combineReducers({
         dialogsPage: dialogsReducer,
         usersPage: usersReducer,
         auth: authReducer,
-        app: appReducer
+        app: appReducer,
+        news: newsReducer,
     }
 );
 export type AppStateType = ReturnType<typeof rootReducer>
@@ -26,7 +28,8 @@ export type AppActionsType =
     ProfileActionType |
     DialogsActionType |
     AuthActionType |
-    AppActionType
+    AppActionType |
+    NewsActionType
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));

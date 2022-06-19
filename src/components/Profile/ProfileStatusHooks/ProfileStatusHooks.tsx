@@ -10,7 +10,9 @@ type ProfileStatusPropsType = {
 export const ProfileStatusHooks = memo(({status, updateStatus}: ProfileStatusPropsType) => {
     const [localStatus, setLocalStatus] = useState(status);
     const onBlurEnterCallback = () => {
-        updateStatus(localStatus)
+        if (localStatus !== status) {
+            updateStatus(localStatus)
+        }
     }
     useEffect(() => {
         setLocalStatus(status)
