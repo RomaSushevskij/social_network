@@ -1,36 +1,38 @@
-import React, {memo, useState} from 'react';
-import styleModule from './DropDownMenu.module.scss';
+import React, {memo, useRef, useState} from 'react';
+import styleModule from './DropDownMenuSorting.module.scss';
 import {CSSTransition} from 'react-transition-group';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faAngleDown} from '@fortawesome/free-solid-svg-icons/faAngleDown';
-import {Checkbox} from '../../../generic/Checkbox/Checkbox';
+import {setSortParams} from '../../../redux/redusers/news/newsReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {Radio} from '../../generic/Radio/Radio';
+import {AppStateType} from '../../../redux/redux-store';
 
 type DropDownMenuType = {
     title: string
-    data: any[]
+    data: string[]
     item?: any
     styleToggleButton?: Object
 }
 
-export const DropDownMenu = memo(({title, data, styleToggleButton}: DropDownMenuType) => {
+export const DropDownMenuSorting = memo(({
+                                             title,
+                                             data,
+                                             styleToggleButton
+                                             , ...props
+                                         }: DropDownMenuType) => {
+
     const [editMode, setEditMode] = useState(false);
     const onSettingsClickHandler = () => {
         setEditMode(!editMode)
     };
-    const [checked, setChecked] = useState<boolean>(false);
-    const items = data.map((item, index) => {
-        return (
-            <div key={item + index} className={styleModule.menuItem}>
-                <Checkbox checked={checked}
-                          onChangeChecked={setChecked}>
-                    {item}
-                </Checkbox>
-            </div>
-        )
-    })
+    const dispatch = useDispatch();
+    const sort = useSelector((state: AppStateType) => state.news.params.sort);
     return (
         <div tabIndex={0}
-             onBlur={() => setEditMode(false)}
+             onBlur={() => {
+                 setEditMode(false)
+             }}
              className={styleModule.dropdownWrapper}>
             <div className={styleModule.toggleButton} style={styleToggleButton}
                  onClick={onSettingsClickHandler}>
@@ -43,7 +45,11 @@ export const DropDownMenu = memo(({title, data, styleToggleButton}: DropDownMenu
                            unmountOnExit
                            mountOnEnter>
                 <div className={styleModule.dropdownBody}>
-                    {items}
+                    <Radio name={'radio'}
+                           options={data}
+                           value={sort}
+                           onChangeOption={(value) => dispatch(setSortParams(value))}
+                           />
                 </div>
             </CSSTransition>
         </div>

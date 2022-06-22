@@ -219,14 +219,14 @@ export let securityAPI = {
 }
 
 export const newsAPI = {
-    getNews() {
-        return newsInstance.get<GetNewsDataType>('news' , {
+    getNews(params: { categories: string, keywords: string, sort: string }) {
+        return newsInstance.get<GetNewsDataType>('news', {
             params: {
                 "access_key": "220e463fea4cb21ca2430f7b466755d2",
-                "categories": "technology, science ",
                 "languages": "en, ru",
-                "limit": 6,
-                "offset":2
+                "limit": '6',
+                "offset": '21',
+                ...params
             }
         })
             .then(response => {

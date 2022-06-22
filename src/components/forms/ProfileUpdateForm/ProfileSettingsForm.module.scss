@@ -68,7 +68,8 @@
 
           &:disabled {
             transform: scaleY(0);
-            opacity: 0;
+            transform-origin: top;
+
 
           }
         }

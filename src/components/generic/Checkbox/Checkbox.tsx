@@ -13,7 +13,7 @@ export const Checkbox: React.FC<SuperCheckboxPropsType> = memo((
         type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
         onChange, onChangeChecked,
         className, spanClassName,
-        children,
+        children, id,
 
         ...restProps
     }
@@ -23,20 +23,19 @@ export const Checkbox: React.FC<SuperCheckboxPropsType> = memo((
         onChangeChecked && onChangeChecked(e.currentTarget.checked);
     };
 
+
     const finalInputClassName = `${s.checkbox} ${className ? className : ''}`
 
     return (
-        <>
-            <div className={s.checkbox}>
-                <input type="checkbox"
-                       onChange={onChangeCallback}
-                       className={finalInputClassName}
-                       {...restProps}
-                       id="chekcbox1"/>
-                <label htmlFor="chekcbox1">
-                    <span className={s.checkboxIcon}></span>
-                    {children && <span className={s.spanClassName}>{children}</span>}</label>
-            </div>
-        </>
+        <div className={s.checkbox}>
+            <input type="checkbox"
+                   onChange={onChangeCallback}
+                   className={finalInputClassName}
+                   {...restProps}
+                   id={id}/>
+            <label htmlFor={id}>
+                <span className={s.checkboxIcon}></span>
+                {children && <span className={s.spanClassName}>{children}</span>}</label>
+        </div>
     )
 });
