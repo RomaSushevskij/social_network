@@ -11,13 +11,14 @@ import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons/faMagnifyingG
 import {DropDownMenuCategories} from './Categories/DropDownMenuCategories';
 import {DropDownMenuSorting} from './Sorting/DropDownMenuSorting';
 import {useDebounce} from '../../utils/hooks';
+import {Paginator} from '../generic/Paginator/Paginator';
 
 
 export const News = memo((props: any) => {
-    const {newsData, newsIsLoading, categories, params} = useSelector((state: AppStateType) => state.news)
+    const {newsData, newsIsLoading, categories, params, pagination} = useSelector((state: AppStateType) => state.news)
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getNews())
+        dispatch(getNews(pagination.limit,pagination.offset))
         return () => {
             dispatch(setNews([]))
         }
@@ -45,13 +46,20 @@ export const News = memo((props: any) => {
 
     //debounced live search
     const innerDebounceCallback = () => {
-        dispatch(getNews())
+        dispatch(getNews(pagination.limit, pagination.offset))
     };
     const debouncedSearch = useDebounce(innerDebounceCallback, 800);
     const onSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value;
         dispatch(setSearchingValue(e.currentTarget.value))
         debouncedSearch(value)
+    };
+    const onChangePage = (pageNumber: number) => {
+        debugger
+        dispatch(getNews(pagination.limit, pageNumber))
+    };
+    const onChangePageSize = (pageCount: number) => {
+        dispatch(getNews(pageCount, 1))
     };
 
     return (
@@ -78,6 +86,14 @@ export const News = memo((props: any) => {
                     <div style={{height: 'calc(100vh - 110px)'}}>
                         <Preloader size={'30px'} color={'#5B48E3'}/>
                     </div> : newsArticles}
+            </div>
+            <div className={styleModule.paginatorBlock}>
+                <Paginator portionSize={5}
+                           currentPage={pagination.offset}
+                           pageSize={pagination.limit}
+                           totalItemsCount={pagination.total}
+                           onChangePage={onChangePage}
+                           onChangePageSize={onChangePageSize}/>
             </div>
         </div>
     );

@@ -47,6 +47,10 @@ export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorProp
             const currentPortionNumber = Math.floor(props.currentPage / portionSize +1)
             setPortionNumber(currentPortionNumber)
         }
+        if (props.currentPage < portionSize * (portionNumber - 1) + 1) {
+            const currentPortionNumber = Math.floor(props.currentPage / portionSize +1)
+            setPortionNumber(currentPortionNumber)
+        }
     }, [props.currentPage])
     return (
         <div className={styleModule.paginator}>

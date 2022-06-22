@@ -1,6 +1,9 @@
 .newsWrapper {
   padding: 20px;
   padding-right: 0;
+  min-height:calc(100vh - 110px)  ;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     color: #111827;
@@ -55,7 +58,10 @@
     justify-content: center;
     align-items: flex-start;
   }
-
+  .paginatorBlock {
+    margin: 10px 0;
+    margin-top: auto;
+  }
 }
 
 .enter {

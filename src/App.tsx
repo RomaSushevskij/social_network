@@ -87,7 +87,7 @@ class App extends React.Component<AppAPIContainerPropsType> {
                         </div>
                     </div> : <Login/>
                 }
-                {/*<SnackBar message={appError} type={SNACK_BAR_TYPES.ERROR}/>*/}
+                <SnackBar message={appError} type={SNACK_BAR_TYPES.ERROR}/>
                 <SnackBar message={appMessage} type={SNACK_BAR_TYPES.SUCCESS}/>
             </>
         )
