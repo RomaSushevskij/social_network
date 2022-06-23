@@ -122,7 +122,7 @@ enum MEDIASTACK_API_KEYS {
     gmail='a41d1935ea422e7739dcdaf95b8626b0'
 }
 const newsInstance = axios.create({
-    baseURL: "https://api.mediastack.com/v1/",
+    baseURL: "http://api.mediastack.com/v1/",
     params:{
         "access_key":MEDIASTACK_API_KEYS.gmail,
         "languages": "en, ru"

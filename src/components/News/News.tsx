@@ -12,17 +12,44 @@ import {DropDownMenuCategories} from './Categories/DropDownMenuCategories';
 import {DropDownMenuSorting} from './Sorting/DropDownMenuSorting';
 import {useDebounce} from '../../utils/hooks';
 import {Paginator} from '../generic/Paginator/Paginator';
+import axios from "axios";
 
 
 export const News = memo((props: any) => {
     const {newsData, newsIsLoading, categories, params, pagination} = useSelector((state: AppStateType) => state.news)
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getNews(pagination.limit,pagination.offset))
-        return () => {
-            dispatch(setNews([]))
-        }
-    }, [params.categoriesArr, params.sort])
+    useEffect(()=>{
+        const instatnceNews = axios.create({
+            baseURL: 'https://free-news.p.rapidapi.com/v1/',
+            params: {q: 'bitcoin', lang: 'en', page: '1', page_size: '25'},
+            headers: {
+                'x-rapidapi-key': '89ac259f4fmshe32981346f4f801p1e4723jsnebb1b54e949b',
+                'x-rapidapi-host': 'free-news.p.rapidapi.com'
+            }
+        })
+        const options = {
+            method: 'GET',
+            url: 'https://free-news.p.rapidapi.com/v1/search',
+            params: {q: 'bitcoin', lang: 'en', page: '1', page_size: '25'},
+            headers: {
+                'x-rapidapi-key': '89ac259f4fmshe32981346f4f801p1e4723jsnebb1b54e949b',
+                'x-rapidapi-host': 'free-news.p.rapidapi.com'
+            }
+        };
+
+        instatnceNews.get('search')
+            .then(function (response) {
+            console.log(response.data);
+        }).catch(function (error) {
+            console.error(error);
+        });
+    },[])
+    // useEffect(() => {
+    //     dispatch(getNews(pagination.limit,pagination.offset))
+    //     return () => {
+    //         dispatch(setNews([]))
+    //     }
+    // }, [params.categoriesArr, params.sort])
 
     const newsArticles = newsData.map((article, index) => {
         return (
