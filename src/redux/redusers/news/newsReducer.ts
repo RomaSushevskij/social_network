@@ -18,13 +18,17 @@ export enum NEWS_ACTIONS_TYPES {
 export type InitialStateNewsType = typeof initialState
 
 export enum NEWS_CATEGORIES {
-    general = 'general',
+    news = 'news',
+    sport = 'sport',
+    tech = 'tech',
+    world = 'world',
+    finance = 'finance',
+    politics = 'politics',
     business = 'business',
+    economics = 'economics',
     entertainment = 'entertainment',
-    health = 'health',
-    science = 'science',
-    sports = 'sports',
-    technology = 'technology'
+    beauty = 'beauty',
+    gaming = 'gaming',
 }
 
 export enum NEWS_SORTING_PARAMS {
@@ -159,7 +163,7 @@ export const getNews = (page_size: number = 5, page: number = 1): AppThunk => (d
             } else {
                 if (data.status === NEWS_RESULT_CODES.no_matches) {
                     dispatch(setAppError(data.status))
-            } else {
+                } else {
                     dispatch(setAppError(data.error_code + ', ' + data.message))
                 }
                 dispatch(setNews([]))
