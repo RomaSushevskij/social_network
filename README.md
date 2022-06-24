@@ -1,9 +1,12 @@
 # Linkspace
-![Header](https://github.com/RomaSushevskij/MovieDatabase/blob/main/src/assets/Preview.png?raw=true)
+![Profile](https://github.com/RomaSushevskij/social_network/blob/master/src/assets/preview/1.png?raw=true)
 
-Simple movie collection app built with React and the  OMDBAPI.
+![Messenger](https://github.com/RomaSushevskij/social_network/blob/master/src/assets/preview/2.png?raw=true)
 
-- :memo: Allows the app to display movie lists, search for movies.
+![Settings](https://github.com/RomaSushevskij/social_network/blob/master/src/assets/preview/3.png?raw=true)
+
+Mini-version of Social network. It is possible to write messages to another users, add posts, and search for new friends..
+
 
 - :wrench: This project was generated with React 17.0.2 , 
                   built with <br />
@@ -16,7 +19,11 @@ Simple movie collection app built with React and the  OMDBAPI.
                   - [React Transition Group](https://reactcommunity.org/react-transition-group/) <br />
                   - [Fontawesome](https://fontawesome.com/v5/docs/web/use-with/react) <br />
 - :octocat: Deployed app to gitHub Pages 
-- :sunny: API used [OMDb API](http://www.omdbapi.com/)
 
 ## Demo 
-:link: [Link to Demo App](https://RomaSushevskij.github.io/MovieDatabase) 
+:link: [Link to Demo App](https://romasushevskij.github.io/social_network/)
+ 
+ To log in get registered [here](https://social-network.samuraijs.com/) or use common test account credentials:
+ 
+  **Email:** free@samuraijs.com <br/>
+  **Password:** free<br/>

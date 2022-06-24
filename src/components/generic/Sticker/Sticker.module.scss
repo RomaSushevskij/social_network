@@ -1,0 +1,27 @@
+.stickerWrapper {
+  color:#000;
+  background:#ffc;
+  height:10em;
+  width:10em;
+  padding:1em;
+  box-shadow: 5px 5px 10px rgba(33,33,33,.3);
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(-4deg);
+  -moz-transform:rotate(-4deg);
+  position:relative;
+  top:5px;
+  transition: all .3s ease;
+  &:focus, &:hover {
+    box-shadow: 5px 5px 20px rgba(50,50,50,.3);
+    -webkit-transform: scale(1.25);
+    -moz-transform: scale(1.25);
+    -o-transform: scale(1.25);
+    position:relative;
+    transition: all .3s ease;
+  }
+  p {
+    font-size:120%;
+    font-weight:normal;
+    font-family:"Marck Script",arial,sans-serif;
+  }
+}

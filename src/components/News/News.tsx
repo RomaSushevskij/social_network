@@ -55,7 +55,6 @@ export const News = memo((props: any) => {
         dispatch(getNews(pagination.page_size, pageNumber))
     };
     const onChangePageSize = (pageCount: number) => {
-        debugger
         dispatch(getNews(Number(pageCount), 1))
     };
     const pageSizeRange = [5, 10, 15, 20, 25];

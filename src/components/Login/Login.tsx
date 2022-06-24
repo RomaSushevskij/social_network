@@ -8,6 +8,7 @@ import {Navigate} from 'react-router-dom';
 import {getIsFetchingSelector} from '../../redux/selectors/usersSelectors';
 import {getCaptchaURL, getIsAuthSelector} from '../../redux/selectors/authSelectors';
 import {Preloader} from '../generic/Preloader/Preloader';
+import {Sticker} from '../generic/Sticker/Sticker';
 
 export type LoginWithApiPropsType =
     MapStateToPropsType &
@@ -19,6 +20,9 @@ export function LoginWithApi(props: LoginWithApiPropsType) {
     }
     return (
         <div className={styleModule.wrapperLogin}>
+            <div className={styleModule.stickerBlock}>
+                <Sticker/>
+            </div>
             {props.isFetching ? <Preloader size={'30px'} color={'#EC4899'}/> : <LoginForm {...props}/>}
         </div>
     );

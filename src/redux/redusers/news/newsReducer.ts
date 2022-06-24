@@ -152,7 +152,6 @@ export const getNews = (page_size: number = 5, page: number = 1): AppThunk => (d
     const {q} = getState().news.params;
     const searchingValue = q.length ? q : 'news';
     dispatch(setIsNewLoading(true))
-    debugger
     newsAPI.getNews({q: searchingValue, page_size, page})
         .then(data => {
             if (data.status === NEWS_RESULT_CODES.success) {
@@ -171,7 +170,6 @@ export const getNews = (page_size: number = 5, page: number = 1): AppThunk => (d
             }
         })
         .catch(error => {
-            debugger
             const errorMessage = error.response.data.error.message;
             dispatch(setAppError(errorMessage))
         })

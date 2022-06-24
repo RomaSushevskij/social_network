@@ -6,3 +6,9 @@
     align-items: center;
     background-color: #F3F4F6;
 }
+.stickerBlock {
+    position: absolute;
+    top:40px;
+    left:40px;
+
+}

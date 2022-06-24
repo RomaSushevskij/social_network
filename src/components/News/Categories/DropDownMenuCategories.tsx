@@ -48,7 +48,6 @@ export const DropDownMenuCategories = memo(({
     return (
         <div tabIndex={0}
              onBlur={() => {
-                 debugger
                  setEditMode(false)
              }}
              className={styleModule.dropdownWrapper}>
