@@ -65,6 +65,7 @@
     max-height: 100px;
     overflow: hidden;
     margin-top: -10px;
+    font-size: 14px;
 
     &::before {
       content: "";
@@ -72,7 +73,7 @@
       height: 20px;
       position: relative;
       top: 80px;
-      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 90%)
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 140%)
     }
 
     p {

@@ -11,11 +11,12 @@ export type PaginatorPropsType = {
     currentPage: number
     pageSize: number
     totalItemsCount: number
+    pageSizeRange:number[]
     onChangePage: (pageNumber: number) => void
     onChangePageSize?: (pageSize: number) => void
 }
 
-export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorPropsType) => {
+export const Paginator = React.memo(({portionSize = 12, pageSizeRange,...props}: PaginatorPropsType) => {
 
     const {pageCount, pages} = useMemo(() => {
         let pages: Array<number> = [];
@@ -29,8 +30,6 @@ export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorProp
 
 
     }, [props.totalItemsCount, props.pageSize]);
-
-    const itemsCounts = [20, 30, 40, 50, 100];
 
     let [portionNumber, setPortionNumber] = useState<number>(1);
     const portionCount: number = Math.ceil(pageCount / portionSize);
@@ -84,7 +83,7 @@ export const Paginator = React.memo(({portionSize = 12, ...props}: PaginatorProp
             <div className={styleModule.pageCountSettings}>
                 Show
                 <span className={styleModule.select}>
-                <Select options={itemsCounts}
+                <Select options={pageSizeRange}
                         value={props.pageSize}
                         onChangeOption={props.onChangePageSize}/>
                 </span>

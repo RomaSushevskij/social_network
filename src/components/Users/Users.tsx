@@ -33,6 +33,7 @@ export const Users = React.memo((props: UsersPropsType) => {
                                                stopBeingFollower={stopBeingFollower}
                                                followingInProcessUsersId={followingInProcessUsersId}
                                                toggleFollowingInProcess={toggleFollowingInProcess}/>);
+    const pageSizeRange = [20, 30, 40, 50, 100];
     return (
         <div className={styleModule.usersWrapper}>
             {isFetching ? <Preloader size={'30px'} color={'#5B48E3'}/> :
@@ -44,6 +45,7 @@ export const Users = React.memo((props: UsersPropsType) => {
                            currentPage={currentPage}
                            pageSize={pageSize}
                            totalItemsCount={usersTotalCount}
+                           pageSizeRange={pageSizeRange}
                            onChangePage={onChangePage}
                            onChangePageSize={setPageSize}/>
             </div>

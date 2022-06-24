@@ -1,4 +1,4 @@
-import {newsAPI, NewsArticleType} from '../../../api/api';
+import {NEWS_RESULT_CODES, newsAPI, NewsArticleType} from '../../../api/api';
 import {AppThunk} from '../../redux-store';
 import {setAppError} from '../app/appReducer';
 
@@ -36,28 +36,31 @@ export enum NEWS_SORTING_PARAMS {
 const initialState = {
     newsData: [] as NewsArticleType[],
     newsIsLoading: false,
-    categories: {
-        general: false,
+    topic: {
+        news: false,
+        sport: false,
+        tech: false,
+        world: false,
+        finance: false,
+        politics: false,
         business: false,
+        economics: false,
         entertainment: false,
-        health: false,
-        science: false,
-        sports: false,
-        technology: false,
+        beauty: false,
+        gaming: false,
     },
     params: {
-        categoriesArr: [] as NEWS_CATEGORIES[],
-        keywords: '',
+        topicsArr: [] as NEWS_CATEGORIES[],
+        q: '',
         sort: 'Published date ↓',
     },
     pagination: {
-        limit: 20,
-        offset: 1,
-        count: 0,
-        total: 0,
+        page_size: 20,
+        page: 1,
+        pages_total: 0,
     },
 }
-export type CategoriesType = typeof initialState.categories
+export type CategoriesType = typeof initialState.topic
 
 export const newsReducer = (state: InitialStateNewsType = initialState, action: NewsActionType): InitialStateNewsType => {
     switch (action.type) {
@@ -67,23 +70,23 @@ export const newsReducer = (state: InitialStateNewsType = initialState, action: 
                 ...state, ...action.payload
             }
         case NEWS_ACTIONS_TYPES.SET_CATEGORY:
-            const categoryName = action.payload.categoryName;
+            const topicName = action.payload.topicName;
             const checked = action.payload.checked;
             return {
-                ...state, categories: {...state.categories, [categoryName]: checked},
+                ...state, topic: {...state.topic, [topicName]: checked},
                 params: checked ?
                     {
-                        ...state.params, categoriesArr: [...state.params.categoriesArr, categoryName],
+                        ...state.params, topicsArr: [...state.params.topicsArr, topicName],
                     } : !checked ?
                         {
-                            ...state.params, categoriesArr:
-                                state.params.categoriesArr.filter(c => c !== categoryName),
+                            ...state.params, topicsArr:
+                                state.params.topicsArr.filter(c => c !== topicName),
                         } :
                         state.params
             }
         case NEWS_ACTIONS_TYPES.SET_SEARCHING_VALUE:
             return {
-                ...state, params: {...state.params, keywords: action.payload.searchingValue}
+                ...state, params: {...state.params, q: action.payload.searchingValue}
             }
         case NEWS_ACTIONS_TYPES.SET_SORTING_PARAMS:
             return {
@@ -119,8 +122,8 @@ export const setIsNewLoading = (newsIsLoading: boolean) => ({
     type: NEWS_ACTIONS_TYPES.SET_IS_NEWS_LOADING,
     payload: {newsIsLoading}
 } as const)
-export const setCategory = (categoryName: NEWS_CATEGORIES, checked: boolean) => ({
-    type: NEWS_ACTIONS_TYPES.SET_CATEGORY, payload: {categoryName, checked}
+export const setCategory = (topicName: NEWS_CATEGORIES, checked: boolean) => ({
+    type: NEWS_ACTIONS_TYPES.SET_CATEGORY, payload: {topicName, checked}
 } as const)
 export const setSearchingValue = (searchingValue: string) => ({
     type: NEWS_ACTIONS_TYPES.SET_SEARCHING_VALUE, payload: {searchingValue}
@@ -128,44 +131,43 @@ export const setSearchingValue = (searchingValue: string) => ({
 export const setSortParams = (sortParams: string) => ({
     type: NEWS_ACTIONS_TYPES.SET_SORTING_PARAMS, payload: {sortParams}
 } as const)
-export const setNewsTotal = (total: number) => ({
-    type: NEWS_ACTIONS_TYPES.SET_NEWS_TOTAL, payload: {total}
+export const setNewsTotal = (pages_total: number) => ({
+    type: NEWS_ACTIONS_TYPES.SET_NEWS_TOTAL, payload: {pages_total}
 } as const)
-export const setCurrentPage = (offset: number) => ({
-    type: NEWS_ACTIONS_TYPES.SET_CURRENT_PAGE, payload: {offset}
+export const setCurrentPage = (page: number) => ({
+    type: NEWS_ACTIONS_TYPES.SET_CURRENT_PAGE, payload: {page}
 } as const)
-export const setLimitPage = (limit: number) => ({
-    type: NEWS_ACTIONS_TYPES.SET_LIMIT_PAGE, payload: {limit}
+export const setLimitPage = (page_size: number) => ({
+    type: NEWS_ACTIONS_TYPES.SET_LIMIT_PAGE, payload: {page_size}
 } as const)
 
 // T H U N K S
 
-export const getNews = (limit: number = 20, offset: number = 1): AppThunk => (dispatch, getState) => {
-    const categories = getState().news.params.categoriesArr.join(', ');
-    const {keywords} = getState().news.params;
-    let sort = getState().news.params.sort;
-    switch (sort) {
-        case 'Published date ↓':
-            sort = NEWS_SORTING_PARAMS.published_desc
-            break;
-        case 'Published date ↑':
-            sort = NEWS_SORTING_PARAMS.published_asc
-            break
-        case 'Popularity':
-            sort = NEWS_SORTING_PARAMS.popularity
-            break
-        default:
-            break
-    }
+export const getNews = (page_size: number = 5, page: number = 1): AppThunk => (dispatch, getState) => {
+    const topic = getState().news.params.topicsArr.join(', '); //experimental in API
+    const {q} = getState().news.params;
+    const searchingValue = q.length ? q : 'news';
     dispatch(setIsNewLoading(true))
-    newsAPI.getNews({categories, keywords, sort, limit, offset})
+    debugger
+    newsAPI.getNews({q: searchingValue, page_size, page})
         .then(data => {
-            dispatch(setNews(data.data))
-            dispatch(setNewsTotal(data.pagination.total))
-            dispatch(setCurrentPage(data.pagination.offset))
-            dispatch(setLimitPage(data.pagination.limit))
+            if (data.status === NEWS_RESULT_CODES.success) {
+                dispatch(setNews(data.articles))
+                dispatch(setNewsTotal(data.total_hits))
+                dispatch(setCurrentPage(data.page))
+                dispatch(setLimitPage(data.page_size))
+            } else {
+                if (data.status === NEWS_RESULT_CODES.no_matches) {
+                    dispatch(setAppError(data.status))
+            } else {
+                    dispatch(setAppError(data.error_code + ', ' + data.message))
+                }
+                dispatch(setNews([]))
+                dispatch(setNewsTotal(0))
+            }
         })
         .catch(error => {
+            debugger
             const errorMessage = error.response.data.error.message;
             dispatch(setAppError(errorMessage))
         })

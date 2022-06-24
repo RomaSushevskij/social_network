@@ -1,7 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {UserType} from "../redux/redusers/usersReducer/usersReducer";
 import {ContactsType, ProfileType} from "../redux/redusers/profileReducer/profileReducer";
-import {NullableType} from '../redux/redux-store';
 
 //types------------------------------------------types
 //↓
@@ -86,24 +85,38 @@ export enum RESPONSE_RESULT_CODES {
 
 // NEWS
 export type NewsArticleType = {
-    author: NullableType<string>
-    category: string
-    country: string
-    description: string
-    image: NullableType<string>
+    author: string
+    clean_url: string
     language: string
-    published_at: string
-    source: string
+    link: string
+    media: string
+    published_date: string
+    summary: string
     title: string
-    url: string
+    topic: string
+    _id: string
+    _score: number
+}
+export enum NEWS_RESULT_CODES {
+    success='ok',
+    no_matches= 'No matches for your search.',
+    error='error'
 }
 export type GetNewsDataType = {
-    data: NewsArticleType[]
-    pagination: {
-        count: number
-        limit: number
-        offset: number
-        total: number
+    articles: NewsArticleType[]
+    page: number
+    page_size: number
+    status: NEWS_RESULT_CODES
+    error_code?:string
+    message?:string
+    total_hits: number
+    total_pages: number
+    user_input: {
+        from: string
+        page: number
+        q: string
+        size: number
+        sort_by: "relevancy"
     }
 }
 
@@ -117,15 +130,11 @@ const instance_1 = axios.create({
         "API-KEY": "10732160-f45a-4879-8e6f-b2819bc13c24"
     }
 });
-enum MEDIASTACK_API_KEYS {
-    yandex='220e463fea4cb21ca2430f7b466755d2',
-    gmail='a41d1935ea422e7739dcdaf95b8626b0'
-}
 const newsInstance = axios.create({
-    baseURL: "http://api.mediastack.com/v1/",
-    params:{
-        "access_key":MEDIASTACK_API_KEYS.gmail,
-        "languages": "en, ru"
+    baseURL: 'https://free-news.p.rapidapi.com/v1/',
+    headers: {
+        'x-rapidapi-key': '89ac259f4fmshe32981346f4f801p1e4723jsnebb1b54e949b',
+        'x-rapidapi-host': 'free-news.p.rapidapi.com'
     }
 })
 
@@ -227,9 +236,10 @@ export let securityAPI = {
 }
 
 export const newsAPI = {
-    getNews(params: { categories: string, keywords: string, sort: string ,limit:number, offset:number}) {
-        return newsInstance.get<GetNewsDataType>('news', {
+    getNews(params: { q: string, page_size: number, page: number }) {
+        return newsInstance.get<GetNewsDataType>('search', {
             params: {
+                'lang':'ru',
                 ...params
             }
         })
