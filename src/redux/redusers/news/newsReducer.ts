@@ -59,7 +59,7 @@ const initialState = {
         sort: 'Published date ↓',
     },
     pagination: {
-        page_size: 20,
+        page_size: 5,
         page: 1,
         pages_total: 0,
     },
@@ -110,7 +110,7 @@ export const newsReducer = (state: InitialStateNewsType = initialState, action: 
 // A C T I O N S
 export type NewsActionType =
     | ReturnType<typeof setNews>
-    | ReturnType<typeof setIsNewLoading>
+    | ReturnType<typeof setIsNewsLoading>
     | ReturnType<typeof setCategory>
     | ReturnType<typeof setSearchingValue>
     | ReturnType<typeof setSortParams>
@@ -122,7 +122,7 @@ export const setNews = (newsData: NewsArticleType[]) => ({
     type: NEWS_ACTIONS_TYPES.GET_NEWS,
     payload: {newsData}
 } as const);
-export const setIsNewLoading = (newsIsLoading: boolean) => ({
+export const setIsNewsLoading = (newsIsLoading: boolean) => ({
     type: NEWS_ACTIONS_TYPES.SET_IS_NEWS_LOADING,
     payload: {newsIsLoading}
 } as const)
@@ -151,7 +151,7 @@ export const getNews = (page_size: number = 5, page: number = 1): AppThunk => (d
     const topic = getState().news.params.topicsArr.join(', '); //experimental in API
     const {q} = getState().news.params;
     const searchingValue = q.length ? q : 'news';
-    dispatch(setIsNewLoading(true))
+    dispatch(setIsNewsLoading(true))
     newsAPI.getNews({q: searchingValue, page_size, page})
         .then(data => {
             if (data.status === NEWS_RESULT_CODES.success) {
@@ -174,7 +174,7 @@ export const getNews = (page_size: number = 5, page: number = 1): AppThunk => (d
             dispatch(setAppError(errorMessage))
         })
         .finally(() => {
-            dispatch(setIsNewLoading(false))
+            dispatch(setIsNewsLoading(false))
         })
 }
 
