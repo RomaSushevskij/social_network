@@ -5,16 +5,16 @@ import {ContactsType, ProfileType} from "../redux/redusers/profileReducer/profil
 //types------------------------------------------types
 //↓
 //USERS---
-type GetUsersDataType = {
+export type GetUsersDataType = {
     error: string | null
-    items: Array<UserType>
+    items: UserType[]
     totalCount: number
 }
 export type PostFollowDataType = {
-    resultCode: number
-    messages: Array<string>
-    data: object
-    fieldsErrors: Array<any>
+    resultCode: RESPONSE_RESULT_CODES
+    messages: string[]
+    data: {}
+    fieldsErrors: string[]
 }
 export type DeleteFollowDataType = PostFollowDataType
 
@@ -22,7 +22,7 @@ export type DeleteFollowDataType = PostFollowDataType
 type GetProfileDataType = ProfileType
 type UpdateStatusDataType = {
     data: {}
-    fieldsErrors: any[]
+    fieldsErrors: string[]
     messages: string[]
     resultCode: RESPONSE_RESULT_CODES
 }
@@ -57,7 +57,7 @@ export type AuthUserDataType = {
 }
 export type GetAuthUserDataType = {
     data: AuthUserDataType
-    fieldsErrors: Array<any>
+    fieldsErrors: Array<string>
     messages: Array<string>
     resultCode: RESPONSE_RESULT_CODES
 }
@@ -70,10 +70,10 @@ export type LoginResponseType = {
     resultCode: RESPONSE_RESULT_CODES
 }
 export type LogoutResponseType = {
-    "data": {},
-    "messages": string[],
-    "fieldsErrors": any[],
-    "resultCode": RESPONSE_RESULT_CODES
+    data: {},
+    messages: string[],
+    fieldsErrors: any[],
+    resultCode: RESPONSE_RESULT_CODES
 }
 
 export enum RESPONSE_RESULT_CODES {
@@ -97,18 +97,20 @@ export type NewsArticleType = {
     _id: string
     _score: number
 }
+
 export enum NEWS_RESULT_CODES {
-    success='ok',
-    no_matches= 'No matches for your search.',
-    error='error'
+    success = 'ok',
+    no_matches = 'No matches for your search.',
+    error = 'error'
 }
+
 export type GetNewsDataType = {
     articles: NewsArticleType[]
     page: number
     page_size: number
     status: NEWS_RESULT_CODES
-    error_code?:string
-    message?:string
+    error_code?: string
+    message?: string
     total_hits: number
     total_pages: number
     user_input: {
@@ -140,64 +142,46 @@ const newsInstance = axios.create({
 
 
 export const usersAPI = {
-    getUsers(pageSize: number, currentPage: number) {
-        return instance_1.get<GetUsersDataType>(`users?count=${pageSize}&page=${currentPage}`)
-            .then(response => {
-                return response.data
-            })
+    async getUsers(pageSize: number, currentPage: number) {
+        const {data} = await instance_1.get<GetUsersDataType>(`users?count=${pageSize}&page=${currentPage}`)
+        return data
     },
-    becomeFollower(userId: number) {
-        return instance_1.post<PostFollowDataType>(`follow/${userId}`)
-            .then(response => {
-                return response.data
-            })
+    async becomeFollower(userId: number) {
+        const {data} = await instance_1.post<PostFollowDataType>(`follow/${userId}`)
+        return data
     },
-    stopBeingFollower(userId: number) {
-        return instance_1.delete<DeleteFollowDataType>(`follow/${userId}`)
-            .then(response => {
-                return response.data
-            })
+    async stopBeingFollower(userId: number) {
+        const {data} = await instance_1.delete<DeleteFollowDataType>(`follow/${userId}`)
+        return data
     },
-
-}
+};
 
 export const profileAPI = {
-    getProfile(userId: string | number) {
-        return instance_1.get<GetProfileDataType>(`profile/${userId}`)
-            .then(response => {
-                return response.data
-            })
+    async getProfile(userId: string | number) {
+        const {data} = await instance_1.get<GetProfileDataType>(`profile/${userId}`)
+        return data
     },
-    getStatus(userId: number) {
-        return instance_1.get<string>(`profile/status/${userId}`)
-            .then(response => {
-                return response.data
-            })
+    async getStatus(userId: number) {
+        const {data} = await instance_1.get<string>(`profile/status/${userId}`)
+        return data
     },
-    updateStatus(status: string) {
-        return instance_1.put<UpdateStatusDataType>(`/profile/status`, {status})
-            .then(response => {
-                return response
-            })
+    async updateStatus(status: string) {
+        const {data} = await instance_1.put<UpdateStatusDataType>(`/profile/status`, {status})
+        return data
     },
-    updatePhoto(photoFile: any) {
-        const formData = new FormData()
-        formData.append('image', photoFile)
-
-        return instance_1.put<UpdatePhotoDataType>('profile/photo', formData, {
+    async updatePhoto(photoFile: any) {
+        const formData = new FormData();
+        formData.append('image', photoFile);
+        const {data} = await instance_1.put<UpdatePhotoDataType>('profile/photo', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then(response => {
-                return response.data
-            })
+        return data;
     },
-    uploadProfile(profileModel: UploadProfileCommonModelType) {
-        return instance_1.put<UpdateProfileDataType>('/profile', profileModel)
-            .then(response => {
-                return response.data
-            })
+    async uploadProfile(profileModel: UploadProfileCommonModelType) {
+        const {data} = await instance_1.put<UpdateProfileDataType>('/profile', profileModel)
+        return data
     }
 }
 
@@ -239,7 +223,7 @@ export const newsAPI = {
     getNews(params: { q: string, page_size: number, page: number }) {
         return newsInstance.get<GetNewsDataType>('search', {
             params: {
-                'lang':'ru',
+                'lang': 'ru',
                 ...params
             }
         })

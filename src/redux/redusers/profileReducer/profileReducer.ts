@@ -11,6 +11,7 @@ import {getAuthorizationInfo, setFullNameAndAvatar} from '../auth/authReducer';
 import {PATH} from '../../../App';
 import {setAppError, setAppMessage} from '../app/appReducer';
 import {MESSAGES_FOR_SUCCESS_BAR} from '../../../components/generic/SnackBar/SnackBar';
+import {AxiosError} from "axios";
 
 export enum PROFILE_ACTIONS_TYPES {
     ADD_POST = 'social/profile/ADD-POST',
@@ -169,7 +170,7 @@ export type ProfileActionType =
     ReturnType<typeof deleteFollower> |
     ReturnType<typeof updatePhotoSuccess>
 
-//A C T I O N S   C R E A T O R S
+// A C T I O N S   C R E A T O R S
 export const addPost = (newPostText: string, fullName: string | null, avatar: string | null) => ({
     type: PROFILE_ACTIONS_TYPES.ADD_POST,
     payload: {newPostText, fullName, avatar}
@@ -194,99 +195,121 @@ export const updatePhotoSuccess = (newPhoto: string | null) => ({
     type: PROFILE_ACTIONS_TYPES.UPDATE_PHOTO_SUCCESS, payload: {newPhoto}
 } as const);
 
-//T H U N K S
-export const getProfile = (userId: number): AppThunk => (dispatch, getState) => {
-    profileAPI.getProfile(userId)
-        .then(data => {
-            dispatch(setProfile(data))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-}
-export const getStatus = (userId: number): AppThunk => dispatch => {
-    profileAPI.getStatus(userId)
-        .then(data => {
-            dispatch(setStatus(data))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-}
-export const updateStatus = (status: string): AppThunk => dispatch => {
-    profileAPI.updateStatus(status)
-        .then(response => {
-            if (response.data.resultCode === RESPONSE_RESULT_CODES.success) {
-                dispatch(setStatus(status))
-                dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.STATUS_CHANGED_SUCCESSFULLY))
-            } else {
-                response.data.messages.length && dispatch(setAppError(response.data.messages[0]))
-            }
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-}
-export const getFollowers = (): AppThunk => (dispatch, getState) => {
-    usersAPI.getUsers(100, 1)
-        .then(data => {
-            const currentPage = Math.ceil(data.totalCount / 100)
-            return usersAPI.getUsers(100, currentPage)
-        })
-        .then(data => {
-            dispatch(setFollowers(data.items))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-}
-export const updatePhoto = (photoFile: any): AppThunk => (dispatch, getState) => {
-    const fullName = getState().profilePage.profile.fullName;
-    dispatch(setIsFetchingValue(true));
-    profileAPI.updatePhoto(photoFile)
-        .then(data => {
-            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-                const newAvatar = data.data.photos.large;
-                dispatch(updatePhotoSuccess(data.data.photos.large))
-                dispatch(setFullNameAndAvatar(fullName, newAvatar))
-                dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.YOUR_PHOTO_UPDATED_SUCCESSFULLY))
-            } else {
-                data.messages.length && dispatch(setAppError(data.messages[0]))
-            }
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-        .finally(() => {
-            dispatch(setIsFetchingValue(false));
-        })
-}
+// T H U N K S
+export const getProfile = (userId: number): AppThunk => async dispatch => {
+    try {
+        const data = await profileAPI.getProfile(userId);
+        dispatch(setProfile(data));
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    }
+};
 
-export const updateProfile = (profileModel: UploadProfileModelType, navigate: Function): AppThunk => (dispatch, getState) => {
-    const userId = getState().profilePage.profile.userId;
-    const contacts = getState().profilePage.profile.contacts;
-    const profileCommonModelType = {...profileModel, contacts: contacts}
-    dispatch(setIsFetchingValue(true));
-    profileAPI.uploadProfile(profileCommonModelType)
-        .then(data => {
-            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-                dispatch(getProfile(userId))
+export const getStatus = (userId: number): AppThunk => async dispatch => {
+    try {
+        const data = await profileAPI.getStatus(userId);
+        dispatch(setStatus(data))
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    }
+};
 
-            } else {
-                data.messages.length && dispatch(setAppError(data.messages[0]))
-            }
-        })
-        .then(() => {
-            navigate(PATH.PROFILE)
-            dispatch(getAuthorizationInfo())
-            dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-        .finally(() => {
-            dispatch(setIsFetchingValue(false));
-        })
+export const updateStatus = (status: string): AppThunk => async dispatch => {
+    try {
+        const data = await profileAPI.updateStatus(status);
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+            dispatch(setStatus(status))
+            dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.STATUS_CHANGED_SUCCESSFULLY))
+        } else {
+            data.messages.length && dispatch(setAppError(data.messages[0]))
+        }
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    }
+};
+
+export const getFollowers = (): AppThunk => async dispatch => {
+    try {
+        const data = await usersAPI.getUsers(100, 1);
+        const currentPage = Math.ceil(data.totalCount / 100);
+        const followers = await usersAPI.getUsers(100, currentPage);
+        dispatch(setFollowers(followers.items));
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    }
+};
+
+export const updatePhoto = (photoFile: any): AppThunk => async (dispatch, getState) => {
+    try {
+        const fullName = getState().profilePage.profile.fullName;
+        dispatch(setIsFetchingValue(true));
+        const data = await profileAPI.updatePhoto(photoFile);
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+            const newAvatar = data.data.photos.large;
+            dispatch(updatePhotoSuccess(data.data.photos.large))
+            dispatch(setFullNameAndAvatar(fullName, newAvatar))
+            dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.YOUR_PHOTO_UPDATED_SUCCESSFULLY))
+        } else {
+            data.messages.length && dispatch(setAppError(data.messages[0]))
+        }
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    } finally {
+        dispatch(setIsFetchingValue(false));
+    }
+};
+
+export const updateProfile = (profileModel: UploadProfileModelType, navigate: Function): AppThunk => async (dispatch, getState) => {
+    try {
+        const userId = getState().profilePage.profile.userId;
+        const contacts = getState().profilePage.profile.contacts;
+        const profileCommonModelType = {...profileModel, contacts: contacts}
+        dispatch(setIsFetchingValue(true));
+        const data = await profileAPI.uploadProfile(profileCommonModelType);
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+            dispatch(getProfile(userId))
+        } else {
+            data.messages.length && dispatch(setAppError(data.messages[0]))
+        }
+        navigate(PATH.PROFILE);
+        dispatch(getAuthorizationInfo());
+        dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY));
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    } finally {
+        dispatch(setIsFetchingValue(false));
+    }
+
+    // const userId = getState().profilePage.profile.userId;
+    // const contacts = getState().profilePage.profile.contacts;
+    // const profileCommonModelType = {...profileModel, contacts: contacts}
+    // dispatch(setIsFetchingValue(true));
+    // profileAPI.uploadProfile(profileCommonModelType)
+    //     .then(data => {
+    //         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+    //             dispatch(getProfile(userId))
+    //
+    //         } else {
+    //             data.messages.length && dispatch(setAppError(data.messages[0]))
+    //         }
+    //     })
+    //     .then(() => {
+    //         navigate(PATH.PROFILE)
+    //         dispatch(getAuthorizationInfo())
+    //         dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY))
+    //     })
+    //     .catch(error => {
+    //         dispatch(setAppError(error.message))
+    //     })
+    //     .finally(() => {
+    //         dispatch(setIsFetchingValue(false));
+    //     })
 }
 export const updateContacts = (contactsModel: UploadContactsModelType, navigate: Function): AppThunk => (dispatch, getState) => {
     const {fullName, userId, aboutMe, lookingForAJob, lookingForAJobDescription} = getState().profilePage.profile;

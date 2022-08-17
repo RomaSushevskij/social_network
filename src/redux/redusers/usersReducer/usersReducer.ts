@@ -2,6 +2,7 @@ import {AppThunk} from "../../redux-store";
 import {RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
 import {deleteFollower} from '../profileReducer/profileReducer';
 import {setAppError} from '../app/appReducer';
+import {AxiosError} from 'axios';
 
 export enum USERS_ACTIONS_TYPES {
     FOLLOW = 'social/users/FOLLOW',
@@ -97,7 +98,7 @@ export type UsersActionType =
     ReturnType<typeof toggleFollowingInProcess> |
     ReturnType<typeof setPageSize>
 
-//A C T I O N S  C R E A T O R S
+// A C T I O N S  C R E A T O R S
 export const follow = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
 export const unfollow = (userID: number) => ({type: USERS_ACTIONS_TYPES.UNFOLLOW, payload: {userID}} as const)
 export const setUsers = (users: UserType[]) => ({type: USERS_ACTIONS_TYPES.SET_USERS, payload: {users}} as const)
@@ -121,61 +122,68 @@ export const setPageSize = (pageSize: number) => ({
     payload: {pageSize}
 } as const)
 
-//T H U N K S
 
-export const getUsers = (pageSize: number, currentPage: number): AppThunk => dispatch => {
-    dispatch(setIsFetchingValue(true))
-    usersAPI.getUsers(pageSize, currentPage)
-        .then(data => {
-            dispatch(setIsFetchingValue(false))
-            dispatch(setUsers(data.items))
-            dispatch(setUsersTotalCount(data.totalCount))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
+// T H U N K S
+
+export const getUsers = (pageSize: number, currentPage: number): AppThunk => async dispatch => {
+    try {
+        dispatch(setIsFetchingValue(true));
+        const data = await usersAPI.getUsers(pageSize, currentPage);
+        dispatch(setUsers(data.items));
+        dispatch(setUsersTotalCount(data.totalCount));
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message))
+    } finally {
+        dispatch(setIsFetchingValue(false))
+    }
+};
+
+export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => async dispatch => {
+    try {
+        dispatch(setCurrentPage(pageNumber));
+        dispatch(setIsFetchingValue(true));
+        const data = await usersAPI.getUsers(Number(pageSize), pageNumber);
+        dispatch(setUsers(data.items))
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message))
+    } finally {
+        dispatch(setIsFetchingValue(false))
+    }
 }
-export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => dispatch => {
-    dispatch(setCurrentPage(pageNumber))
-    dispatch(setIsFetchingValue(true))
-    usersAPI.getUsers(Number(pageSize), pageNumber)
-        .then(data => {
-            dispatch(setIsFetchingValue(false))
-            dispatch(setUsers(data.items))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-}
-export const becomeFollower = (id: number): AppThunk => dispatch => {
-    dispatch(toggleFollowingInProcess(id, true))
-    usersAPI.becomeFollower(id)
-        .then(data => {
-            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-                dispatch(follow(id))
-            } else {
-                data.messages.length && dispatch(setAppError(data.messages[0]))
-            }
-            dispatch(toggleFollowingInProcess(id, false))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
+export const becomeFollower = (id: number): AppThunk => async dispatch => {
+    try {
+        dispatch(toggleFollowingInProcess(id, true));
+        const data = await usersAPI.becomeFollower(id);
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+            dispatch(follow(id))
+        } else {
+            data.messages.length && dispatch(setAppError(data.messages[0]))
+        }
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message))
+    } finally {
+        dispatch(toggleFollowingInProcess(id, false))
+    }
 }
 
-export const stopBeingFollower = (id: number): AppThunk => dispatch => {
-    dispatch(toggleFollowingInProcess(id, true))
-    usersAPI.stopBeingFollower(id).then(data => {
+export const stopBeingFollower = (id: number): AppThunk => async dispatch => {
+    try {
+        dispatch(toggleFollowingInProcess(id, true));
+        const data = await usersAPI.stopBeingFollower(id);
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             dispatch(unfollow(id))
             dispatch(deleteFollower(id))
         } else {
             data.messages.length && dispatch(setAppError(data.messages[0]))
         }
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message))
+    } finally {
         dispatch(toggleFollowingInProcess(id, false))
-    })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-}
+    }
+};
 
