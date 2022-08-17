@@ -30,6 +30,7 @@ beforeEach(() => {
     getStateMock.mockClear();
     usersAPIMock.becomeFollower.mockClear();
     usersAPIMock.stopBeingFollower.mockClear();
+    usersAPIMock.getUsers.mockClear();
 });
 
 test("call of becomeFollower thunk should be success", async () => {

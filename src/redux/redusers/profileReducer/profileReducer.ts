@@ -55,12 +55,12 @@ export type PhotosType = {
 
 export type ProfileType = {
     aboutMe: string | null,
-    contacts: ContactsType
+    contacts: ContactsType,
     lookingForAJob: boolean,
     lookingForAJobDescription: string | null,
     fullName: string,
     userId: number,
-    photos: PhotosType
+    photos: PhotosType,
 }
 export type InitialStateProfileType = typeof initialState
 
@@ -310,7 +310,8 @@ export const updateProfile = (profileModel: UploadProfileModelType, navigate: Fu
     //     .finally(() => {
     //         dispatch(setIsFetchingValue(false));
     //     })
-}
+};
+
 export const updateContacts = (contactsModel: UploadContactsModelType, navigate: Function): AppThunk => (dispatch, getState) => {
     const {fullName, userId, aboutMe, lookingForAJob, lookingForAJobDescription} = getState().profilePage.profile;
     const profileCommonModelType = {
@@ -340,7 +341,7 @@ export const updateContacts = (contactsModel: UploadContactsModelType, navigate:
         .finally(() => {
             dispatch(setIsFetchingValue(false));
         })
-}
+};
 
 
 
