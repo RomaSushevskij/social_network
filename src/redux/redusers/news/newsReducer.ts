@@ -147,35 +147,32 @@ export const setLimitPage = (page_size: number) => ({
 
 // T H U N K S
 
-export const getNews = (page_size: number = 5, page: number = 1): AppThunk => (dispatch, getState) => {
-    const topic = getState().news.params.topicsArr.join(', '); //experimental in API
-    const {q} = getState().news.params;
-    const searchingValue = q.length ? q : 'news';
-    dispatch(setIsNewsLoading(true))
-    newsAPI.getNews({q: searchingValue, page_size, page})
-        .then(data => {
-            if (data.status === NEWS_RESULT_CODES.success) {
-                dispatch(setNews(data.articles))
-                dispatch(setNewsTotal(data.total_hits))
-                dispatch(setCurrentPage(data.page))
-                dispatch(setLimitPage(data.page_size))
+export const getNews = (page_size: number = 5, page: number = 1): AppThunk => async (dispatch, getState) => {
+    try {
+        const {q} = getState().news.params;
+        const searchingValue = q.length ? q : 'news';
+        dispatch(setIsNewsLoading(true));
+        const data = await newsAPI.getNews({q: searchingValue, page_size, page});
+        if (data.status === NEWS_RESULT_CODES.success) {
+            dispatch(setNews(data.articles))
+            dispatch(setNewsTotal(data.total_hits))
+            dispatch(setCurrentPage(data.page))
+            dispatch(setLimitPage(data.page_size))
+        } else {
+            if (data.status === NEWS_RESULT_CODES.no_matches) {
+                dispatch(setAppError(data.status))
             } else {
-                if (data.status === NEWS_RESULT_CODES.no_matches) {
-                    dispatch(setAppError(data.status))
-                } else {
-                    dispatch(setAppError(data.error_code + ', ' + data.message))
-                }
-                dispatch(setNews([]))
-                dispatch(setNewsTotal(0))
+                dispatch(setAppError(data.error_code + ', ' + data.message))
             }
-        })
-        .catch(error => {
-            const errorMessage = error.response.data.error.message;
-            dispatch(setAppError(errorMessage))
-        })
-        .finally(() => {
-            dispatch(setIsNewsLoading(false))
-        })
+            dispatch(setNews([]))
+            dispatch(setNewsTotal(0))
+        }
+    } catch (error: any) {
+        const errorMessage = error.response.data.error.message;
+        dispatch(setAppError(errorMessage))
+    } finally {
+        dispatch(setIsNewsLoading(false))
+    }
 }
 
 

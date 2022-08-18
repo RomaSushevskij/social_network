@@ -20,7 +20,7 @@ export type DeleteFollowDataType = PostFollowDataType
 
 //PROFILE---
 type GetProfileDataType = ProfileType
-type UpdateStatusDataType = {
+export type UpdateStatusDataType = {
     data: {}
     fieldsErrors: string[]
     messages: string[]
@@ -157,7 +157,7 @@ export const usersAPI = {
 };
 
 export const profileAPI = {
-    async getProfile(userId: string | number) {
+    async getProfile(userId: number) {
         const {data} = await instance_1.get<GetProfileDataType>(`profile/${userId}`)
         return data
     },
@@ -183,52 +183,43 @@ export const profileAPI = {
         const {data} = await instance_1.put<UpdateProfileDataType>('/profile', profileModel)
         return data
     }
-}
+};
 
 export let authMeAPI = {
-    getAuthorizationInfo() {
-        return instance_1.get<GetAuthUserDataType>(`auth/me`)
-            .then(response => {
-                return response.data
-            })
+    async getAuthorizationInfo() {
+        const {data} = await instance_1.get<GetAuthUserDataType>(`auth/me`)
+        return data;
     },
-    login(email: string, password: string, rememberMe: boolean, captcha?: string) {
-        return instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean, captcha?: string }>(`auth/login`, {
+    async login(email: string, password: string, rememberMe: boolean, captcha?: string) {
+        const {data} = await instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean, captcha?: string }>(`auth/login`, {
             email,
             password,
             rememberMe,
             captcha
         })
-            .then(response => {
-                return response.data
-            })
+        return data;
     },
-    logout() {
-        return instance_1.delete<any, AxiosResponse<LogoutResponseType>>(`auth/login`)
-            .then(response => {
-                return response.data
-            })
+    async logout() {
+        const {data} = await instance_1.delete<any, AxiosResponse<LogoutResponseType>>(`auth/login`);
+        return data;
     }
 }
+;
 export let securityAPI = {
-    getCaptchaURL() {
-        return instance_1.get<{ url: string }>('security/get-captcha-url')
-            .then(response => {
-                return response.data
-            })
+    async getCaptchaURL() {
+        const {data} = await instance_1.get<{ url: string }>('security/get-captcha-url')
+        return data;
     }
-}
+};
 
 export const newsAPI = {
-    getNews(params: { q: string, page_size: number, page: number }) {
-        return newsInstance.get<GetNewsDataType>('search', {
+    async getNews(params: { q: string, page_size: number, page: number }) {
+        const {data} = await newsInstance.get<GetNewsDataType>('search', {
             params: {
                 'lang': 'ru',
                 ...params
             }
         })
-            .then(response => {
-                return response.data
-            })
+        return data
     }
-}
+};

@@ -1,6 +1,7 @@
-import {getProfile, getStatus, ProfileType, setProfile, setStatus} from "./profileReducer";
-import {profileAPI} from "../../../api/api";
-import {setAppError} from "../app/appReducer";
+import {getProfile, getStatus, ProfileType, setProfile, setStatus, updateStatus} from "./profileReducer";
+import {profileAPI, RESPONSE_RESULT_CODES, UpdateStatusDataType} from "../../../api/api";
+import {setAppError, setAppMessage} from "../app/appReducer";
+import {MESSAGES_FOR_SUCCESS_BAR} from "../../../components/generic/SnackBar/SnackBar";
 
 jest.mock("../../../api/api");
 const profileAPIMock = profileAPI as jest.Mocked<typeof profileAPI>;
@@ -12,6 +13,7 @@ beforeEach(() => {
     dispatchMock.mockClear();
     getStateMock.mockClear();
     profileAPIMock.getProfile.mockClear();
+    profileAPIMock.getStatus.mockClear();
 })
 test("call of getProfile thunk should be success", async () => {
     const data: ProfileType = {
@@ -76,4 +78,21 @@ test("call of getStatus thunk should be with network error", async () => {
 
     expect(dispatchMock).toBeCalledTimes(1);
     expect(dispatchMock).toHaveBeenNthCalledWith(1, setAppError(error.message));
+});
+
+test("call of updateStatus thunk should be success", async () => {
+    const status = "new status";
+    const data: UpdateStatusDataType = {
+        data: {},
+        messages: [],
+        resultCode: RESPONSE_RESULT_CODES.success,
+        fieldsErrors: []
+    };
+    profileAPIMock.updateStatus.mockReturnValue(Promise.resolve(data));
+    const thunk = updateStatus(status);
+    await thunk(dispatchMock, getStateMock, {});
+
+    expect(dispatchMock).toBeCalledTimes(2);
+    expect(dispatchMock).toHaveBeenNthCalledWith(1, setStatus(status));
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, setAppMessage(MESSAGES_FOR_SUCCESS_BAR.STATUS_CHANGED_SUCCESSFULLY));
 });

@@ -4,13 +4,13 @@ import {AppStateType} from '../../../redux/redux-store';
 import {useNavigate} from 'react-router-dom';
 import {useFormik} from 'formik';
 import {UploadProfileModelType} from '../../../api/api';
-import {updateProfile} from '../../../redux/redusers/profileReducer/profileReducer';
 import styleModule from './ProfileSettingsForm.module.scss';
 import {Preloader} from '../../generic/Preloader/Preloader';
 import InputTextSecondary from '../../generic/InputTextSecondary/InputTextSecondary';
 import {TextareaSecondary} from '../../generic/TextareaSecondary/TextareaSecondary';
 import {Checkbox} from '../../generic/Checkbox/Checkbox';
 import {Button} from '../../generic/Button/Button';
+import {updateProfile} from "../../../redux/redusers/profileReducer/profileReducer";
 
 export const ProfileSettingsForm = memo(() => {
     const fullName = useSelector((state: AppStateType) => state.profilePage.profile?.fullName)
@@ -23,10 +23,10 @@ export const ProfileSettingsForm = memo(() => {
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            fullName: fullName,
-            aboutMe: aboutMe as string,
-            lookingForAJob: lookingForAJob,
-            lookingForAJobDescription: lookingForAJobDescription as string,
+            fullName,
+            aboutMe,
+            lookingForAJob,
+            lookingForAJobDescription,
         },
         onSubmit: values => {
             const profileModel: UploadProfileModelType = {
@@ -50,6 +50,7 @@ export const ProfileSettingsForm = memo(() => {
         }
     });
     const isSubmitButtonDisabled = formik.errors.fullName || formik.errors.aboutMe;
+
     return (
         <div className={styleModule.settingsFormWrapper}>
             <div className={styleModule.description}>
@@ -82,8 +83,9 @@ export const ProfileSettingsForm = memo(() => {
                                 <p className={styleModule.fieldTitle}>
                                     Looking for a job
                                 </p>
-                                <Checkbox {...formik.getFieldProps('lookingForAJob')}
-                                          checked={formik.values.lookingForAJob}>
+                                <Checkbox {...formik.getFieldProps("lookingForAJob")}
+                                    checked={formik.values.lookingForAJob}
+                                          id={"lookingForAJob"}>
                                     Looking for a job
                                 </Checkbox>
                             </div>
@@ -92,7 +94,7 @@ export const ProfileSettingsForm = memo(() => {
                                     Job description
                                 </p>
                                 <TextareaSecondary placeholder={'Description of the job you are looking for...'}
-                                    {...formik.getFieldProps('lookingForAJobDescription')}
+                                                   {...formik.getFieldProps('lookingForAJobDescription')}
                                                    disabled={!formik.values.lookingForAJob}
                                                    className={!formik.errors.lookingForAJobDescription ?
                                                        `${styleModule.optionalField} ${styleModule.border}` :

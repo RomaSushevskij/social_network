@@ -25,7 +25,6 @@ export const Checkbox: React.FC<SuperCheckboxPropsType> = memo((
 
 
     const finalInputClassName = `${s.checkbox} ${className ? className : ''}`
-
     return (
         <div className={s.checkbox}>
             <input type="checkbox"

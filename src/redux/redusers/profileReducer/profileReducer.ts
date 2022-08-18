@@ -285,62 +285,34 @@ export const updateProfile = (profileModel: UploadProfileModelType, navigate: Fu
     } finally {
         dispatch(setIsFetchingValue(false));
     }
-
-    // const userId = getState().profilePage.profile.userId;
-    // const contacts = getState().profilePage.profile.contacts;
-    // const profileCommonModelType = {...profileModel, contacts: contacts}
-    // dispatch(setIsFetchingValue(true));
-    // profileAPI.uploadProfile(profileCommonModelType)
-    //     .then(data => {
-    //         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-    //             dispatch(getProfile(userId))
-    //
-    //         } else {
-    //             data.messages.length && dispatch(setAppError(data.messages[0]))
-    //         }
-    //     })
-    //     .then(() => {
-    //         navigate(PATH.PROFILE)
-    //         dispatch(getAuthorizationInfo())
-    //         dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY))
-    //     })
-    //     .catch(error => {
-    //         dispatch(setAppError(error.message))
-    //     })
-    //     .finally(() => {
-    //         dispatch(setIsFetchingValue(false));
-    //     })
 };
 
-export const updateContacts = (contactsModel: UploadContactsModelType, navigate: Function): AppThunk => (dispatch, getState) => {
-    const {fullName, userId, aboutMe, lookingForAJob, lookingForAJobDescription} = getState().profilePage.profile;
-    const profileCommonModelType = {
-        fullName,
-        userId,
-        aboutMe,
-        lookingForAJob,
-        lookingForAJobDescription,
-        contacts: contactsModel
+export const updateContacts = (contactsModel: UploadContactsModelType, navigate: Function): AppThunk => async (dispatch, getState) => {
+    try {
+        const {fullName, userId, aboutMe, lookingForAJob, lookingForAJobDescription} = getState().profilePage.profile;
+        const profileCommonModelType = {
+            fullName,
+            userId,
+            aboutMe,
+            lookingForAJob,
+            lookingForAJobDescription,
+            contacts: contactsModel
+        }
+        dispatch(setIsFetchingValue(true));
+        const data = await profileAPI.uploadProfile(profileCommonModelType);
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+            dispatch(getProfile(userId))
+        } else {
+            data.messages.length && dispatch(setAppError(data.messages[0]))
+        }
+        navigate(PATH.PROFILE)
+        dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.CONTACTS_UPDATED_SUCCESSFULLY))
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    } finally {
+        dispatch(setIsFetchingValue(false));
     }
-    dispatch(setIsFetchingValue(true));
-    profileAPI.uploadProfile(profileCommonModelType)
-        .then(data => {
-            if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-                dispatch(getProfile(userId))
-            } else {
-                data.messages.length && dispatch(setAppError(data.messages[0]))
-            }
-        })
-        .then(() => {
-            navigate(PATH.PROFILE)
-            dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.CONTACTS_UPDATED_SUCCESSFULLY))
-        })
-        .catch(error => {
-            dispatch(setAppError(error.message))
-        })
-        .finally(() => {
-            dispatch(setIsFetchingValue(false));
-        })
 };
 
 

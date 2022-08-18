@@ -1,5 +1,6 @@
 import {AppThunk} from '../../redux-store';
 import {getAuthorizationInfo} from '../auth/authReducer';
+import {AxiosError} from "axios";
 
 export enum APP_ACTIONS_TYPES {
     SET_APP_INITIALIZE_VALUE = 'social/app/SET_APP_INITIALIZE_VALUE',
@@ -11,8 +12,8 @@ export type InitialStateAppType = typeof initialState
 
 export const initialState = {
     initialized: false,
-    appError:'',
-    appMessage:''
+    appError: '',
+    appMessage: ''
 }
 
 
@@ -47,11 +48,15 @@ export const setAppMessage = (appMessage: string,) => ({
     payload: {appMessage}
 } as const)
 
-//T H U N K S
-export const initializeApp = (): AppThunk => dispatch => {
-    const promise_1 = dispatch(getAuthorizationInfo())
-    Promise.all([promise_1])
-        .then(() => {
-            dispatch(setAppInitializeValue(true))
-        })
+// T H U N K S
+export const initializeApp = (): AppThunk => async dispatch => {
+    try {
+        debugger
+        const promise_1 = dispatch(getAuthorizationInfo());
+        await Promise.all([promise_1]);
+        dispatch(setAppInitializeValue(true));
+    } catch (e) {
+        const error = e as AxiosError;
+        dispatch(setAppError(error.message));
+    }
 }
