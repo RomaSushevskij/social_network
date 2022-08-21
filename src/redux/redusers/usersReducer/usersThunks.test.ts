@@ -1,8 +1,12 @@
 import {
     becomeFollower,
     follow,
-    getUsers, repeatGetUsers, setCurrentPage,
+    getUsers,
+    repeatGetUsers,
+    SearchUsersFilterType,
+    setCurrentPage,
     setIsFetchingValue,
+    setSearchFilter,
     setUsers,
     setUsersTotalCount,
     stopBeingFollower,
@@ -154,16 +158,21 @@ test("call of getUsers thunk should be success", async () => {
         }],
         totalCount: 1
     };
+    const searchFilter: SearchUsersFilterType = {
+        term: "",
+        friend: null,
+    };
     usersAPIMock.getUsers.mockReturnValue(Promise.resolve(data));
 
-    const thunk = getUsers(pageSize, currentPage);
+    const thunk = getUsers(pageSize, currentPage, searchFilter);
     await thunk(dispatchMock, getStateMock, {});
 
-    expect(dispatchMock).toBeCalledTimes(4);
+    expect(dispatchMock).toBeCalledTimes(5);
     expect(dispatchMock).toHaveBeenNthCalledWith(1, setIsFetchingValue(true));
-    expect(dispatchMock).toHaveBeenNthCalledWith(2, setUsers(data.items));
-    expect(dispatchMock).toHaveBeenNthCalledWith(3, setUsersTotalCount(data.totalCount));
-    expect(dispatchMock).toHaveBeenNthCalledWith(4, setIsFetchingValue(false));
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, setSearchFilter(searchFilter));
+    expect(dispatchMock).toHaveBeenNthCalledWith(3, setUsers(data.items));
+    expect(dispatchMock).toHaveBeenNthCalledWith(4, setUsersTotalCount(data.totalCount));
+    expect(dispatchMock).toHaveBeenNthCalledWith(5, setIsFetchingValue(false));
 });
 
 test("call of getUsers thunk should be with error of network", async () => {
@@ -181,7 +190,7 @@ test("call of getUsers thunk should be with error of network", async () => {
     expect(dispatchMock).toHaveBeenNthCalledWith(3, setIsFetchingValue(false));
 });
 
-test("call of repeatGetUsers thunk should be success", async ()=>{
+test("call of repeatGetUsers thunk should be success", async () => {
     const pageSize = 10;
     const currentPage = 1;
     const data: GetUsersDataType = {
@@ -211,7 +220,7 @@ test("call of repeatGetUsers thunk should be success", async ()=>{
     expect(dispatchMock).toHaveBeenNthCalledWith(4, setIsFetchingValue(false));
 });
 
-test("call of repeatGetUsers thunk should with error of network", async ()=>{
+test("call of repeatGetUsers thunk should with error of network", async () => {
     const pageSize = 10;
     const currentPage = 1;
     const error = new Error("network error");
@@ -220,9 +229,8 @@ test("call of repeatGetUsers thunk should with error of network", async ()=>{
     const thunk = repeatGetUsers(pageSize, currentPage);
     await thunk(dispatchMock, getStateMock, {});
 
-    expect(dispatchMock).toBeCalledTimes(4);
-    expect(dispatchMock).toHaveBeenNthCalledWith(1, setCurrentPage(currentPage));
-    expect(dispatchMock).toHaveBeenNthCalledWith(2, setIsFetchingValue(true));
-    expect(dispatchMock).toHaveBeenNthCalledWith(3, setAppError(error.message));
-    expect(dispatchMock).toHaveBeenNthCalledWith(4, setIsFetchingValue(false));
+    expect(dispatchMock).toBeCalledTimes(3);
+    expect(dispatchMock).toHaveBeenNthCalledWith(1, setIsFetchingValue(true));
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, setAppError(error.message));
+    expect(dispatchMock).toHaveBeenNthCalledWith(3, setIsFetchingValue(false));
 });

@@ -68,13 +68,13 @@ type MapStateToPropsType = {
     isAuth: boolean
     status: string
     userId: number | null
-    isFetching:boolean
+    isFetching: boolean
 }
 type MapDispatchToPropsType = {
     getProfile: (userId: number) => void
     getStatus: (userId: number) => void
     updateStatus: (status: string) => void
-    updatePhoto: (photoFile:any) => void
+    updatePhoto: (photoFile: any) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
@@ -82,7 +82,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     isAuth: getIsAuthSelector(state),
     status: getStatusSelector(state),
     userId: getAuthUserIDSelector(state),
-    isFetching:getIsFetchingSelector(state)
+    isFetching: getIsFetchingSelector(state)
 })
 
 

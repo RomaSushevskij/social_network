@@ -3,7 +3,9 @@ import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
     becomeFollower,
-    getUsers, repeatGetUsers,
+    getUsers,
+    repeatGetUsers,
+    SearchUsersFilterType,
     stopBeingFollower,
     toggleFollowingInProcess,
     UserType
@@ -14,6 +16,7 @@ import {
     getFollowingInProcessUsersIdSelector,
     getIsFetchingSelector,
     getPageSizeSelector,
+    getSearchUsersFilterSelector,
     getUsersSelector,
     getUsersTotalCountSelector
 } from '../../redux/selectors/usersSelectors';
@@ -25,23 +28,23 @@ class UsersApiContainer extends React.PureComponent<UsersApiContainerPropsType> 
     }
 
     componentDidMount(): void {
-        const {currentPage,getUsers} = this.props
+        const {getUsers} = this.props
         //get request for getting users (with thunk)
-        getUsers(this.state.pageSize, currentPage)
+        getUsers(this.state.pageSize, 1);
 
     }
 
     // action for pressing on page number
     onChangePage = (pageNumber: number) => {
         const {pageSize, repeatGetUsers,} = this.props
-        repeatGetUsers(pageSize, pageNumber)
+        repeatGetUsers(pageSize, pageNumber, this.props.searchUsersFilter)
     }
-    onChangePageSize = (pageSize:number) => {
+    onChangePageSize = (pageSize: number) => {
         const {repeatGetUsers} = this.props
         this.setState({
-            pageSize:Number(pageSize)
+            pageSize: Number(pageSize)
         })
-        repeatGetUsers(Number(pageSize), this.props.currentPage)
+        repeatGetUsers(Number(pageSize), this.props.currentPage, this.props.searchUsersFilter)
     }
 
     render() {
@@ -64,13 +67,14 @@ type MapStateToPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProcessUsersId: number[]
+    searchUsersFilter: SearchUsersFilterType
 }
 type MapDispatchToPropsType = {
     becomeFollower: (userID: number) => void
     stopBeingFollower: (userID: number) => void
     toggleFollowingInProcess: (userId: number, followingInProcess: boolean) => void
-    getUsers: (pageSize: number, currentPage: number) => void
-    repeatGetUsers: (pageSize: number, pageNumber: number) => void
+    getUsers: (pageSize: number, currentPage: number, searchFilter?: SearchUsersFilterType) => void
+    repeatGetUsers: (pageSize: number, pageNumber: number, searchFilter?: SearchUsersFilterType) => void
 }
 
 export type UsersApiContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -83,6 +87,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         currentPage: getCurrentPageSelector(state),
         isFetching: getIsFetchingSelector(state),
         followingInProcessUsersId: getFollowingInProcessUsersIdSelector(state),
+        searchUsersFilter: getSearchUsersFilterSelector(state)
     }
 }
 

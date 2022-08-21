@@ -9,7 +9,7 @@ import {UsersApiContainerPropsType} from "./UsersContainer";
 type UsersPropsType = UsersApiContainerPropsType & {
     onChangePage: (pageNumber: number) => void
     setPageSize: (pageSize: number) => void
-    pageSize:number
+    pageSize: number
 }
 
 export const Users = React.memo((props: UsersPropsType) => {

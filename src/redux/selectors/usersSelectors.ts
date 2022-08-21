@@ -1,5 +1,5 @@
 import {AppStateType} from "../redux-store";
-import {UserType} from '../redusers/usersReducer/usersReducer';
+import {SearchUsersFilterType, UserType} from '../redusers/usersReducer/usersReducer';
 import {createSelector} from 'reselect';
 
 export const getUsersSelector = (state: AppStateType): UserType[] => {
@@ -22,4 +22,7 @@ export const getIsFetchingSelector = (state: AppStateType): boolean => {
 }
 export const getFollowingInProcessUsersIdSelector = (state: AppStateType): number[] => {
     return state.usersPage.followingInProcessUsersId
+}
+export const getSearchUsersFilterSelector = (state: AppStateType): SearchUsersFilterType => {
+    return state.usersPage.searchFilter
 }

@@ -1,11 +1,12 @@
 import React from "react";
 import styleModule from './Header.module.css';
 import styled from "styled-components";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {HeaderAPIContainerPropsType} from "./HeaderContainer";
 import logo_avatar from '../../usersAvatars/user.png'
 import {PATH} from '../../App';
 import {Button} from '../generic/Button/Button';
+import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
 
 export type HeaderPropsType = {
     title: string
@@ -23,20 +24,20 @@ export const Header = React.memo((props: HeaderPropsType) => {
         description,
         background,
         color,
-        logo,
         avatar,
-        fullName,
         auth,
     } = props
     const Header = styled.header`
-    & {
-    background: ${background}
+      & {
+        background: ${background}
     `;
     const TitleDescription = styled.div`
-    & p {
-    color: ${color}
-    }
+      & p {
+        color: ${color}
+      }
     `;
+    const location = useLocation();
+    const isUsersPage = location.pathname === PATH.USERS;
     return (
         <Header className={styleModule.header}>
             <div className={styleModule.logoAndDescription}>
@@ -47,8 +48,11 @@ export const Header = React.memo((props: HeaderPropsType) => {
                     <p>{description}</p>
                 </TitleDescription>
             </div>
+            <div className={styleModule.usersSearchBlock}>
+                {isUsersPage && <SearchUsersForm/>
+                }
+            </div>
             <div className={styleModule.loginStatus}>
-
                 {auth.isAuth ?
                     <div className={styleModule.loginAndAvatar}>
                         <div className={styleModule.avatar}

@@ -1,0 +1,35 @@
+.inputWrapper {
+    position: relative;
+    margin-left: 20px;
+}
+
+.superInput, .errorInput {
+    line-height: 48px;
+    padding: 0 30px;
+    outline: none;
+    font-size: 16px;
+    color: #808080;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
+    font-weight: 400;
+    opacity: 1;
+    border-radius: 4px;
+    border: none;
+}
+.superInput::placeholder {
+    color: #9CA3AF;
+}
+.searchLogo {
+    position: absolute;
+    color:#9CA3AF;
+    top:16px;
+}
+
+
+
+
+
+
+
+

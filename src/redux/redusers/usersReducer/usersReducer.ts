@@ -13,6 +13,7 @@ export enum USERS_ACTIONS_TYPES {
     SET_IS_FETCHING_VALUE = 'social/users/SET_IS_FETCHING_VALUE',
     TOGGLE_FOLLOWING_IN_PROCESS = 'social/users/TOGGLE_FOLLOWING_IN_PROCESS',
     SET_PAGE_SIZE = 'social/users/SET_PAGE_SIZE',
+    SET_SEARCH_USERS_FILTER = 'social/users/SET_SEARCH_USERS_FILTER',
 
 }
 
@@ -20,7 +21,6 @@ export type UserPhotoType = {
     small: null | string
     large: null | string
 }
-
 export type UserType = {
     /**
      * User name
@@ -42,7 +42,8 @@ export type UserType = {
     followed: boolean
 }
 
-export type InitialStateUsersType = typeof initialState
+export type InitialStateUsersType = typeof initialState;
+export type SearchUsersFilterType = typeof initialState.searchFilter;
 
 const initialState = {
     users: [] as UserType[],
@@ -50,7 +51,11 @@ const initialState = {
     pageSize: 20,
     currentPage: 1,
     isFetching: false,
-    followingInProcessUsersId: [] as Array<number>
+    followingInProcessUsersId: [] as Array<number>,
+    searchFilter: {
+        term: "",
+        friend: null as null | true | false
+    }
 }
 
 
@@ -74,6 +79,7 @@ export const usersReducer = (state: InitialStateUsersType = initialState, action
         case USERS_ACTIONS_TYPES.SET_USERS_TOTAL_COUNT:
         case USERS_ACTIONS_TYPES.SET_IS_FETCHING_VALUE:
         case USERS_ACTIONS_TYPES.SET_PAGE_SIZE:
+        case USERS_ACTIONS_TYPES.SET_SEARCH_USERS_FILTER:
             return {
                 ...state, ...action.payload
             }
@@ -96,7 +102,8 @@ export type UsersActionType =
     ReturnType<typeof setUsersTotalCount> |
     ReturnType<typeof setIsFetchingValue> |
     ReturnType<typeof toggleFollowingInProcess> |
-    ReturnType<typeof setPageSize>
+    ReturnType<typeof setPageSize> |
+    ReturnType<typeof setSearchFilter>
 
 // A C T I O N S  C R E A T O R S
 export const follow = (userID: number) => ({type: USERS_ACTIONS_TYPES.FOLLOW, payload: {userID}} as const)
@@ -121,14 +128,19 @@ export const setPageSize = (pageSize: number) => ({
     type: USERS_ACTIONS_TYPES.SET_PAGE_SIZE,
     payload: {pageSize}
 } as const)
+export const setSearchFilter = (searchFilter: SearchUsersFilterType) => ({
+    type: USERS_ACTIONS_TYPES.SET_SEARCH_USERS_FILTER,
+    payload: {searchFilter}
+} as const)
 
 
 // T H U N K S
 
-export const getUsers = (pageSize: number, currentPage: number): AppThunk => async dispatch => {
+export const getUsers = (pageSize: number, currentPage: number, searchFilter?: SearchUsersFilterType): AppThunk => async dispatch => {
     try {
         dispatch(setIsFetchingValue(true));
-        const data = await usersAPI.getUsers(pageSize, currentPage);
+        const data = await usersAPI.getUsers(pageSize, currentPage, searchFilter);
+        searchFilter && dispatch(setSearchFilter(searchFilter));
         dispatch(setUsers(data.items));
         dispatch(setUsersTotalCount(data.totalCount));
     } catch (e) {
@@ -139,11 +151,13 @@ export const getUsers = (pageSize: number, currentPage: number): AppThunk => asy
     }
 };
 
-export const repeatGetUsers = (pageSize: number, pageNumber: number): AppThunk => async dispatch => {
+export const repeatGetUsers = (pageSize: number, pageNumber: number, searchFilter?: SearchUsersFilterType): AppThunk => async dispatch => {
+    debugger
     try {
-        dispatch(setCurrentPage(pageNumber));
         dispatch(setIsFetchingValue(true));
-        const data = await usersAPI.getUsers(Number(pageSize), pageNumber);
+        const data = await usersAPI.getUsers(Number(pageSize), pageNumber, searchFilter);
+        searchFilter && dispatch(setSearchFilter(searchFilter));
+        dispatch(setCurrentPage(pageNumber));
         dispatch(setUsers(data.items))
     } catch (e) {
         const error = e as AxiosError;

@@ -58,7 +58,7 @@ class App extends React.Component<AppAPIContainerPropsType> {
     }
 
     render() {
-        const {appError, appMessage} =this.props
+        const {appError, appMessage} = this.props
         if (!this.props.initialized) {
             return (
                 <div style={{height: '100vh'}}>
@@ -99,8 +99,8 @@ export type AppAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsT
 type MapStateToPropsType = {
     initialized: boolean
     isAuth: boolean
-    appError:string
-    appMessage:string
+    appError: string
+    appMessage: string
 }
 type MapDispatchToPropsType = {
     initializeApp: () => void
@@ -111,7 +111,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         initialized: getInitializedSelector(state),
         isAuth: getIsAuthSelector(state),
         appError: getAppError(state),
-        appMessage:getAppMessage(state),
+        appMessage: getAppMessage(state),
     }
 };
 

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {UserType} from "../redux/redusers/usersReducer/usersReducer";
+import {SearchUsersFilterType, UserType} from "../redux/redusers/usersReducer/usersReducer";
 import {ContactsType, ProfileType} from "../redux/redusers/profileReducer/profileReducer";
 
 //types------------------------------------------types
@@ -17,6 +17,12 @@ export type PostFollowDataType = {
     fieldsErrors: string[]
 }
 export type DeleteFollowDataType = PostFollowDataType
+type SearchUsersParamsType = {
+    count: number,
+    page: number,
+    term?: string,
+    friend?: null | false | true,
+}
 
 //PROFILE---
 type GetProfileDataType = ProfileType
@@ -26,7 +32,7 @@ export type UpdateStatusDataType = {
     messages: string[]
     resultCode: RESPONSE_RESULT_CODES
 }
-type UpdatePhotoDataType = {
+export type UpdatePhotoDataType = {
     data: {
         photos: {
             large: string
@@ -47,7 +53,7 @@ export type UploadProfileCommonModelType = {
 }
 export type UploadProfileModelType = Omit<UploadProfileCommonModelType, 'contacts'>
 export type UploadContactsModelType = ContactsType
-type UpdateProfileDataType = UpdateStatusDataType
+export type UpdateProfileDataType = UpdateStatusDataType
 
 //AUTH---
 export type AuthUserDataType = {
@@ -142,8 +148,14 @@ const newsInstance = axios.create({
 
 
 export const usersAPI = {
-    async getUsers(pageSize: number, currentPage: number) {
-        const {data} = await instance_1.get<GetUsersDataType>(`users?count=${pageSize}&page=${currentPage}`)
+    async getUsers(pageSize: number, currentPage: number, searchFilter?: SearchUsersFilterType) {
+        const params: SearchUsersParamsType = {
+            count: pageSize,
+            page: currentPage
+        }
+        if (searchFilter?.term) params.term = searchFilter.term;
+        if (searchFilter?.friend === false || searchFilter?.friend === true) params.friend = searchFilter.friend;
+        const {data} = await instance_1.get<GetUsersDataType>("users", {params})
         return data
     },
     async becomeFollower(userId: number) {
@@ -186,24 +198,24 @@ export const profileAPI = {
 };
 
 export let authMeAPI = {
-    async getAuthorizationInfo() {
-        const {data} = await instance_1.get<GetAuthUserDataType>(`auth/me`)
-        return data;
-    },
-    async login(email: string, password: string, rememberMe: boolean, captcha?: string) {
-        const {data} = await instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean, captcha?: string }>(`auth/login`, {
-            email,
-            password,
-            rememberMe,
-            captcha
-        })
-        return data;
-    },
-    async logout() {
-        const {data} = await instance_1.delete<any, AxiosResponse<LogoutResponseType>>(`auth/login`);
-        return data;
+        async getAuthorizationInfo() {
+            const {data} = await instance_1.get<GetAuthUserDataType>(`auth/me`)
+            return data;
+        },
+        async login(email: string, password: string, rememberMe: boolean, captcha?: string) {
+            const {data} = await instance_1.post<any, AxiosResponse<LoginResponseType>, { email: string, password: string, rememberMe: boolean, captcha?: string }>(`auth/login`, {
+                email,
+                password,
+                rememberMe,
+                captcha
+            })
+            return data;
+        },
+        async logout() {
+            const {data} = await instance_1.delete<any, AxiosResponse<LogoutResponseType>>(`auth/login`);
+            return data;
+        }
     }
-}
 ;
 export let securityAPI = {
     async getCaptchaURL() {

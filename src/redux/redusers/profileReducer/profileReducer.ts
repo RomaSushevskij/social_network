@@ -233,9 +233,7 @@ export const updateStatus = (status: string): AppThunk => async dispatch => {
 
 export const getFollowers = (): AppThunk => async dispatch => {
     try {
-        const data = await usersAPI.getUsers(100, 1);
-        const currentPage = Math.ceil(data.totalCount / 100);
-        const followers = await usersAPI.getUsers(100, currentPage);
+        const followers = await usersAPI.getUsers(100, 1, {friend: true, term: ""});
         dispatch(setFollowers(followers.items));
     } catch (e) {
         const error = e as AxiosError;
@@ -250,7 +248,7 @@ export const updatePhoto = (photoFile: any): AppThunk => async (dispatch, getSta
         const data = await profileAPI.updatePhoto(photoFile);
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             const newAvatar = data.data.photos.large;
-            dispatch(updatePhotoSuccess(data.data.photos.large))
+            dispatch(updatePhotoSuccess(newAvatar))
             dispatch(setFullNameAndAvatar(fullName, newAvatar))
             dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.YOUR_PHOTO_UPDATED_SUCCESSFULLY))
         } else {
@@ -266,19 +264,18 @@ export const updatePhoto = (photoFile: any): AppThunk => async (dispatch, getSta
 
 export const updateProfile = (profileModel: UploadProfileModelType, navigate: Function): AppThunk => async (dispatch, getState) => {
     try {
-        const userId = getState().profilePage.profile.userId;
-        const contacts = getState().profilePage.profile.contacts;
+        const {userId, contacts} = getState().profilePage.profile;
         const profileCommonModelType = {...profileModel, contacts: contacts}
         dispatch(setIsFetchingValue(true));
         const data = await profileAPI.uploadProfile(profileCommonModelType);
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             dispatch(getProfile(userId))
+            navigate(PATH.PROFILE);
+            dispatch(getAuthorizationInfo());
+            dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY));
         } else {
             data.messages.length && dispatch(setAppError(data.messages[0]))
         }
-        navigate(PATH.PROFILE);
-        dispatch(getAuthorizationInfo());
-        dispatch(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY));
     } catch (e) {
         const error = e as AxiosError;
         dispatch(setAppError(error.message));

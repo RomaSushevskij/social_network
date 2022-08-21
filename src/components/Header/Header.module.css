@@ -1,8 +1,7 @@
 .header {
     grid-area: header;
-    padding: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 250px 1fr 250px;
     position: sticky;
     top: 0;
     z-index: 2;
@@ -16,6 +15,8 @@
     grid-template-columns: 70px 1fr;
     letter-spacing: .03em;
     align-items: center;
+    --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .header .main_logo {
@@ -44,7 +45,9 @@
     mask-position: center;
     mask-repeat: no-repeat;
 }
-
+.usersSearchBlock {
+    align-self: center;
+}
 
 .loginStatus {
     justify-self: end;

@@ -51,7 +51,6 @@ export const setAppMessage = (appMessage: string,) => ({
 // T H U N K S
 export const initializeApp = (): AppThunk => async dispatch => {
     try {
-        debugger
         const promise_1 = dispatch(getAuthorizationInfo());
         await Promise.all([promise_1]);
         dispatch(setAppInitializeValue(true));

@@ -97,7 +97,7 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
             <div className={finalClassName}
                  ref={nodeRef}>
                 <div className={style.icon}>
-                    <FontAwesomeIcon icon={SNACK_BAR_TYPES.SUCCESS ? faCircleCheck : faCircleExclamation}/>
+                    <FontAwesomeIcon icon={type === SNACK_BAR_TYPES.SUCCESS ? faCircleCheck : faCircleExclamation}/>
                 </div>
                 <p>{message}</p>
                 <div className={style.closeSnackBar}
