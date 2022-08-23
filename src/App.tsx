@@ -20,9 +20,9 @@ import {withSuspense} from './hoc/withSuspense';
 import {SNACK_BAR_TYPES, SnackBar} from './components/generic/SnackBar/SnackBar';
 
 
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer').then(({default: UsersContainer}) => ({default: UsersContainer})));
+const UsersPage = React.lazy(() => import('./components/Users/Users').then(({default: Users}) => ({default: Users})));
 const Settings = React.lazy(() => import('./components/Settings/Settings').then(({default: Settings}) => ({default: Settings})));
-const UsersContainerLazy = withSuspense(UsersContainer);
+const UsersLazy = withSuspense(UsersPage);
 const SettingsLazy = withSuspense(Settings);
 
 
@@ -80,7 +80,7 @@ class App extends React.Component<AppAPIContainerPropsType> {
                                 <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
                                 <Route path={PATH.MUSIC} element={<Music/>}/>
                                 <Route path={PATH.NEWS} element={<News/>}/>
-                                <Route path={PATH.USERS} element={<UsersContainerLazy/>}/>
+                                <Route path={PATH.USERS} element={<UsersLazy/>}/>
                                 <Route path={PATH.SETTINGS} element={<SettingsLazy/>}/>
                                 <Route path={PATH.LOGIN} element={<Login/>}/>
                             </Routes>
