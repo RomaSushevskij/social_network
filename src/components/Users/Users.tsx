@@ -21,6 +21,7 @@ import {
     toggleFollowingInProcess
 } from "../../redux/redusers/usersReducer/usersReducer";
 import {useDispatch} from "react-redux";
+import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
 
 const Users = React.memo(() => {
     const dispatch = useDispatch();
@@ -60,15 +61,18 @@ const Users = React.memo(() => {
     }
 
     const userElements = users.map(user => <User key={user.id}
-                                               {...user}
-                                               becomeFollower={onBecomeFollower}
-                                               stopBeingFollower={onStopBeingFollower}
-                                               followingInProcessUsersId={followingInProcessUsersId}
-                                               toggleFollowingInProcess={onToggleFollowingInProcess}/>);
+                                                 {...user}
+                                                 becomeFollower={onBecomeFollower}
+                                                 stopBeingFollower={onStopBeingFollower}
+                                                 followingInProcessUsersId={followingInProcessUsersId}
+                                                 toggleFollowingInProcess={onToggleFollowingInProcess}/>);
 
 
     return (
         <div className={styleModule.usersWrapper}>
+            <div className={styleModule.searchFormBlock}>
+                <SearchUsersForm/>
+            </div>
             {isFetching ? <Preloader size={'30px'} color={'#5B48E3'}/> :
                 <div className={styleModule.usersBlock}>
                     {userElements}

@@ -152,7 +152,6 @@ export const getUsers = (pageSize: number, currentPage: number, searchFilter?: S
 };
 
 export const repeatGetUsers = (pageSize: number, pageNumber: number, searchFilter?: SearchUsersFilterType): AppThunk => async dispatch => {
-    debugger
     try {
         dispatch(setIsFetchingValue(true));
         const data = await usersAPI.getUsers(Number(pageSize), pageNumber, searchFilter);

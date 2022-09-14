@@ -15,6 +15,7 @@ import {CustomNavLink} from "./NavLink/CustomNavLink";
 import {Button} from "../generic/Button/Button";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {Avatar} from '../generic/Avatar/Avatar';
+import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
 
 
 export type NavLinkItem = {

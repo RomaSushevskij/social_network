@@ -4,12 +4,21 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.searchFormBlock {
+    justify-self: start;
+    position: fixed;
+    top: 10px;
+    z-index: 2;
+}
+
 .usersBlock {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 20px;
 }
+
 .paginatorBlock {
     margin-bottom: 30px;
 }

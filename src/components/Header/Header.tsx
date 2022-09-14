@@ -7,6 +7,7 @@ import logo_avatar from '../../usersAvatars/user.png'
 import {PATH} from '../../App';
 import {Button} from '../generic/Button/Button';
 import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
+import {Music} from "../Music/Music";
 
 export type HeaderPropsType = {
     title: string
@@ -49,8 +50,7 @@ export const Header = React.memo((props: HeaderPropsType) => {
                 </TitleDescription>
             </div>
             <div className={styleModule.usersSearchBlock}>
-                {isUsersPage && <SearchUsersForm/>
-                }
+                {/*{isUsersPage && <SearchUsersForm/>}*/}
             </div>
             <div className={styleModule.loginStatus}>
                 {auth.isAuth ?
@@ -69,7 +69,7 @@ export const Header = React.memo((props: HeaderPropsType) => {
                             <Button name={'Logout'} onClick={props.logout}/>
                         </div>
                     </div> :
-                    <NavLink to={'/login'}>
+                    <NavLink to={PATH.LOGIN}>
                         LOGIN
                     </NavLink>}
             </div>
