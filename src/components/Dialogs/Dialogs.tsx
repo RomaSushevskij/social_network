@@ -7,7 +7,7 @@ import {AddMessageForm} from '../forms/AddMessageForm/AddMessageForm';
 import {useParams} from 'react-router-dom';
 
 
-const MESSAGE_STYLE = {
+export const MESSAGE_STYLE = {
     background: '#F3F4F6',
     color: '#374151',
     meBackground: '#2563EB',
@@ -55,7 +55,6 @@ export const Dialogs = React.memo((props: DialogsPropsType) => {
                                                                     {...message}/>)}
                         </div>
                         <AddMessageForm addMessage={props.addMessage}/>
-
                     </div>
                 </>
                 }

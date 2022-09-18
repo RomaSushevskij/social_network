@@ -168,7 +168,7 @@ export const getNews = (page_size: number = 5, page: number = 1): AppThunk => as
             dispatch(setNewsTotal(0))
         }
     } catch (error: any) {
-        const errorMessage = error.response.data.error.message;
+        const errorMessage = error.response?.data.error.message;
         dispatch(setAppError(errorMessage))
     } finally {
         dispatch(setIsNewsLoading(false))

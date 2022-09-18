@@ -33,9 +33,9 @@ export type DialogType = {
 export type MessageType = {
     id: number
     userId: number
-    name: string
+    userName: string
     message: string
-    image: string | null
+    photo: string | null
     time: string
 };
 export type InitialStateDialogsType = typeof initialState
@@ -75,52 +75,52 @@ const initialState = {
         {
             id: 1,
             userId: 184,
-            name: 'Ruslan',
+            userName: 'Ruslan',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, rem!',
-            image: RuslanLogo,
+            photo: RuslanLogo,
             time: '12:03'
         },
 
         {id: 2, userId: 20392, name: 'Me', message: 'Lorem ipsum dolor !', image: null, time: '12:10'},
         {
             id: 3,
-            name: 'Dmitry',
+            userName: 'Dmitry',
             userId: 185,
             message: 'Lorem ipsum dolor sit amet',
-            image: DmitryLogo,
+            photo: DmitryLogo,
             time: '13:01'
         },
         {
             id: 4,
-            name: 'Ivan',
+            userName: 'Ivan',
             userId: 187,
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            image: IvanLogo,
+            photo: IvanLogo,
             time: '13:08'
         },
         {
             id: 5,
             userId: 20392,
-            name: 'Me',
+            userName: 'Me',
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            image: null,
+            photo: null,
             time: '13:49'
         },
         {
             id: 6,
-            name: 'Ivan',
+            userName: 'Ivan',
             userId: 187,
             message: 'Lorem ipsum dolor !',
-            image: IvanLogo,
+            photo: IvanLogo,
             time: '14:05'
         },
-        {id: 7, userId: 20392, name: 'Me', message: 'Lorem ipsum dolor', image: null, time: '14:08'},
+        {id: 7, userId: 20392, userName: 'Me', message: 'Lorem ipsum dolor', photo: null, time: '14:08'},
         {
             id: 8,
-            name: 'Me',
+            userName: 'Me',
             userId: 20392,
             message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit dolor sit amet, consectetur.',
-            image: null,
+            photo: null,
             time: '14:10'
         },
 
@@ -133,9 +133,9 @@ export const dialogsReducer = (state: InitialStateDialogsType = initialState, ac
             const newMessage: MessageType = {
                 id: state.messagesData.length + 1,
                 userId: 20392,
-                name: 'Me',
+                userName: 'Me',
                 message: action.payload.newMessageText,
-                image: null,
+                photo: null,
                 time: new Date().toLocaleTimeString().slice(0, 5)
             };
             return {...state, messagesData: [...state.messagesData, newMessage]}

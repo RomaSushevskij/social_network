@@ -22,13 +22,16 @@ import {Header} from "./components/Header/Header";
 
 const UsersPage = React.lazy(() => import('./components/Users/Users').then(({default: Users}) => ({default: Users})));
 const Settings = React.lazy(() => import('./components/Settings/Settings').then(({default: Settings}) => ({default: Settings})));
+const Chat = React.lazy(() => import('./components/CommonChat/CommonChat').then(({default: CommonChat}) => ({default: CommonChat})));
 const UsersLazy = withSuspense(UsersPage);
 const SettingsLazy = withSuspense(Settings);
+const ChatLazy = withSuspense(Chat);
 
 
 export type PATHType = {
     PROFILE: string
     DIALOGS: string
+    COMMON_CHAT: string
     MUSIC: string
     NEWS: string
     USERS: string
@@ -38,6 +41,7 @@ export type PATHType = {
 export const PATH: PATHType = {
     PROFILE: '/profile/*',
     DIALOGS: '/dialogs/*',
+    COMMON_CHAT: '/commonChat',
     MUSIC: '/music',
     NEWS: '/news',
     USERS: '/users',
@@ -82,6 +86,7 @@ class App extends React.Component<AppAPIContainerPropsType> {
                                 <Route path='/' element={<Navigate to={PATH.PROFILE}/>}/>
                                 <Route path={PATH.PROFILE} element={<ProfileContainer/>}/>
                                 <Route path={PATH.DIALOGS} element={<DialogsContainer/>}/>
+                                <Route path={PATH.COMMON_CHAT} element={<ChatLazy/>}/>
                                 <Route path={PATH.MUSIC} element={<Music/>}/>
                                 <Route path={PATH.NEWS} element={<News/>}/>
                                 <Route path={PATH.USERS} element={<UsersLazy/>}/>

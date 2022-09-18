@@ -4,12 +4,12 @@ import styled from "styled-components";
 import {UserLogo} from '../../generic/Avatar/Avatar';
 
 export type MessagePropsType = {
-    id: number,
+    id?: number,
     /**
      * Name of the interlocutor
      */
     userId: number
-    name: string,
+    userName: string,
     /**
      * Text of message
      */
@@ -17,25 +17,25 @@ export type MessagePropsType = {
     /**
      * Image of the interlocutor
      */
-    image: string | null,
+    photo: string | null,
     /**
      * Time of sending message
      */
-    time: string
+    time?: string
     background: string
     color: string
     meBackground: string
     meColor: string
-    myUserId: null | number
-    myAvatar: null | string
+    myUserId?: null | number
+    myAvatar?: null | string
 }
 
 export const Message = React.memo(({
                                        id,
                                        userId,
-                                       name,
+                                       userName,
                                        message,
-                                       image,
+                                       photo,
                                        time,
                                        color,
                                        background,
@@ -43,8 +43,8 @@ export const Message = React.memo(({
                                        meColor,
                                        myUserId,
                                        myAvatar,
-                                       ...props
                                    }: MessagePropsType) => {
+    debugger
     const MessageBlock = styled.div`
     & {
     background: ${userId === myUserId ? meBackground : background};
@@ -56,7 +56,7 @@ export const Message = React.memo(({
     `;
     let resultAvatar = userId === myUserId && myAvatar ? <img src={myAvatar}/> :
         userId === myUserId && !myAvatar ? <UserLogo/> :
-            image ? <img src={image}/> : <UserLogo/>
+            photo ? <img src={photo}/> : <UserLogo/>
 
 
     // if the message is mine, then one style, if not, then another
@@ -74,7 +74,7 @@ export const Message = React.memo(({
             </div>
             <MessageBlock className={messageBlockStyle}>
                 <div className={styleModule.name}>
-                    {name}
+                    {userName}
                 </div>
                 <div className={styleModule.message}>
                     {message}

@@ -48,7 +48,7 @@ export default {
             ...getCategoryObj('Main'),
             defaultValue:'Hello, World!'
         },
-        name: {
+        userName: {
             defaultValue:'Roman',
             ...getCategoryObj('Main')
         },
@@ -56,7 +56,7 @@ export default {
             ...getCategoryObj('Main'),
             defaultValue:'13:00'
         },
-        image: {
+        photo: {
             ...getCategoryObj('Main'),
         },
         id: {
@@ -69,26 +69,26 @@ const Template: ComponentStory<typeof Message> = (args) => <Message {...args} />
 export const SomeOneMessage = Template.bind({});
 SomeOneMessage.args = {
     id: 3,
-    name:'Someone',
+    userName:'Someone',
     message:'Hello',
     time:'13:45',
     background:'#FFFFFF',
     color:'#293440',
     meBackground:'#6B8AF4',
     meColor:'#FCFDFE',
-    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
+    photo: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
 };
 export const MyMessage = Template.bind({});
 MyMessage.args = {
     id: 13,
-    name:'Me',
+    userName:'Me',
     message:'Hello',
     time:'13:45',
     background:'#FFFFFF',
     color:'#293440',
     meBackground:'#6B8AF4',
     meColor:'#FCFDFE',
-    image: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
+    photo: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
 };
 
 

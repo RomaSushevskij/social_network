@@ -7,7 +7,8 @@ import {
     faNewspaper,
     faSlidersH,
     faUserAlt,
-    faUsers
+    faUsers,
+    faPeopleGroup
 } from "@fortawesome/free-solid-svg-icons";
 import {AppStateType} from "../../redux/redux-store";
 import {connect, useSelector} from "react-redux";
@@ -31,6 +32,7 @@ export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
     const navLinksArr: NavLinkItem[] = [
         {title: 'Profile', path: '/profile/*', iconTitle: JSON.stringify(faUserAlt), withAuthRedirect: true,},
         {title: 'Messages', path: '/dialogs', iconTitle: JSON.stringify(faCommentDots), withAuthRedirect: true,},
+        {title: 'Common chat', path: '/commonChat', iconTitle: JSON.stringify(faPeopleGroup), withAuthRedirect: true,},
         {title: 'News', path: '/news', iconTitle: JSON.stringify(faNewspaper), withAuthRedirect: false,},
         {title: 'Music', path: '/music', iconTitle: JSON.stringify(faHeadphonesAlt), withAuthRedirect: false,},
         {title: 'Users', path: '/users', iconTitle: JSON.stringify(faUsers), withAuthRedirect: false,},
