@@ -141,6 +141,7 @@ export const getUsers = (pageSize: number, currentPage: number, searchFilter?: S
         dispatch(setIsFetchingValue(true));
         const data = await usersAPI.getUsers(pageSize, currentPage, searchFilter);
         searchFilter && dispatch(setSearchFilter(searchFilter));
+        dispatch(setCurrentPage(currentPage));
         dispatch(setUsers(data.items));
         dispatch(setUsersTotalCount(data.totalCount));
     } catch (e) {

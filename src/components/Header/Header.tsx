@@ -1,13 +1,14 @@
-import React from "react";
+import React, {FC, memo} from "react";
 import styleModule from './Header.module.css';
 import styled from "styled-components";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {HeaderAPIContainerPropsType} from "./HeaderContainer";
+import {NavLink, useNavigate} from "react-router-dom";
 import logo_avatar from '../../usersAvatars/user.png'
 import {PATH} from '../../App';
 import {Button} from '../generic/Button/Button';
-import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
-import {Music} from "../Music/Music";
+import {useAppSelector} from "../../redux/hooks";
+import {getAvatarSelector, getIsAuthSelector} from "../../redux/selectors/authSelectors";
+import {logout} from "../../redux/redusers/auth/authReducer";
+import {useDispatch} from "react-redux";
 
 export type HeaderPropsType = {
     title: string
@@ -15,19 +16,16 @@ export type HeaderPropsType = {
     background: string
     color: string
     logo?: any
-} & HeaderAPIContainerPropsType
+};
 
-
-export const Header = React.memo((props: HeaderPropsType) => {
-    const navigate = useNavigate()
-    const {
-        title,
-        description,
-        background,
-        color,
-        avatar,
-        auth,
-    } = props
+export const Header: FC<HeaderPropsType> = memo(({
+                                                     title,
+                                                     description,
+                                                     background,
+                                                     color
+                                                 }) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const Header = styled.header`
       & {
         background: ${background}
@@ -37,8 +35,11 @@ export const Header = React.memo((props: HeaderPropsType) => {
         color: ${color}
       }
     `;
-    const location = useLocation();
-    const isUsersPage = location.pathname === PATH.USERS;
+    const isAuth = useAppSelector(getIsAuthSelector);
+    const avatar = useAppSelector(getAvatarSelector);
+    const onLogoutButtonClick = () => {
+        dispatch(logout);
+    };
     return (
         <Header className={styleModule.header}>
             <div className={styleModule.logoAndDescription}>
@@ -49,11 +50,9 @@ export const Header = React.memo((props: HeaderPropsType) => {
                     <p>{description}</p>
                 </TitleDescription>
             </div>
-            <div className={styleModule.usersSearchBlock}>
-                {/*{isUsersPage && <SearchUsersForm/>}*/}
-            </div>
+            <div className={styleModule.usersSearchBlock}/>
             <div className={styleModule.loginStatus}>
-                {auth.isAuth ?
+                {isAuth ?
                     <div className={styleModule.loginAndAvatar}>
                         <div className={styleModule.avatar}
                              onClick={() => {
@@ -62,11 +61,12 @@ export const Header = React.memo((props: HeaderPropsType) => {
                             <img src={avatar ? avatar : logo_avatar}/>
                         </div>
                         <div className={styleModule.notifications}
-                             onClick={() => navigate('/dialogs/')}>
+                             onClick={() => navigate('/dialogs/')}
+                        >
                             <NotificationsLogo/>
                         </div>
                         <div className={styleModule.logoutButton}>
-                            <Button name={'Logout'} onClick={props.logout}/>
+                            <Button name={'Logout'} onClick={onLogoutButtonClick}/>
                         </div>
                     </div> :
                     <NavLink to={PATH.LOGIN}>
@@ -84,5 +84,5 @@ const NotificationsLogo = () => {
                 d="M256 32V49.88C328.5 61.39 384 124.2 384 200V233.4C384 278.8 399.5 322.9 427.8 358.4L442.7 377C448.5 384.2 449.6 394.1 445.6 402.4C441.6 410.7 433.2 416 424 416H24C14.77 416 6.365 410.7 2.369 402.4C-1.628 394.1-.504 384.2 5.26 377L20.17 358.4C48.54 322.9 64 278.8 64 233.4V200C64 124.2 119.5 61.39 192 49.88V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32V32zM216 96C158.6 96 112 142.6 112 200V233.4C112 281.3 98.12 328 72.31 368H375.7C349.9 328 336 281.3 336 233.4V200C336 142.6 289.4 96 232 96H216zM288 448C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288z"/>
         </svg>
     )
-}
+};
 

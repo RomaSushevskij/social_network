@@ -1,6 +1,6 @@
 import SearchInputText from "../../generic/SearchInputText/SearchInputText";
 import {Button} from "../../generic/Button/Button";
-import React, {useEffect} from "react";
+import React, {memo, useEffect} from "react";
 import {useFormik} from "formik";
 import style from "./SearchUsersForm.module.scss"
 import Select from "../../generic/Select/Select";
@@ -18,14 +18,19 @@ import {
     setSearchFilter
 } from "../../../redux/redusers/usersReducer/usersReducer";
 import {useDispatch} from "react-redux";
-import {convertSearchSelectValue} from "../../generic/SearchInputText/utils/utils";
+import {convertSearchSelectValue, convertSearchSelectValueBack} from "./utils/utils";
 
 export type FormValuesType = {
     term: string,
     friend: string
 };
+export type  QueryParamsType = {
+    term?: string;
+    page?: string;
+    friend?: string;
+}
 
-export const SearchUsersForm = () => {
+export const SearchUsersForm = memo(() => {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -36,39 +41,30 @@ export const SearchUsersForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            term: "",
-            friend: "All"
+            term,
+            friend: convertSearchSelectValueBack(friend),
         },
         onSubmit: (values: FormValuesType) => {
             const correctValues = {...values, friend: convertSearchSelectValue(values.friend)};
             dispatch(getUsers(pageSize, 1, correctValues));
-            dispatch(setCurrentPage(1));
-        }
+        },
+        enableReinitialize: true,
     });
-
+    console.log(term)
     const onSelectChange = (optionValue: string) => {
         const values: SearchUsersFilterType = {
             term: formik.values.term,
             friend: convertSearchSelectValue(optionValue),
         }
         dispatch(getUsers(pageSize, 1, values))
-        dispatch(setCurrentPage(1));
     }
     useEffect(() => {
-        const newSearchParams = {
-            term,
-            friend: String(friend),
-            page: String(currentPage)
-        }
-        setSearchParams(newSearchParams)
-        console.log(newSearchParams)
+        const newSearchParams: QueryParamsType = {};
+        if (!!term) newSearchParams.term = term;
+        if (friend !== null) newSearchParams.friend = String(friend);
+        if (currentPage !== 1) newSearchParams.page = String(currentPage);
+        setSearchParams(newSearchParams);
     }, [term, friend, currentPage])
-
-    useEffect(() => {
-        dispatch(setSearchFilter({term: "", friend: null}));
-        dispatch(setCurrentPage(1));
-    }, [])
-
 
     return (
         <form onSubmit={formik.handleSubmit} className={style.form}>
@@ -79,4 +75,4 @@ export const SearchUsersForm = () => {
             <Button type="submit" name="Search"/>
         </form>
     )
-};
+});

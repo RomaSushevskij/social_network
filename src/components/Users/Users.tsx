@@ -22,6 +22,7 @@ import {
 } from "../../redux/redusers/usersReducer/usersReducer";
 import {useDispatch} from "react-redux";
 import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
+import {useSearchParams} from "react-router-dom";
 
 const Users = React.memo(() => {
     const dispatch = useDispatch();
@@ -35,11 +36,31 @@ const Users = React.memo(() => {
     const followingInProcessUsersId = useAppSelector(getFollowingInProcessUsersIdSelector);
 
     const [pageSize, setPageSize] = useState(20);
-
     const pageSizeRange = [20, 30, 40, 50, 100];
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
     useEffect(() => {
-        dispatch(getUsers(pageSize, 1));
+        let actualSearchUsersFilter = searchUsersFilter;
+        let actualCurrentPage = currentPage;
+
+        const term = searchParams.get('term');
+        const friend = searchParams.get('friend');
+        const page = searchParams.get('page');
+        if (!!page) actualCurrentPage = Number(page);
+        if (!!term) actualSearchUsersFilter.term = term;
+        switch (friend) {
+            case 'null':
+                actualSearchUsersFilter = {...searchUsersFilter, friend: null};
+                break;
+            case 'true':
+                actualSearchUsersFilter = {...searchUsersFilter, friend: true};
+                break;
+            case 'false':
+                actualSearchUsersFilter = {...searchUsersFilter, friend: false};
+                break;
+        }
+        dispatch(getUsers(pageSize, actualCurrentPage, actualSearchUsersFilter));
     }, [])
 
 

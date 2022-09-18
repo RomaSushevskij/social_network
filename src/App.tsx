@@ -6,7 +6,6 @@ import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
-import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
 import {connect} from 'react-redux';
 import {AppStateType} from './redux/redux-store';
@@ -18,6 +17,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {getIsAuthSelector} from './redux/selectors/authSelectors';
 import {withSuspense} from './hoc/withSuspense';
 import {SNACK_BAR_TYPES, SnackBar} from './components/generic/SnackBar/SnackBar';
+import {Header} from "./components/Header/Header";
 
 
 const UsersPage = React.lazy(() => import('./components/Users/Users').then(({default: Users}) => ({default: Users})));
@@ -71,7 +71,11 @@ class App extends React.Component<AppAPIContainerPropsType> {
             <>
                 {this.props.isAuth ?
                     <div className="app_wrapper">
-                        <HeaderContainer/>
+                        <Header title={'Linkspace'}
+                                description={'Connecting Network'}
+                                background={HEADER_STYLE.background}
+                                color={HEADER_STYLE.color}
+                                logo={HEADER_STYLE.logo}/>
                         <Navbar/>
                         <div className="app_wrapper_content">
                             <Routes>

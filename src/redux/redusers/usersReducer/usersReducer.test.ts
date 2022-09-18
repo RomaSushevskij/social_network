@@ -51,7 +51,11 @@ beforeEach(() => {
         pageSize: 12,
         currentPage: 1,
         isFetching: false,
-        followingInProcessUsersId: [] as Array<number>
+        followingInProcessUsersId: [] as Array<number>,
+        searchFilter: {
+            term: '',
+            friend: null
+        }
     }
 })
 
