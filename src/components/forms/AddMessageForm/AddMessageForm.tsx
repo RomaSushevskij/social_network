@@ -10,6 +10,7 @@ type AddPostFormValuesType = {
 
 type AddMessageFormPropsType = {
     addMessage: (newMessageText: string) => void
+    isSubmitDisabled?: boolean
 }
 
 type OnSubmitParamsType = {
@@ -17,16 +18,16 @@ type OnSubmitParamsType = {
     resetForm: (nextState?: Partial<FormikState<{ newMessageText: string; }>> | undefined) => void
 }
 
-export const AddMessageForm = memo(({addMessage}: AddMessageFormPropsType) => {
+export const AddMessageForm = memo(({addMessage, isSubmitDisabled}: AddMessageFormPropsType) => {
 
     const onSubmitHandler = (values: AddPostFormValuesType, {setSubmitting, resetForm}: OnSubmitParamsType) => {
-        values.newMessageText.trim() && addMessage(values.newMessageText);
+        values.newMessageText.trim() && !isSubmitDisabled && addMessage(values.newMessageText);
         setSubmitting(false)
         resetForm()
     }
     const onAddMessageWithEnter = (e: KeyboardEvent<HTMLFormElement>,
                                    handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void) => {
-        if (!e.shiftKey && e.key === 'Enter') {
+        if (!e.shiftKey && e.key === 'Enter' && !isSubmitDisabled) {
             e.preventDefault();
             handleSubmit()
         }
@@ -46,7 +47,7 @@ export const AddMessageForm = memo(({addMessage}: AddMessageFormPropsType) => {
                     <div className={styleModule.sendMessage}>
                         <Button name={'Send'}
                                 type={'submit'}
-                                disabled={isSubmitting}
+                                disabled={isSubmitting || isSubmitDisabled}
                                 background={'#2563EB'}
                                 backgroundHover={'#1F4DAA'}/>
                     </div>

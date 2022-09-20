@@ -38,7 +38,8 @@ export const Header: FC<HeaderPropsType> = memo(({
     const isAuth = useAppSelector(getIsAuthSelector);
     const avatar = useAppSelector(getAvatarSelector);
     const onLogoutButtonClick = () => {
-        dispatch(logout);
+        debugger
+        dispatch(logout());
     };
     return (
         <Header className={styleModule.header}>

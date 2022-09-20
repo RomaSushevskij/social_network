@@ -44,7 +44,7 @@ export const Message = React.memo(({
                                        myUserId,
                                        myAvatar,
                                    }: MessagePropsType) => {
-    debugger
+
     const MessageBlock = styled.div`
     & {
     background: ${userId === myUserId ? meBackground : background};
