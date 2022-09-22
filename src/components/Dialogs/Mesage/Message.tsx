@@ -28,6 +28,7 @@ export type MessagePropsType = {
     meColor: string
     myUserId?: null | number
     myAvatar?: null | string
+    onUserClick?: () => void
 }
 
 export const Message = React.memo(({
@@ -43,16 +44,18 @@ export const Message = React.memo(({
                                        meColor,
                                        myUserId,
                                        myAvatar,
+                                       onUserClick
                                    }: MessagePropsType) => {
 
     const MessageBlock = styled.div`
-    & {
-    background: ${userId === myUserId ? meBackground : background};
-    color: ${userId === myUserId ? meColor : color}
-    }
-    &:before {
-    background-color:  ${userId === myUserId ? meBackground : background};
-    }
+      & {
+        background: ${userId === myUserId ? meBackground : background};
+        color: ${userId === myUserId ? meColor : color}
+      }
+
+      &:before {
+        background-color: ${userId === myUserId ? meBackground : background};
+      }
     `;
     let resultAvatar = userId === myUserId && myAvatar ? <img src={myAvatar}/> :
         userId === myUserId && !myAvatar ? <UserLogo/> :
@@ -69,7 +72,7 @@ export const Message = React.memo(({
         styleModule.messageBlock
     return (
         <div className={messageWrapperStyle}>
-            <div className={styleModule.avatar}>
+            <div className={styleModule.avatar} onClick={onUserClick}>
                 {resultAvatar}
             </div>
             <MessageBlock className={messageBlockStyle}>

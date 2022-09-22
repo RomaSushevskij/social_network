@@ -82,6 +82,7 @@
     min-height: 50px;
     align-self: flex-start;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .avatar img {

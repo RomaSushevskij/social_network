@@ -1,75 +1,48 @@
-import React, {FC, memo, useEffect, useRef, useState} from "react";
+import React, {FC, memo, useEffect, useRef} from "react";
 import styleModule from "./CommonChat.module.scss";
 import {AddMessageForm} from "../forms/AddMessageForm/AddMessageForm";
 import {Message} from "../Dialogs/Mesage/Message";
-import {MessageType} from "../../redux/redusers/dialogsReducer/dialogsReducer";
 import {MESSAGE_STYLE} from "../Dialogs/Dialogs";
 import {useAppSelector} from "../../redux/hooks";
 import {getAuthUserIDSelector, getAvatarSelector} from "../../redux/selectors/authSelectors";
-import {WsChannelStatusType} from "./types";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {
+    sendMessage,
+    startMessagesListening,
+    stopMessagesListening
+} from "../../redux/redusers/chatReducer/chat-reducer";
+import {selectMessages} from "../../redux/selectors/chatSelectors";
 
 
 const CommonChat: FC = memo(() => {
+    const dispatch = useDispatch();
     const messageBottom = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
 
-    const userId = useAppSelector(getAuthUserIDSelector);
+    const myUserId = useAppSelector(getAuthUserIDSelector);
     const avatar = useAppSelector(getAvatarSelector);
-
-    const [messages, setMessages] = useState<MessageType[]>([]);
-    const [wsChannel, setWsChannel] = useState<WebSocket | null>(null);
-    const [wsChannelStatus, setWsChannelStatus] = useState<WsChannelStatusType>('pending');
+    const messages = useAppSelector(selectMessages);
 
     useEffect(() => {
-        let ws: WebSocket;
-        const onWsClose = () => {
-            console.log('wsChannel closed');
-            createWsChannel();
-        }
+        dispatch(startMessagesListening());
 
-        function createWsChannel() {
-            if (ws) {
-                ws.removeEventListener('close', onWsClose);
-                ws.close();
-            }
-            ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
-            setWsChannel(ws);
-            ws.addEventListener('close', onWsClose)
-        }
-
-        createWsChannel();
         return () => {
-            ws.removeEventListener('close', onWsClose);
-            ws.close();
+            dispatch(stopMessagesListening())
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
-        const onWsMessage = (e: MessageEvent<any>) => {
-            const newMessages = JSON.parse(e.data);
-            setMessages(messages => ([...messages, ...newMessages]));
-        };
-        wsChannel?.addEventListener('message', onWsMessage);
-        return () => {
-            wsChannel?.removeEventListener('message', onWsMessage);
-        }
-    }, [wsChannel]);
-
-    useEffect(() => {
-        const onWsOpen = () => {
-            console.log('wsChannel opened')
-            setWsChannelStatus('ready')
-        };
-        wsChannel?.addEventListener('open', onWsOpen)
-    }, [wsChannel]);
-
-    useEffect(() => {
-        messageBottom.current?.scrollIntoView({behavior: 'smooth'})
+        messageBottom.current?.scrollIntoView({behavior: 'auto'})
     }, [messages])
 
     const onSendMessageButtonClick = (message: string) => {
-        wsChannel?.send(message);
+        dispatch(sendMessage(message));
     };
-
+    const onUserAvatarClick = (userId: number) => {
+        const path = `/profile/${userId}`
+        navigate(path);
+    }
     return (
         <div className={styleModule.commonChatWrapper}>
             <div className={styleModule.messages}>
@@ -78,15 +51,14 @@ const CommonChat: FC = memo(() => {
                                                            background={MESSAGE_STYLE.background}
                                                            meColor={MESSAGE_STYLE.meColor}
                                                            meBackground={MESSAGE_STYLE.meBackground}
-                                                           myUserId={userId}
+                                                           myUserId={myUserId}
                                                            myAvatar={avatar}
+                                                           onUserClick={() => onUserAvatarClick(message.userId)}
                                                            {...message}/>)}
                 <div ref={messageBottom}/>
             </div>
             <AddMessageForm addMessage={onSendMessageButtonClick}
-                            isSubmitDisabled={wsChannel === null || wsChannelStatus !== 'ready'}/>
-            <button onClick={() => wsChannel?.close()}>close ws</button>
-
+                            isSubmitDisabled={false}/>
         </div>
     )
 });
