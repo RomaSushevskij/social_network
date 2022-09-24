@@ -1,10 +1,10 @@
-import React from "react";
+import React, {memo} from "react";
 import styleModule from './Message.module.css';
 import styled from "styled-components";
 import {UserLogo} from '../../generic/Avatar/Avatar';
 
 export type MessagePropsType = {
-    id?: number,
+    id?: number | string,
     /**
      * Name of the interlocutor
      */
@@ -28,25 +28,25 @@ export type MessagePropsType = {
     meColor: string
     myUserId?: null | number
     myAvatar?: null | string
-    onUserClick?: () => void
+    onUserClick?: (userId: number) => void
 }
 
-export const Message = React.memo(({
-                                       id,
-                                       userId,
-                                       userName,
-                                       message,
-                                       photo,
-                                       time,
-                                       color,
-                                       background,
-                                       meBackground,
-                                       meColor,
-                                       myUserId,
-                                       myAvatar,
-                                       onUserClick
-                                   }: MessagePropsType) => {
-
+export const Message = memo(({
+                                 id,
+                                 userId,
+                                 userName,
+                                 message,
+                                 photo,
+                                 time,
+                                 color,
+                                 background,
+                                 meBackground,
+                                 meColor,
+                                 myUserId,
+                                 myAvatar,
+                                 onUserClick
+                             }: MessagePropsType) => {
+    console.log('Message')
     const MessageBlock = styled.div`
       & {
         background: ${userId === myUserId ? meBackground : background};
@@ -70,9 +70,13 @@ export const Message = React.memo(({
         ?
         `${styleModule.messageBlock} ${styleModule.meMessageBlock}` :
         styleModule.messageBlock
+
+    const onUserAvatarClick = () => {
+        onUserClick && onUserClick(userId)
+    }
     return (
         <div className={messageWrapperStyle}>
-            <div className={styleModule.avatar} onClick={onUserClick}>
+            <div className={styleModule.avatar} onClick={onUserAvatarClick}>
                 {resultAvatar}
             </div>
             <MessageBlock className={messageBlockStyle}>

@@ -50,7 +50,6 @@ export const SearchUsersForm = memo(() => {
         },
         enableReinitialize: true,
     });
-    console.log(term)
     const onSelectChange = (optionValue: string) => {
         const values: SearchUsersFilterType = {
             term: formik.values.term,

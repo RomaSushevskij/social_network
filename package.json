@@ -20,6 +20,7 @@
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
     "@types/styled-components": "^5.1.19",
+    "@types/uuid": "^8.3.4",
     "axios": "^0.25.0",
     "formik": "^2.2.9",
     "react": "^17.0.2",
@@ -35,6 +36,7 @@
     "sass": "^1.52.1",
     "styled-components": "^5.3.3",
     "typescript": "^4.5.2",
+    "uuid": "^9.0.0",
     "web-vitals": "^1.1.2"
   },
   "homepage": "https://RomaSushevskij.github.io/social_network",
