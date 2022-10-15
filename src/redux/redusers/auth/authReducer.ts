@@ -103,7 +103,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     } finally {
         dispatch(setIsFetchingValue(false))
     }
-}
+};
 
 export const logout = (): AppThunk => async dispatch => {
     try {

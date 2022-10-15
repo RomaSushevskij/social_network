@@ -3,12 +3,12 @@ import styleModule from './Login.module.css';
 import {LoginForm} from "../forms/LoginForm/LoginForm";
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
-import {login} from '../../redux/redusers/auth/authReducer';
 import {Navigate} from 'react-router-dom';
 import {getIsFetchingSelector} from '../../redux/selectors/usersSelectors';
 import {getCaptchaURL, getIsAuthSelector} from '../../redux/selectors/authSelectors';
 import {Preloader} from '../generic/Preloader/Preloader';
 import {Sticker} from '../generic/Sticker/Sticker';
+import {login} from "../../redux/sagas/auth/authSagas";
 
 export type LoginWithApiPropsType =
     MapStateToPropsType &

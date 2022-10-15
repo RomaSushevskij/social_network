@@ -7,8 +7,8 @@ import {PATH} from '../../App';
 import {Button} from '../generic/Button/Button';
 import {useAppSelector} from "../../redux/hooks";
 import {getAvatarSelector, getIsAuthSelector} from "../../redux/selectors/authSelectors";
-import {logout} from "../../redux/redusers/auth/authReducer";
 import {useDispatch} from "react-redux";
+import {logout} from "../../redux/sagas/auth/authSagas";
 
 export type HeaderPropsType = {
     title: string
@@ -38,7 +38,6 @@ export const Header: FC<HeaderPropsType> = memo(({
     const isAuth = useAppSelector(getIsAuthSelector);
     const avatar = useAppSelector(getAvatarSelector);
     const onLogoutButtonClick = () => {
-        debugger
         dispatch(logout());
     };
     return (

@@ -4,8 +4,6 @@ import {Button} from "../../generic/Button/Button";
 import {Checkbox} from "../../generic/Checkbox/Checkbox";
 import {useFormik} from "formik";
 import {LoginWithApiPropsType} from '../../Login/Login';
-import s from '../../generic/InputText/InputText.module.css';
-import {CSSTransition} from 'react-transition-group';
 import InputTextSecondary from '../../generic/InputTextSecondary/InputTextSecondary';
 
 type LoginFormValuesType = {
@@ -71,17 +69,17 @@ export const LoginForm = memo(({login, captchaURL}: LoginFormPropsType) => {
 
                 </div>
                 {!!captchaURL &&
-                <>
-                    <div className={styleModule.captchaBlock}>
-                        <img src={captchaURL} alt="Captcha"/>
-                    </div>
-                    <div className={styleModule.formElement}>
-                        <InputTextSecondary type="text"
-                                            placeholder={'Type the code from the image'}
-                                            {...formik.getFieldProps('captcha')}
-                                            error={formik.errors.captcha}/>
-                    </div>
-                </>
+                    <>
+                        <div className={styleModule.captchaBlock}>
+                            <img src={captchaURL} alt="Captcha"/>
+                        </div>
+                        <div className={styleModule.formElement}>
+                            <InputTextSecondary type="text"
+                                                placeholder={'Type the code from the image'}
+                                                {...formik.getFieldProps('captcha')}
+                                                error={formik.errors.captcha}/>
+                        </div>
+                    </>
                 }
                 <div className={`${styleModule.formElement} ${styleModule.submitButton}`}>
                     <Button name={'Login'}

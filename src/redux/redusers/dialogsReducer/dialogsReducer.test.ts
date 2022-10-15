@@ -45,20 +45,20 @@ beforeEach(() => {
         messagesData: [
             {
                 id: 1,
-                name: 'Ruslan',
+                userName: 'Ruslan',
                 message: 'Hi',
                 image: 'https://sun9-15.userapi.com/impg/O_LNAi5kKsq4-ViNecim4rUQkihvDLuTnXfL2w/BSAIvsvBviM.jpg?size=863x1080&quality=96&sign=8c552a2a19907e2e040b0475efdb6b85&type=album',
                 time: '12:03'
             },
-            {id: 2, name: 'Dmitry', message: 'Hi, how are you?', image: null, time: '13:01'},
+            {id: 2, userName: 'Dmitry', message: 'Hi, how are you?', photo: null, time: '13:01'},
             {
                 id: 3,
-                name: 'Ivan',
+                userName: 'Ivan',
                 message: 'Yo',
-                image: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
+                photo: 'https://sun9-53.userapi.com/impf/c623626/v623626744/19d9c/KBDd8fH-BOg.jpg?size=1280x960&quality=96&sign=03d1a85127b8411ce8b5b0b4118f78f6&type=album',
                 time: '13:08'
             },
-            {id: 4, name: 'Mother', message: 'Why yo?', image: null, time: '14:05'}
+            {id: 4, userName: 'Mother', message: 'Why yo?', photo: null, time: '14:05'}
         ] as Array<MessageType>
     }
 })
