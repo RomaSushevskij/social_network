@@ -19,7 +19,7 @@ import {getFollowersWorkerSaga} from "../profile/profileSagas";
 import {setIsFetchingValue} from "../../redusers/usersReducer/usersReducer";
 import {MESSAGES_FOR_SUCCESS_BAR} from "../../../components/generic/SnackBar/SnackBar";
 
-enum authActions {
+export enum authActions {
     GET_AUTHORIZATION_INFO = 'auth/GET_AUTHORIZATION_INFO',
     LOGIN = 'auth/LOGIN',
     LOGOUT = 'auth/LOGOUT',
@@ -27,12 +27,12 @@ enum authActions {
 }
 
 export function* getAuthorizationInfoWorkerSaga() {
+    debugger
     try {
         const data: GetAuthUserDataType = yield call(authMeAPI.getAuthorizationInfo);
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             yield put(setAuthUserData(data.data, true))
-            const state: AppStateType = yield select();
-            const id = getAuthUserIDSelector(state);
+            const id:number = yield select(getAuthUserIDSelector);
             if (id) {
                 const profileData: GetProfileDataType = yield call(profileAPI.getProfile, id);
                 const fullName = profileData?.fullName
@@ -53,12 +53,13 @@ export function* getAuthorizationInfoWorkerSaga() {
 }
 
 export function* loginWorkerSaga(action: ReturnType<typeof login>) {
+    debugger
     const {password, rememberMe, captcha, email} = action.payload;
     try {
         yield put(setIsFetchingValue(true))
         const data: LoginResponseType = yield call(authMeAPI.login, email, password, rememberMe, captcha);
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
-            yield* getAuthorizationInfoWorkerSaga()
+            yield getAuthorizationInfoWorkerSaga()
             yield put(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.LOGGED_IN_SUCCESSFULLY))
         } else {
             if (data.resultCode === RESPONSE_RESULT_CODES.needCaptcha) {
