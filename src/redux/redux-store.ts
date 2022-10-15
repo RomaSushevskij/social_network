@@ -13,6 +13,7 @@ import {authWatcherSaga} from "./sagas/auth/authSagas";
 import {all} from "redux-saga/effects";
 import {profileWatcherSaga} from "./sagas/profile/profileSagas";
 import {appWatcherSaga} from "./sagas/app/appSagas";
+import {newsWatcherSaga} from "./sagas/news/newsSagas";
 
 
 declare global {
@@ -48,7 +49,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware, sagaMiddleware)));
 
 export function* rootWatcherSaga() {
-    yield  all([authWatcherSaga(), profileWatcherSaga(), appWatcherSaga()])
+    yield  all([authWatcherSaga(), profileWatcherSaga(), appWatcherSaga(), newsWatcherSaga()])
 }
 
 sagaMiddleware.run(rootWatcherSaga);

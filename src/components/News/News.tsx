@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {NewsArticle} from './NewsItem/NewsArticle';
 import {Preloader} from '../generic/Preloader/Preloader';
-import {getNews, NEWS_CATEGORIES, setSearchingValue} from '../../redux/redusers/news/newsReducer';
+import {NEWS_CATEGORIES, setSearchingValue} from '../../redux/redusers/news/newsReducer';
 import InputTextSecondary from '../generic/InputTextSecondary/InputTextSecondary';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass';
@@ -12,6 +12,7 @@ import {DropDownMenuCategories} from './Categories/DropDownMenuCategories';
 import {DropDownMenuSorting} from './Sorting/DropDownMenuSorting';
 import {useDebounce} from '../../utils/hooks';
 import {Paginator} from '../generic/Paginator/Paginator';
+import {getNews} from "../../redux/sagas/news/newsSagas";
 
 
 export const News = memo((props: any) => {

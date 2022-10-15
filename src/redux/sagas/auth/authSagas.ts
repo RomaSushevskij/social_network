@@ -13,7 +13,6 @@ import {setProfile} from "../../redusers/profileReducer/profileReducer";
 import {AxiosError} from "axios";
 import {setAuthUserData, setCaptchaURL, setFullNameAndAvatar} from "../../redusers/auth/authReducer";
 import {call, put, select, takeEvery} from "redux-saga/effects";
-import {AppStateType} from "../../redux-store";
 import {getAuthUserIDSelector} from "../../selectors/authSelectors";
 import {getFollowersWorkerSaga} from "../profile/profileSagas";
 import {setIsFetchingValue} from "../../redusers/usersReducer/usersReducer";
@@ -31,7 +30,7 @@ export function* getAuthorizationInfoWorkerSaga() {
         const data: GetAuthUserDataType = yield call(authMeAPI.getAuthorizationInfo);
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             yield put(setAuthUserData(data.data, true))
-            const id:number = yield select(getAuthUserIDSelector);
+            const id: number = yield select(getAuthUserIDSelector);
             if (id) {
                 const profileData: GetProfileDataType = yield call(profileAPI.getProfile, id);
                 const fullName = profileData?.fullName
