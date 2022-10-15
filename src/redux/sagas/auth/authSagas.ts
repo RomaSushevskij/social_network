@@ -1,12 +1,11 @@
 import {authMeAPI, GetAuthUserDataType, GetProfileDataType, profileAPI, RESPONSE_RESULT_CODES} from "../../../api/api";
 import {setAppError} from "../../redusers/app/appReducer";
-import {getFollowers, setProfile} from "../../redusers/profileReducer/profileReducer";
+import {setProfile} from "../../redusers/profileReducer/profileReducer";
 import {AxiosError} from "axios";
 import {setAuthUserData, setFullNameAndAvatar} from "../../redusers/auth/authReducer";
-import {call, put, select} from "redux-saga/effects";
+import {call, put, select, takeEvery} from "redux-saga/effects";
 import {AppStateType} from "../../redux-store";
 import {getAuthUserIDSelector} from "../../selectors/authSelectors";
-import {takeEvery} from 'redux-saga/effects'
 import {getFollowersWorkerSaga} from "../profile/profileSagas";
 
 enum authActions {
@@ -33,7 +32,6 @@ export function* getAuthorizationInfoWorkerSaga() {
             yield put(setFullNameAndAvatar(fullName, avatar))
             yield put(setProfile(profileData))
         }
-
         yield* getFollowersWorkerSaga();
     } catch (e) {
         const error = e as AxiosError;

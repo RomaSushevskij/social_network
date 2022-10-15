@@ -1,7 +1,6 @@
-import {getAuthorizationInfo} from "../../redusers/auth/authReducer";
 import {AxiosError} from "axios";
 import {setAppError, setAppInitializeValue} from "../../redusers/app/appReducer";
-import {call, put, takeEvery} from 'redux-saga/effects'
+import {put, takeEvery} from 'redux-saga/effects'
 import {getAuthorizationInfoWorkerSaga} from "../auth/authSagas";
 
 enum appActions {
@@ -9,9 +8,8 @@ enum appActions {
 }
 
 export function* initializeAppWorkerSage() {
-    debugger
     try {
-        yield* getAuthorizationInfoWorkerSaga();
+        yield getAuthorizationInfoWorkerSaga();
         yield put(setAppInitializeValue(true));
     } catch (e) {
         const error = e as AxiosError;
