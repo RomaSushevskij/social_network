@@ -14,13 +14,12 @@ import {
     getUsersTotalCountSelector
 } from "../../redux/selectors/usersSelectors";
 import {
-    stopBeingFollower,
     toggleFollowingInProcess
 } from "../../redux/redusers/usersReducer/usersReducer";
 import {useDispatch} from "react-redux";
 import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
 import {useSearchParams} from "react-router-dom";
-import {becomeFollower, getUsers, repeatGetUsers} from "../../redux/sagas/users/usersSagas";
+import {becomeFollower, getUsers, repeatGetUsers, stopBeingFollower} from "../../redux/sagas/users/usersSagas";
 
 const Users = React.memo(() => {
     const dispatch = useDispatch();

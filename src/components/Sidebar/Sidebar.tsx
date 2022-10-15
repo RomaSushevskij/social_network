@@ -4,7 +4,7 @@ import {AppStateType} from '../../redux/redux-store';
 import {UserLogo} from '../generic/Avatar/Avatar';
 import {memo, useState} from 'react';
 import {NavLink} from 'react-router-dom';
-import {stopBeingFollower} from '../../redux/redusers/usersReducer/usersReducer';
+import {stopBeingFollower} from "../../redux/sagas/users/usersSagas";
 
 export const SideBar = memo(() => {
     const [random, setRandom] = useState(Math.random())
@@ -35,11 +35,11 @@ type FollowerItemType = {
     id: number
 }
 const FollowerItem = memo(({
-                          name,
-                          avatar,
-                          status,
-                          id
-                      }: FollowerItemType) => {
+                               name,
+                               avatar,
+                               status,
+                               id
+                           }: FollowerItemType) => {
     const dispatch = useDispatch();
 
     return (
@@ -54,7 +54,7 @@ const FollowerItem = memo(({
                 <span className={style.status}>{status}</span>
             </div>
             <div className={style.action}>
-                <button onClick={()=>dispatch(stopBeingFollower(id))}>
+                <button onClick={() => dispatch(stopBeingFollower(id))}>
                     Unfollow
                 </button>
             </div>

@@ -6,12 +6,20 @@ import {
     setSearchFilter,
     setUsers,
     setUsersTotalCount,
-    toggleFollowingInProcess
+    toggleFollowingInProcess,
+    unfollow
 } from "../../redusers/usersReducer/usersReducer";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {GetUsersDataType, PostFollowDataType, RESPONSE_RESULT_CODES, usersAPI} from "../../../api/api";
+import {
+    DeleteFollowDataType,
+    GetUsersDataType,
+    PostFollowDataType,
+    RESPONSE_RESULT_CODES,
+    usersAPI
+} from "../../../api/api";
 import {AxiosError} from "axios";
 import {setAppError} from "../../redusers/app/appReducer";
+import {deleteFollower} from "../../redusers/profileReducer/profileReducer";
 
 export enum usersActions {
     GET_USERS = 'users/GET_USERS',
@@ -72,7 +80,22 @@ export function* becomeFollowerWorkerSaga(action: ReturnType<typeof becomeFollow
 }
 
 export function* stopBeingFollowerWorkerSaga(action: ReturnType<typeof stopBeingFollower>) {
-
+    const {id} = action.payload;
+    try {
+        yield put(toggleFollowingInProcess(id, true));
+        const data: DeleteFollowDataType = yield call(usersAPI.stopBeingFollower, id);
+        if (data.resultCode === RESPONSE_RESULT_CODES.success) {
+            yield put(unfollow(id))
+            yield put(deleteFollower(id))
+        } else {
+            if (data.messages.length) yield put(setAppError(data.messages[0]))
+        }
+    } catch (e) {
+        const error = e as AxiosError;
+        yield put(setAppError(error.message))
+    } finally {
+        yield put(toggleFollowingInProcess(id, false))
+    }
 }
 
 export const getUsers = (pageSize: number, currentPage: number, searchFilter?: SearchUsersFilterType) => ({
