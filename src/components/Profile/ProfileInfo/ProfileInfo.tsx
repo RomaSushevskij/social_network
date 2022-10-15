@@ -53,7 +53,7 @@ export const ProfileInfo = React.memo(({
                          className={styleModule.avatarWrapper}>
                         {isFetching ? <Preloader size={'20px'} color={'#EC4899'}/> :
                             <>
-                                <Avatar photo={profile?.photos.large || userAvatar}
+                                <Avatar photo={profile?.photos?.large || userAvatar}
                                         style={{width: '200px', height: '200px'}}/>
                                 <div className={hover ?
                                     `${styleModule.uploadAvatar} ${styleModule.hover}`

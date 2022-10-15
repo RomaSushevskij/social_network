@@ -8,6 +8,12 @@ import {AppActionType, appReducer} from './redusers/app/appReducer';
 import {NewsActionType, newsReducer} from './redusers/news/newsReducer';
 import {chatReducer} from "./redusers/chatReducer/chat-reducer";
 import {ChatActionType} from "./redusers/chatReducer/types";
+import createSagaMiddleware from 'redux-saga';
+import {authWatcherSaga} from "./sagas/auth/authSagas";
+import {all} from "redux-saga/effects";
+import {profileWatcherSaga} from "./sagas/profile/profileSagas";
+import {appWatcherSaga} from "./sagas/app/appSagas";
+
 
 declare global {
     interface Window {
@@ -36,7 +42,16 @@ export type AppActionsType =
     ChatActionType
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+
+const sagaMiddleware = createSagaMiddleware();
+
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware, sagaMiddleware)));
+
+export function* rootWatcherSaga() {
+    yield  all([authWatcherSaga(), profileWatcherSaga(), appWatcherSaga()])
+}
+
+sagaMiddleware.run(rootWatcherSaga);
 
 export type GetStateType = typeof store.getState
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,

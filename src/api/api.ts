@@ -25,7 +25,7 @@ type SearchUsersParamsType = {
 }
 
 //PROFILE---
-type GetProfileDataType = ProfileType
+export type GetProfileDataType = ProfileType
 export type UpdateStatusDataType = {
     data: {}
     fieldsErrors: string[]
@@ -169,7 +169,7 @@ export const usersAPI = {
 };
 
 export const profileAPI = {
-    async getProfile(userId: number) {
+    async getProfile(userId: number):Promise<GetProfileDataType> {
         const {data} = await instance_1.get<GetProfileDataType>(`profile/${userId}`)
         return data
     },
@@ -198,7 +198,7 @@ export const profileAPI = {
 };
 
 export let authMeAPI = {
-        async getAuthorizationInfo() {
+        async getAuthorizationInfo():Promise<GetAuthUserDataType> {
             const {data} = await instance_1.get<GetAuthUserDataType>(`auth/me`)
             return data;
         },

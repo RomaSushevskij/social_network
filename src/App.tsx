@@ -9,7 +9,6 @@ import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {Login} from "./components/Login/Login";
 import {connect} from 'react-redux';
 import {AppStateType} from './redux/redux-store';
-import {initializeApp} from './redux/redusers/app/appReducer';
 import {Preloader} from './components/generic/Preloader/Preloader';
 import {getAppError, getAppMessage, getInitializedSelector} from './redux/selectors/appSelectors';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
@@ -18,6 +17,7 @@ import {getIsAuthSelector} from './redux/selectors/authSelectors';
 import {withSuspense} from './hoc/withSuspense';
 import {SNACK_BAR_TYPES, SnackBar} from './components/generic/SnackBar/SnackBar';
 import {Header} from "./components/Header/Header";
+import {initializeApp} from "./redux/sagas/app/appSagas";
 
 
 const UsersPage = React.lazy(() => import('./components/Users/Users').then(({default: Users}) => ({default: Users})));
