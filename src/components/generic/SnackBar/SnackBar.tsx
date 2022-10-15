@@ -61,7 +61,6 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
         debugger
         const timeoutID = setTimeout(() => {
             setIsShowError(false);
-            console.log('setIsShowError(false);')
         }, 4000);
         return () => {
             clearTimeout(timeoutID);

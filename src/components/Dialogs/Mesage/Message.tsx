@@ -46,7 +46,6 @@ export const Message = memo(({
                                  myAvatar,
                                  onUserClick
                              }: MessagePropsType) => {
-    console.log('Message')
     const MessageBlock = styled.div`
       & {
         background: ${userId === myUserId ? meBackground : background};
