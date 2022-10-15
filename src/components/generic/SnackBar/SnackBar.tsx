@@ -39,6 +39,7 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
 
     //synchronization appError and isShowError
     useEffect(() => {
+        debugger
         if (!!message) {
             setIsShowError(true)
         }
@@ -57,17 +58,20 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
 
     //closing SnackBar after some time
     useEffect(() => {
+        debugger
         const timeoutID = setTimeout(() => {
             setIsShowError(false);
+            console.log('setIsShowError(false);')
         }, 4000);
         return () => {
             clearTimeout(timeoutID);
             clearTimeout(closeTimerId.current as ReturnType<typeof setTimeout>);
         }
-    }, []);
+    }, [message]);
 
     //clear appError after some time
     useEffect(() => {
+        debugger
         const timeoutID = setTimeout(() => {
             if (type === SNACK_BAR_TYPES.ERROR) {
                 dispatch(setAppError(''))
@@ -79,7 +83,7 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
         return () => {
             clearTimeout(timeoutID);
         }
-    }, []);
+    }, [type, dispatch]);
 
     const finalClassName = type === SNACK_BAR_TYPES.SUCCESS ?
         `${style.snackBarWrapper} ${style.successBarWrapper}` :

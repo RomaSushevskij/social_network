@@ -27,7 +27,6 @@ export enum authActions {
 }
 
 export function* getAuthorizationInfoWorkerSaga() {
-    debugger
     try {
         const data: GetAuthUserDataType = yield call(authMeAPI.getAuthorizationInfo);
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
@@ -53,7 +52,6 @@ export function* getAuthorizationInfoWorkerSaga() {
 }
 
 export function* loginWorkerSaga(action: ReturnType<typeof login>) {
-    debugger
     const {password, rememberMe, captcha, email} = action.payload;
     try {
         yield put(setIsFetchingValue(true))
