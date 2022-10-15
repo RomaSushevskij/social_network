@@ -5,10 +5,10 @@ import {
     faCommentDots,
     faHeadphonesAlt,
     faNewspaper,
+    faPeopleGroup,
     faSlidersH,
     faUserAlt,
-    faUsers,
-    faPeopleGroup
+    faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import {AppStateType} from "../../redux/redux-store";
 import {connect, useSelector} from "react-redux";
@@ -16,7 +16,6 @@ import {CustomNavLink} from "./NavLink/CustomNavLink";
 import {Button} from "../generic/Button/Button";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {Avatar} from '../generic/Avatar/Avatar';
-import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
 
 
 export type NavLinkItem = {
@@ -44,6 +43,7 @@ export const NavbarContainer = React.memo((props: MapStateToPropsType) => {
     if (!props.isAuth) {
         resultNavLinks = navLinks.filter(nav => !nav.withAuthRedirect)
     }
+    debugger
     const avatar = useSelector((state: AppStateType) => state.auth.avatar);
     const name = useSelector((state: AppStateType) => state.auth.fullName);
     const postsCount = useSelector((state: AppStateType) => state.profilePage.postsData.length);

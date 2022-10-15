@@ -61,6 +61,7 @@ export const setCaptchaURL = (captchaURL: string) => ({
 // T H U N K S
 
 export const getAuthorizationInfo = (): AppThunk => async (dispatch, getState: GetStateType) => {
+    debugger
     try {
         const data = await authMeAPI.getAuthorizationInfo();
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {

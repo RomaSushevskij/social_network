@@ -16,10 +16,11 @@ import {setFollowers, setProfile, setStatus, updatePhotoSuccess} from "../../red
 import {call, put, select, takeEvery} from "redux-saga/effects";
 import {MESSAGES_FOR_SUCCESS_BAR} from "../../../components/generic/SnackBar/SnackBar";
 import {setIsFetchingValue} from "../../redusers/usersReducer/usersReducer";
-import {getAuthorizationInfo, setFullNameAndAvatar} from "../../redusers/auth/authReducer";
+import {setFullNameAndAvatar} from "../../redusers/auth/authReducer";
 import {getFullNameSelector} from "../../selectors/authSelectors";
 import {PATH} from "../../../App";
 import {getProfileSelector} from "../../selectors/profileSelectors";
+import {getAuthorizationInfoWorkerSaga} from "../auth/authSagas";
 
 enum profileActions {
     GET_PROFILE = 'profile/GET_PROFILE',
@@ -107,7 +108,7 @@ export function* updateProfileWorkerSaga(action: ReturnType<typeof updateProfile
         if (data.resultCode === RESPONSE_RESULT_CODES.success) {
             yield put(getProfile(userId))
             navigate(PATH.PROFILE);
-            yield getAuthorizationInfo();
+            yield getAuthorizationInfoWorkerSaga();
             yield put(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.PROFILE_UPDATED_SUCCESSFULLY));
         } else {
             if (data.messages.length) yield put(setAppError(data.messages[0]))
