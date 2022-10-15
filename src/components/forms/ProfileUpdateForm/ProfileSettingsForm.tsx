@@ -10,7 +10,7 @@ import InputTextSecondary from '../../generic/InputTextSecondary/InputTextSecond
 import {TextareaSecondary} from '../../generic/TextareaSecondary/TextareaSecondary';
 import {Checkbox} from '../../generic/Checkbox/Checkbox';
 import {Button} from '../../generic/Button/Button';
-import {updateProfile} from "../../../redux/redusers/profileReducer/profileReducer";
+import {updateProfile} from "../../../redux/sagas/profile/profileSagas";
 
 export const ProfileSettingsForm = memo(() => {
     const fullName = useSelector((state: AppStateType) => state.profilePage.profile?.fullName)

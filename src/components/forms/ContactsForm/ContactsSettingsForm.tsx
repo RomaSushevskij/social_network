@@ -3,12 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
 import {useNavigate} from 'react-router-dom';
 import {useFormik} from 'formik';
-import {ContactsType, updateContacts} from '../../../redux/redusers/profileReducer/profileReducer';
+import {ContactsType} from '../../../redux/redusers/profileReducer/profileReducer';
 import styleModule from './ContactsSettingsForm.module.scss';
 import {Preloader} from '../../generic/Preloader/Preloader';
 import InputTextSecondary from '../../generic/InputTextSecondary/InputTextSecondary';
 import {Button} from '../../generic/Button/Button';
 import {validateURL} from '../../../utils/validators';
+import {updateContacts} from "../../../redux/sagas/profile/profileSagas";
 
 export const ContactsSettingsForm = memo(() => {
     const contacts = useSelector((state: AppStateType) => state.profilePage.profile?.contacts)

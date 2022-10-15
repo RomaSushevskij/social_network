@@ -21,7 +21,7 @@ import {
 import {setAppError, setAppMessage} from "../app/appReducer";
 import {MESSAGES_FOR_SUCCESS_BAR} from "../../../components/generic/SnackBar/SnackBar";
 import {setIsFetchingValue} from "../usersReducer/usersReducer";
-import {getAuthorizationInfo, setFullNameAndAvatar} from "../auth/authReducer";
+import {setFullNameAndAvatar} from "../auth/authReducer";
 
 jest.mock("../../../api/api");
 const profileAPIMock = profileAPI as jest.Mocked<typeof profileAPI>;
