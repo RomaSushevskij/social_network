@@ -15,7 +15,6 @@ import {
 } from "../../redux/selectors/usersSelectors";
 import {
     becomeFollower,
-    getUsers,
     repeatGetUsers,
     stopBeingFollower,
     toggleFollowingInProcess
@@ -23,6 +22,7 @@ import {
 import {useDispatch} from "react-redux";
 import {SearchUsersForm} from "../forms/SearchUsersForm/SearchUsersForm";
 import {useSearchParams} from "react-router-dom";
+import {getUsers} from "../../redux/sagas/users/usersSagas";
 
 const Users = React.memo(() => {
     const dispatch = useDispatch();

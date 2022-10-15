@@ -11,14 +11,10 @@ import {
 } from "../../../redux/selectors/usersSelectors";
 import {useSearchParams} from "react-router-dom";
 import {useAppSelector} from "../../../redux/hooks";
-import {
-    getUsers,
-    SearchUsersFilterType,
-    setCurrentPage,
-    setSearchFilter
-} from "../../../redux/redusers/usersReducer/usersReducer";
+import {SearchUsersFilterType} from "../../../redux/redusers/usersReducer/usersReducer";
 import {useDispatch} from "react-redux";
 import {convertSearchSelectValue, convertSearchSelectValueBack} from "./utils/utils";
+import {getUsers} from "../../../redux/sagas/users/usersSagas";
 
 export type FormValuesType = {
     term: string,
