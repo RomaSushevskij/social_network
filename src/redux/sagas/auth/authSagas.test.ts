@@ -48,7 +48,7 @@ test('getAuthorizationInfoWorkerSaga success response code', () => {
     expect(gen.next(profileData).value).toEqual(put(setFullNameAndAvatar(fullName, photos.small)));
     expect(gen.next().value).toEqual(put(setProfile(profileData)));
     expect(gen.next().value).toEqual(getFollowersWorkerSaga().next().value)
-})
+});
 
 test('getAuthorizationInfoWorkerSaga error response code', () => {
     const gen = getAuthorizationInfoWorkerSaga();
@@ -61,4 +61,13 @@ test('getAuthorizationInfoWorkerSaga error response code', () => {
     expect(gen.next().value).toEqual(call(authMeAPI.getAuthorizationInfo));
     // @ts-ignore
     expect(gen.next(data).value).toEqual(put(setAppError(data.messages[0])))
+});
+
+test('getAuthorizationInfoWorkerSaga error', () => {
+    const gen = getAuthorizationInfoWorkerSaga();
+    const error = {message: 'some error'}
+
+    expect(gen.next().value).toEqual(call(authMeAPI.getAuthorizationInfo));
+    expect(gen.throw(error).value).toEqual(put(setAppError(error.message)))
+
 })
