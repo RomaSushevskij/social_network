@@ -39,7 +39,6 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
 
     //synchronization appError and isShowError
     useEffect(() => {
-        debugger
         if (!!message) {
             setIsShowError(true)
         }
@@ -58,7 +57,6 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
 
     //closing SnackBar after some time
     useEffect(() => {
-        debugger
         const timeoutID = setTimeout(() => {
             setIsShowError(false);
         }, 4000);
@@ -70,7 +68,6 @@ export const SnackBar = ({message, type,}: ErrorBarPropsType) => {
 
     //clear appError after some time
     useEffect(() => {
-        debugger
         const timeoutID = setTimeout(() => {
             if (type === SNACK_BAR_TYPES.ERROR) {
                 dispatch(setAppError(''))

@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {ProfileType, updatePhoto, updateStatus} from "../../redux/redusers/profileReducer/profileReducer";
+import {ProfileType, updatePhoto} from "../../redux/redusers/profileReducer/profileReducer";
 import {Profile} from "./Profile";
 import {Preloader} from "../generic/Preloader/Preloader";
 import {withRouter} from "../../hoc/withRouter";
@@ -10,7 +10,7 @@ import {PATH} from '../../App';
 import {getProfileSelector, getStatusSelector} from '../../redux/selectors/profileSelectors';
 import {getAuthUserIDSelector, getIsAuthSelector} from '../../redux/selectors/authSelectors';
 import {getIsFetchingSelector} from '../../redux/selectors/usersSelectors';
-import {getProfile, getStatus} from "../../redux/sagas/profile/profileSagas";
+import {getProfile, getStatus, updateStatus} from "../../redux/sagas/profile/profileSagas";
 
 
 class ProfileAPIContainer extends React.Component<ProfileAPIContainerPropsType> {
