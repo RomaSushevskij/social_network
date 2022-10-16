@@ -22,7 +22,7 @@ import {PATH} from "../../../App";
 import {getProfileSelector} from "../../selectors/profileSelectors";
 import {getAuthorizationInfoWorkerSaga} from "../auth/authSagas";
 
-enum profileActions {
+export enum profileActions {
     GET_PROFILE = 'profile/GET_PROFILE',
     GET_STATUS = 'profile/GET_STATUS',
     UPDATE_STATUS = 'profile/UPDATE_STATUS',
