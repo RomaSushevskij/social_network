@@ -2,6 +2,7 @@ import {getProfile, getProfileWorkerSaga, profileActions} from "./profileSagas";
 import {GetProfileDataType, profileAPI} from "../../../api/api";
 import {setProfile} from "../../redusers/profileReducer/profileReducer";
 import {call, put} from "redux-saga/effects";
+import {setAppError} from "../../redusers/app/appReducer";
 
 test('getProfileWorkerSaga success', () => {
     const action: ReturnType<typeof getProfile> = {type: profileActions.GET_PROFILE, payload: {userId: 12}}
@@ -31,6 +32,14 @@ test('getProfileWorkerSaga success', () => {
 
     expect(gen.next().value).toEqual(call(profileAPI.getProfile, action.payload.userId));
     expect(gen.next(data).value).toEqual(put(setProfile(data)));
-
 });
 
+test('getProfileWorkerSaga error', () => {
+    const action: ReturnType<typeof getProfile> = {type: profileActions.GET_PROFILE, payload: {userId: 12}}
+    const error = {message: 'some error'};
+
+    const gen = getProfileWorkerSaga(action);
+
+    expect(gen.next().value).toEqual(call(profileAPI.getProfile, action.payload.userId));
+    expect(gen.throw(error).value).toEqual(put(setAppError(error.message)));
+});
