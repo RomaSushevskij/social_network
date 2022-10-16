@@ -78,5 +78,34 @@ test('updatePhotoWorkerSaga success', () => {
     expect(gen.next().value).toEqual(put(setFullNameAndAvatar(fullName, newAvatar)));
     expect(gen.next().value).toEqual(put(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.YOUR_PHOTO_UPDATED_SUCCESSFULLY)));
     expect(gen.next().value).toEqual(put(setIsFetchingValue(false)));
-})
+});
+
+test('updatePhotoWorkerSaga with responseCode.error', () => {
+    const action: ReturnType<typeof updatePhoto> = {
+        type: profileActions.UPDATE_PHOTO,
+        payload: {photoFile: new File([new Blob()], 'file')}
+    };
+    const data: UpdatePhotoDataType = {
+        data: {
+            photos: {
+                large: 'large',
+                small: 'small',
+            }
+        },
+        fieldsErrors: [],
+        messages: ['some error occurred'],
+        resultCode: RESPONSE_RESULT_CODES.error
+    };
+    const fullName = 'fullName';
+
+    const gen = updatePhotoWorkerSaga(action);
+
+    expect(gen.next().value).toEqual(select(getFullNameSelector));
+    // @ts-ignore
+    expect(gen.next(fullName).value).toEqual(put(setIsFetchingValue(true)));
+    expect(gen.next().value).toEqual(call(profileAPI.updatePhoto, action.payload.photoFile));
+    // @ts-ignore
+    expect(gen.next(data).value).toEqual(put(setAppError(data.messages[0])));
+    expect(gen.next().value).toEqual(put(setIsFetchingValue(false)));
+});
 
