@@ -78,6 +78,5 @@ test('updatePhotoWorkerSaga success', () => {
     expect(gen.next().value).toEqual(put(setFullNameAndAvatar(fullName, newAvatar)));
     expect(gen.next().value).toEqual(put(setAppMessage(MESSAGES_FOR_SUCCESS_BAR.YOUR_PHOTO_UPDATED_SUCCESSFULLY)));
     expect(gen.next().value).toEqual(put(setIsFetchingValue(false)));
-
 })
 
