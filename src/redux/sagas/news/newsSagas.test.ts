@@ -161,3 +161,26 @@ test('getNewsWorkerSaga should be with searching error (no-matches)', () => {
     expect(newsGen.next().value).toEqual(put(setNewsTotal(0)));
     expect(newsGen.next().value).toEqual(put(setIsNewsLoading(false)));
 })
+
+test('getNewsWorkerSaga should be with searching error', () => {
+    const action: ReturnType<typeof getNews> = {
+        type: newsActions.GET_NEWS,
+        payload: {page_size: 10, page: 1}
+    };
+    const searchString = 'searchString';
+    const error = {response: {data: {error: {message: 'someError'}}}};
+    const newsGen = getNewsWorkerSaga(action);
+
+    expect(newsGen.next().value).toEqual(select(selectNewsSearchValue));
+    // @ts-ignore
+    expect(newsGen.next(searchString).value).toEqual(put(setIsNewsLoading(true)));
+    expect(newsGen.next().value).toEqual(call(newsAPI.getNews, {
+        q: searchString,
+        page_size: action.payload.page_size,
+        page: action.payload.page
+    }));
+    // @ts-ignore
+    expect(newsGen.throw(error).value).toEqual(put(setAppError(error.response.data.error.message)));
+    expect(newsGen.next().value).toEqual(put(setIsNewsLoading(false)));
+
+})
