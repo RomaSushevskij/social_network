@@ -109,3 +109,22 @@ test('updatePhotoWorkerSaga with responseCode.error', () => {
     expect(gen.next().value).toEqual(put(setIsFetchingValue(false)));
 });
 
+test('updatePhotoWorkerSaga with error', () => {
+    const action: ReturnType<typeof updatePhoto> = {
+        type: profileActions.UPDATE_PHOTO,
+        payload: {photoFile: new File([new Blob()], 'file')}
+    };
+    const fullName = 'fullName';
+    const error = {message: 'some error'};
+
+    const gen = updatePhotoWorkerSaga(action);
+
+    expect(gen.next().value).toEqual(select(getFullNameSelector));
+    // @ts-ignore
+    expect(gen.next(fullName).value).toEqual(put(setIsFetchingValue(true)));
+    expect(gen.next().value).toEqual(call(profileAPI.updatePhoto, action.payload.photoFile));
+    // @ts-ignore
+    expect(gen.throw(error).value).toEqual(put(setAppError(error.message)));
+    expect(gen.next().value).toEqual(put(setIsFetchingValue(false)));
+});
+
